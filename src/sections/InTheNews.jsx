@@ -1,29 +1,58 @@
 // src/sections/InTheNews.jsx
-import React from 'react';
+import React, { useContext } from 'react';
+import { LanguageContext } from '../context/LanguageContext';
 
-const news = [
-  {
-    title: "Gut check at Nordstrom: Retail giant to sell microbiome test from Seattle-area startup Viome",
-    source: "GEEKWIRE",
-    link: "#"
-  },
-  {
-    title: "Is Viome the Future of Food?",
-    source: "THE FOOD INSTITUTE",
-    link: "#"
-  },
-  {
-    title: "For Naveen Jain, the Big Problems Are the Draw",
-    source: "INC.",
-    link: "#"
-  }
-];
+const newsData = {
+  ru: [
+    {
+      title: "Gut check at Nordstrom: розничный гигант продаст тест микробиома от стартапа Viome из Сиэтла",
+      source: "GEEKWIRE",
+      link: "#"
+    },
+    {
+      title: "Является ли Viome будущим еды?",
+      source: "THE FOOD INSTITUTE",
+      link: "#"
+    },
+    {
+      title: "Для Навина Джейна большие проблемы - это привлекательная задача",
+      source: "INC.",
+      link: "#"
+    }
+  ],
+  kg: [
+    {
+      title: "Nordstrom компаниясы: Сиэтлдик Viome стартабынын микробиом тестин сатуу",
+      source: "GEEKWIRE",
+      link: "#"
+    },
+    {
+      title: "Viome тамак-аштын келечегиби?",
+      source: "THE FOOD INSTITUTE",
+      link: "#"
+    },
+    {
+      title: "Навин Жейн үчүн чоң көйгөйлөр - кызыктуу тапшырма",
+      source: "INC.",
+      link: "#"
+    }
+  ]
+};
+
+const content = {
+  ru: { title: "В НОВОСТЯХ", readMore: "Читать далее →" },
+  kg: { title: "ЖАҢЫЛЫКТАРДА", readMore: "Көбүрөөк окуу →" }
+};
 
 export const InTheNews = () => {
+  const { language } = useContext(LanguageContext);
+  const t = content[language];
+  const news = newsData[language];
+
   return (
     <section className="section-padding bg-white">
       <div className="container-custom">
-        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">IN THE NEWS</h2>
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t.title}</h2>
         <div className="grid md:grid-cols-3 gap-8">
           {news.map((item, index) => (
             <a 
@@ -36,7 +65,7 @@ export const InTheNews = () => {
                 {item.title}
               </h3>
               <div className="mt-4 text-gray-500 group-hover:text-blue-600 flex items-center">
-                Read more →
+                {t.readMore}
               </div>
             </a>
           ))}
@@ -46,4 +75,4 @@ export const InTheNews = () => {
   );
 };
 
-export default InTheNews; 
+export default InTheNews;

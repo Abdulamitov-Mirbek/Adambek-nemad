@@ -1,5 +1,6 @@
 // src/sections/FeaturedIn.jsx
-import React from 'react';
+import React, { useContext } from 'react';
+import { LanguageContext } from '../context/LanguageContext';
 
 const featuredLogos = [
   { name: 'Forbes', class: 'text-3xl' },
@@ -9,11 +10,19 @@ const featuredLogos = [
   { name: 'Amazon', class: 'text-3xl font-light' }
 ];
 
+const content = {
+  ru: { title: "ПУБЛИКАЦИИ" },
+  kg: { title: "БАСЫЛМАЛАР" }
+};
+
 export const FeaturedIn = () => {
+  const { language } = useContext(LanguageContext);
+  const t = content[language];
+
   return (
     <section className="section-padding bg-gray-50">
       <div className="container-custom">
-        <p className="text-center text-gray-600 uppercase tracking-wider mb-8">Featured In</p>
+        <p className="text-center text-gray-600 uppercase tracking-wider mb-8">{t.title}</p>
         <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16">
           {featuredLogos.map((logo, index) => (
             <div key={index} className={`text-gray-500 ${logo.class}`}>
