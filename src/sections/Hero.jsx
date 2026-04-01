@@ -1,22 +1,24 @@
-// src/sections/Hero.jsx - Updated to adjust for navbar
 import React, { useContext } from 'react';
+import { motion } from 'framer-motion';
 import { LanguageContext } from '../context/LanguageContext';
 import { LanguageSwitcher } from '../components/LanguageSwitcher';
 
 const content = {
   ru: {
-    title: "РЕШАЙТЕ",
-    titleGradient: "НЕВОЗМОЖНОЕ",
-    description: "Навин Джейн решает самые большие проблемы мира. Он доказывает, что нет вызова, который не могли бы решить предпринимательство и инновации.",
-    button1: "Смотреть историю",
-    button2: "Связаться"
+    badge: "Официальный сайт",
+    title: "АДАМБЕК",
+    titleGradient: "НЕЕМАТ",
+    description: "Предприниматель, ментор и визионер. Помогаю раскрыть потенциал через системное мышление и инновационные подходы в бизнесе.",
+    button1: "Смотреть курсы",
+    button2: "Связаться",
   },
   kg: {
-    title: "МҮМКҮН ЭМЕСТИ",
-    titleGradient: "ЧЕЧИҢИЗ",
-    description: "Навин Жейн дүйнөнүн эң чоң көйгөйлөрүн чечет. Ал ишкердик жана инновация чече албаган көйгөй жок экенинин далили.",
-    button1: "Тарыхын көрүү",
-    button2: "Байланышуу"
+    badge: "Расмий сайт",
+    title: "АДАМБЕК",
+    titleGradient: "НЕЕМАТ",
+    description: "Ишкер, ментор жана визионер. Системалык ой жүгүртүү жана бизнестеги инновациялык ыкмалар аркылуу потенциалды ачууга жардам берем.",
+    button1: "Курстарды көрүү",
+    button2: "Байланышуу",
   }
 };
 
@@ -25,28 +27,70 @@ export const Hero = () => {
   const t = content[language];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a] text-white">
+      {/* Фоновый градиент для глубины */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
+      
       <LanguageSwitcher />
-      <div className="absolute inset-0 bg-black/50 z-10" />
-      <div className="container-custom relative z-20 text-center">
-        <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-          {t.title}{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+
+      <div className="container px-6 relative z-20 text-center">
+        {/* Маленький бейдж над заголовком */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="inline-block px-4 py-1.5 mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full"
+        >
+          <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
+            {t.badge}
+          </span>
+        </motion.div>
+
+        <motion.h1 
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter"
+        >
+          {t.title}<br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
             {t.titleGradient}
           </span>
-        </h1>
-        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
+        </motion.h1>
+
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light"
+        >
           {t.description}
-        </p>
-        <div className="flex gap-4 justify-center">
-          <button className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-semibold hover:shadow-lg transition-all hover:scale-105">
+        </motion.p>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex flex-col sm:flex-row gap-5 justify-center items-center"
+        >
+          <button className="w-full sm:w-auto px-10 py-4 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-blue-500/40">
             {t.button1}
           </button>
-          <button className="px-8 py-3 border-2 border-white rounded-full font-semibold hover:bg-white hover:text-gray-900 transition-all">
+          <button className="w-full sm:w-auto px-10 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 backdrop-blur-sm transition-all duration-300">
             {t.button2}
           </button>
-        </div>
+        </motion.div>
       </div>
+
+      {/* Декоративный элемент снизу */}
+      <motion.div 
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-30"
+      >
+        <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
+      </motion.div>
     </section>
   );
 };

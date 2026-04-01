@@ -22,7 +22,6 @@
     @apply py-16 md:py-24;
   }
 }
-/* src/index.css - add this to existing styles */
 @keyframes fadeInUp {
   from {
     opacity: 0;
