@@ -74,12 +74,20 @@ export const Hero = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row gap-5 justify-center items-center"
         >
-          <button className="w-full sm:w-auto px-10 py-4 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-blue-500/40">
+          <a
+            href="#courses"
+            className="w-full sm:w-auto px-10 py-4 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-blue-500/40 text-center inline-block"
+          >
             {t.button1}
-          </button>
-          <button className="w-full sm:w-auto px-10 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 backdrop-blur-sm transition-all duration-300">
+          </a>
+          <a
+            href="https://wa.me/996704343756?text=%D0%90%D1%81%D1%81%D0%B0%D0%BB%D0%B0%D0%BC%D1%83%20%D0%B0%D0%BB%D0%B0%D0%B9%D0%BA%D1%83%D0%BC!%20%D0%9C%D0%B5%D0%BD%20%D1%81%D0%B0%D0%B9%D1%82%D1%82%D0%B0%D0%BD%20%D0%B6%D0%B0%D0%B7%D1%8B%D0%BF%20%D0%B6%D0%B0%D1%82%D0%B0%D0%BC."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto px-10 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 backdrop-blur-sm transition-all duration-300 text-center inline-block"
+          >
             {t.button2}
-          </button>
+          </a>
         </motion.div>
       </div>
 

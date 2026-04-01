@@ -10,6 +10,8 @@ const content = {
     about: "О нас",
     companies: "Компании",
     speaking: "Выступления",
+    collaboration: "Сотрудничество",
+    courses: "Курсы",
     connect: "Связаться",
     newsletter: "Новости",
     newsletterText: "Получайте последние обновления и инсайты",
@@ -23,6 +25,8 @@ const content = {
     about: "Биз жөнүндө",
     companies: "Компаниялар",
     speaking: "Сүйлөөлөр",
+    collaboration: "Кызматташуу",
+    courses: "Курстар",
     connect: "Байланыш",
     newsletter: "Жаңылыктар",
     newsletterText: "Акыркы жаңыртууларды жана инсайттарды алыңыз",
@@ -52,6 +56,11 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
+                <a href="#courses" className="hover:text-white transition">
+                  {t.courses}
+                </a>
+              </li>
+              <li>
                 <a href="#companies" className="hover:text-white transition">
                   {t.companies}
                 </a>
@@ -59,6 +68,14 @@ export const Footer = () => {
               <li>
                 <a href="#speaking" className="hover:text-white transition">
                   {t.speaking}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#collaboration"
+                  className="hover:text-white transition"
+                >
+                  {t.collaboration}
                 </a>
               </li>
             </ul>
