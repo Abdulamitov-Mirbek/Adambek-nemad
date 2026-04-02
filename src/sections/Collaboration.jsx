@@ -98,7 +98,7 @@ export const Collaboration = () => {
                 className="group flex w-full flex-col bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden text-left"
               >
                 {/* ФОТО СВЕРХУ - сделал aspect-[3/4] для еще большей высоты и ширины */}
-                <div className="relative aspect-[3/4] overflow-hidden bg-gray-50">
+                <div className="relative aspect-[10/10] overflow-hidden bg-gray-50">
                   <img 
                     src={p.img} 
                     alt={p.handle} 
