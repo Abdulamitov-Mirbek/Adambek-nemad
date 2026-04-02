@@ -408,7 +408,8 @@ export const InTheNews = () => {
         language={language}
       />
 
-      <style jsx>{`
+      {/* Исправленный блок стилей без атрибута jsx */}
+      <style>{`
         .scrollbar-custom::-webkit-scrollbar {
           height: 6px;
         }
@@ -420,6 +421,7 @@ export const InTheNews = () => {
           background: linear-gradient(90deg, #3b82f6, #8b5cf6);
           border-radius: 10px;
         }
+        /* Tailwind уже имеет класс line-clamp-2, но если версия старая, оставим этот фикс */
         .line-clamp-2 {
           display: -webkit-box;
           -webkit-line-clamp: 2;

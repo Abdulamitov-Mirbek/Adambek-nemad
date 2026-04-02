@@ -15,10 +15,11 @@ const content = {
     title: "Обучение для бизнеса и продаж",
     lead:
       "Адамбек Нээмат — предприниматель и бизнес-аналитик: помогает разобраться в цифрах, процессах и клиентах, чтобы рост был измеримым, а не случайным. На курсах — структура, практика и обратная связь.",
-    ctaTitle: "Записаться на курс",
+    ctaTitle: "Свяжитесь с нами",
     ctaBody:
-      "Напишите в WhatsApp — подберём формат, ответим на вопросы и оформим запись.",
-    ctaButton: "Записаться в WhatsApp",
+      "Напишите в WhatsApp или подпишитесь на Instagram — будьте в курсе новых курсов и материалов.",
+    whatsappButton: "Написать в WhatsApp",
+    instagramButton: "Подписаться в Instagram",
     ctaNote: "Ответим в рабочее время · без обязательств на первом сообщении",
     features: [
       {
@@ -40,10 +41,11 @@ const content = {
     title: "Бизнес жана сатуу боюнча окутуу",
     lead:
       "Адамбек Нээмат — ишкер жана бизнес-аналитик: сандарды, процесстерди жана кардарларды түшүнүүгө жардам берет. Курстарда — түзүлүш, практика жана байланыш.",
-    ctaTitle: "Курска жазылуу",
+    ctaTitle: "Биз менен байланышыңыз",
     ctaBody:
-      "WhatsApp аркылуу жазыңыз — форматты тандап, суроолорго жооп берип, жаздырууну аяктайбыз.",
-    ctaButton: "WhatsApp аркылуу жазылуу",
+      "WhatsApp аркылуу жазыңыз же Instagram'га жазылыңыз — жаңы курстар жана материалдар жөнүндө кабардар болуңуз.",
+    whatsappButton: "WhatsApp аркылуу жазуу",
+    instagramButton: "Instagram'га жазылуу",
     ctaNote: "Жумуш убактысында жооп беребиз · биринчи кабарда милдеттүү эмес",
     features: [
       {
@@ -64,6 +66,23 @@ const content = {
 
 const icons = [ChartLine, TrendingUp, ClipboardList];
 
+// Instagram SVG Icon - No external dependencies
+const InstagramIcon = () => (
+  <svg 
+    className="h-5 w-5 shrink-0" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  >
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+  </svg>
+);
+
 export const Courses = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
@@ -76,7 +95,11 @@ export const Courses = () => {
     return `https://wa.me/996704343756?text=${encodeURIComponent(msg)}`;
   }, [language]);
 
+  const instagramLink = "https://www.instagram.com/adambek.neemat";
+
   const openWa = () => window.open(waLink, "_blank", "noopener,noreferrer");
+  const openInstagram = () =>
+    window.open(instagramLink, "_blank", "noopener,noreferrer");
 
   return (
     <section
@@ -147,14 +170,27 @@ export const Courses = () => {
           <p className="mb-8 text-base leading-relaxed text-blue-100 md:text-lg">
             {t.ctaBody}
           </p>
-          <button
-            type="button"
-            onClick={openWa}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition hover:bg-blue-50 hover:shadow-xl active:scale-[0.98] sm:w-auto"
-          >
-            <MessageCircle className="h-5 w-5 shrink-0" />
-            {t.ctaButton}
-          </button>
+          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+            {/* WhatsApp Button */}
+            <button
+              type="button"
+              onClick={openWa}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition hover:bg-blue-50 hover:shadow-xl active:scale-[0.98] sm:w-auto"
+            >
+              <MessageCircle className="h-5 w-5 shrink-0" />
+              {t.whatsappButton}
+            </button>
+
+            {/* Instagram Button */}
+            <button
+              type="button"
+              onClick={openInstagram}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-8 py-4 text-base font-bold text-white shadow-lg transition hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
+            >
+              <InstagramIcon />
+              {t.instagramButton}
+            </button>
+          </div>
           <p className="mt-5 text-xs text-blue-200/90">{t.ctaNote}</p>
         </motion.div>
       </div>
