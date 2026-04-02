@@ -1,181 +1,153 @@
 import React, { useContext, useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { Play } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Play, X } from "lucide-react"; // Добавили иконку закрытия
 import { LanguageContext } from "../context/LanguageContext";
 
 const videos = [
-  "https://www.youtube.com/shorts/OfMA-QJzG6A?feature=share",
+  "https://www.youtube.com/shorts/OfMA-QJzG6A",
   "https://youtu.be/of-JJl9Yauc",
-  "https://www.youtube.com/shorts/bCFWI_acscM?feature=share",
-  "https://www.youtube.com/shorts/4b_HxfcT2nE?feature=share",
-  "https://www.youtube.com/shorts/N6Z8TlRiVsY?feature=share",
-  "https://www.youtube.com/shorts/yMrsSJkQhWE?feature=share",
+  "https://www.youtube.com/shorts/bCFWI_acscM",
+  "https://www.youtube.com/shorts/4b_HxfcT2nE",
+  "https://www.youtube.com/shorts/N6Z8TlRiVsY",
+  "https://www.youtube.com/shorts/yMrsSJkQhWE",
 ];
 
 function getVideoId(url) {
   try {
     const u = new URL(url);
-    if (u.hostname.includes("youtu.be")) {
-      return u.pathname.replace("/", "");
-    }
-    const parts = u.pathname.split("/").filter(Boolean); // e.g. ["shorts","OfMA-QJzG6A"]
+    if (u.hostname.includes("youtu.be")) return u.pathname.replace("/", "");
+    const parts = u.pathname.split("/").filter(Boolean);
     const idx = parts.indexOf("shorts");
     if (idx !== -1 && parts[idx + 1]) return parts[idx + 1];
+    if (u.searchParams.get("v")) return u.searchParams.get("v");
     return "";
-  } catch {
-    return "";
-  }
+  } catch { return ""; }
 }
 
 function getThumbCandidates(id) {
   if (!id) return [];
-  // Try best quality first; if the URL doesn't exist, fall back to the next.
   return [
     `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
     `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-    `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
   ];
 }
 
 const content = {
   ru: {
     kicker: "ОТЗЫВЫ",
-    title: "Отзывы",
-    lead:
-      "Короткие видео-отзывы о бизнесе, продажах и практике. Нажмите на карточку, чтобы открыть на YouTube.",
+    title: "Видео-отзывы",
+    lead: "Посмотрите, что говорят партнеры и ученики прямо здесь.",
+    close: "Закрыть"
   },
   kg: {
     kicker: "ПИКИРЛЕР",
-    title: "Пикирлер",
-    lead:
-      "Бизнес, сатуу жана практика боюнча кыска видео-пикирлер. Карточканы басып, YouTube'тан ачыңыз.",
+    title: "Видео-пикирлер",
+    lead: "Өнөктөштөр жана окуучулар эмне дешет, ушул жерден көрүңүз.",
+    close: "Жабуу"
   },
-};
-
-const VideoCard = ({ v, idx, language }) => {
-  const thumbCandidates = v.thumbCandidates || [];
-  const [thumbIndex, setThumbIndex] = useState(0);
-
-  const thumb = thumbCandidates[thumbIndex] || "";
-
-  const handleError = () => {
-    setThumbIndex((i) => Math.min(i + 1, Math.max(thumbCandidates.length - 1, 0)));
-  };
-
-  return (
-    <a
-      href={v.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group block h-full rounded-2xl border border-gray-100 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
-    >
-      <div className="relative aspect-[9/16] w-full overflow-hidden rounded-2xl">
-        {thumb ? (
-          <img
-            src={thumb}
-            onError={handleError}
-            alt={`YouTube Shorts ${idx + 1}`}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-            referrerPolicy="no-referrer"
-          />
-        ) : (
-          <div className="h-full w-full bg-gradient-to-br from-gray-100 to-blue-50" />
-        )}
-
-        {/* Top gradient */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"
-          aria-hidden
-        />
-
-        {/* “ОТЗЫВЫ” badge */}
-        <div className="absolute left-3 top-3 inline-flex items-center rounded-full bg-black/40 px-3 py-1 text-[10px] font-bold tracking-widest text-white backdrop-blur-sm">
-          {language === "kg" ? "ПИКИР" : "ОТЗЫВ"}
-        </div>
-
-        {/* Play overlay */}
-        <div className="absolute inset-0 grid place-items-center">
-          <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10 backdrop-blur-md ring-1 ring-white/20 transition-all group-hover:bg-white/15">
-            <Play className="h-7 w-7 text-white" strokeWidth={2.5} />
-          </div>
-        </div>
-
-        {/* Bottom text */}
-        <div className="absolute bottom-0 left-0 right-0 p-4">
-          <p className="text-sm font-semibold text-white">
-            {language === "kg" ? `Пикир ${idx + 1}` : `Отзыв ${idx + 1}`}
-          </p>
-          <p className="mt-1 text-xs text-white/80">
-            {language === "kg" ? "YouTube'тан көрүү" : "Смотреть на YouTube"}
-          </p>
-        </div>
-      </div>
-    </a>
-  );
 };
 
 export const VideoLibrary = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
+  const [activeVideo, setActiveVideo] = useState(null);
 
-  const cards = useMemo(
-    () =>
-      videos.map((url) => {
-        const id = getVideoId(url);
-        return {
-          url,
-          id,
-          thumbCandidates: getThumbCandidates(id),
-        };
-      }),
-    [],
+  const cards = useMemo(() =>
+    videos.map((url) => {
+      const id = getVideoId(url);
+      return { url, id, thumbCandidates: getThumbCandidates(id) };
+    }), []
   );
 
   return (
-    <section
-      id="videos"
-      className="section-padding bg-white overflow-hidden"
-    >
-      <div className="container-custom">
+    <section id="videos" className="py-24 bg-white overflow-hidden">
+      <div className="container-custom max-w-7xl mx-auto px-6">
+        
+        {/* Заголовок */}
         <motion.div
-          initial={{ opacity: 0, y: 14 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto mb-12 max-w-3xl text-center"
+          viewport={{ once: true }}
+          className="mx-auto mb-16 max-w-3xl text-center"
         >
-          <div className="mb-5 inline-flex items-center gap-3 rounded-full border border-blue-100 bg-blue-50/60 px-5 py-2 text-xs font-bold tracking-[0.25em] text-blue-700">
-            <span className="h-2 w-2 rounded-full bg-gradient-to-r from-blue-600 to-purple-600" />
+          <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-blue-100 bg-blue-50 px-6 py-2 text-xs font-bold tracking-[0.2em] text-blue-700 uppercase">
             {t.kicker}
           </div>
-          <h2 className="text-3xl font-black tracking-tight text-gray-900 md:text-4xl">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-6">
             {t.title}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-gray-600 md:text-lg">
-            {t.lead}
-          </p>
+          <p className="text-lg text-gray-600">{t.lead}</p>
         </motion.div>
 
-        {/* One horizontal row (scrollable) */}
-        <ul className="flex gap-6 overflow-x-auto pb-2 scroll-smooth snap-x snap-mandatory">
+        {/* Скролл-список */}
+        <div className="flex gap-6 overflow-x-auto pb-10 scroll-smooth snap-x snap-mandatory no-scrollbar">
           {cards.map((v, idx) => (
-            <motion.li
-              key={v.url}
-              className="min-w-[280px] sm:min-w-[320px] lg:min-w-[360px] snap-start"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ delay: idx * 0.05, duration: 0.45 }}
+            <motion.div
+              key={v.id}
+              className="min-w-[280px] md:min-w-[320px] snap-start"
+              whileHover={{ y: -8 }}
+              onClick={() => setActiveVideo(v.id)}
             >
-              <VideoCard v={v} idx={idx} language={language} />
-            </motion.li>
+              <div className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 border-[6px] border-white shadow-xl transition-all hover:shadow-blue-200">
+                <img
+                  src={v.thumbCandidates[0]}
+                  alt="Preview"
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform">
+                    <Play className="h-8 w-8 text-white fill-current" />
+                  </div>
+                </div>
+                <div className="absolute bottom-6 left-6 right-6">
+                   <p className="text-white font-bold tracking-wide uppercase text-xs opacity-80 mb-1">{t.kicker} {idx + 1}</p>
+                   <div className="h-1 w-12 bg-blue-500 rounded-full" />
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </ul>
+        </div>
       </div>
+
+      {/* MODAL PLAYER */}
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4"
+            onClick={() => setActiveVideo(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 40 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 40 }}
+              className="relative w-full max-w-[400px] aspect-[9/16] bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setActiveVideo(null)}
+                className="absolute top-4 right-4 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+              >
+                <X size={24} />
+              </button>
+              
+              <iframe
+                className="h-full w-full"
+                src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0`}
+                title="YouTube Video"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
 
 export default VideoLibrary;
-
