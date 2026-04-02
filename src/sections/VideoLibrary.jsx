@@ -58,7 +58,7 @@ export const VideoLibrary = () => {
   );
 
   return (
-    <section id="videos" className="py-24 bg-white overflow-hidden">
+    <section id="videos" className="scroll-mt-24 py-24 bg-white overflow-hidden">
       <div className="container-custom max-w-7xl mx-auto px-6">
         
         {/* Заголовок */}

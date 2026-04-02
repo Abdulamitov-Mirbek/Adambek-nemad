@@ -22,7 +22,7 @@ export const Books = () => {
   const t = content[language];
 
   return (
-    <section className="section-padding bg-gray-50">
+    <section id="books" className="section-padding scroll-mt-24 bg-gray-50">
       <div className="container-custom">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">{t.title}</h2>

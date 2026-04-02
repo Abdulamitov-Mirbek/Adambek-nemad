@@ -36,7 +36,7 @@ export const About = () => {
   const t = content[language];
 
   return (
-    <section id="about" className="py-24 bg-white overflow-hidden">
+    <section id="about" className="scroll-mt-24 py-24 bg-white overflow-hidden">
       <div className="container-custom max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-16 items-center">
           {/* Левая часть: Фото или визуал */}

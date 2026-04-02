@@ -4,7 +4,6 @@ import { Hero } from "./sections/Hero";
 import { About } from "./sections/About";
 import { Courses } from "./sections/Courses";
 import { FeaturedIn } from "./sections/FeaturedIn";
-import { VisionaryInsight } from "./sections/VisionaryInsight";
 import { Books } from "./sections/Books";
 import { Collaboration } from "./sections/Collaboration";
 import { InTheNews } from "./sections/InTheNews";
@@ -27,7 +26,6 @@ function App() {
         <FeaturedIn />
         <Collaboration />
         <Awards />
-        <VisionaryInsight />
         <Books />
         <InTheNews />
         <VideoLibrary />
