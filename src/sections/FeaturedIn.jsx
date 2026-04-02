@@ -18,11 +18,6 @@ const featuredPartners = [
     link: "https://wa.me/996704343756?text=Ассаламу%20алайкум!%20Мен%20сайттан%20жазып жатам...",
     class: "font-medium tracking-widest text-green-600",
   }, // Добавили WhatsApp
-  {
-    name: "TAPLINK",
-    link: "https://taplink.cc/zak.0806",
-    class: "font-bold italic",
-  },
 ];
 const content = {
   ru: { title: "УПОМИНАНИЯ И ПАРТНЕРСТВО" },
