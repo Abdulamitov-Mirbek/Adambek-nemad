@@ -20,36 +20,36 @@ const featuredPartners = [
   }, // Добавили WhatsApp
 ];
 const content = {
-  ru: { title: "УПОМИНАНИЯ И ПАРТНЕРСТВО" },
-  kg: { title: "ШИЛТЕМЕЛЕР ЖАНА ӨНӨКТӨШТӨР" },
+  ru: { title: "МЫ В СОЦСЕТЯХ" },
+  kg: { title: "БИЗ СОЦТАРМАКТАРДА" },
 };
 
 export const FeaturedIn = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
 
-  const handleOpen = (url) => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
   return (
-    <section className="py-20 bg-white">
+    <section className="py-16 bg-white border-y border-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="text-center text-gray-400 text-sm uppercase tracking-[0.4em] mb-12"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center text-gray-400 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-12"
         >
           {t.title}
         </motion.p>
 
-        <div className="flex flex-wrap justify-center items-center gap-10 md:gap-20 grayscale opacity-40 hover:opacity-100 transition-all duration-700">
+        <div className="flex flex-wrap justify-center items-center gap-10 md:gap-24 opacity-60 hover:opacity-100 transition-opacity duration-500">
           {featuredPartners.map((logo, index) => (
             <motion.div
               key={index}
-              onClick={() => handleOpen(logo.link)}
-              whileHover={{ scale: 1.1, grayscale: 0, opacity: 1 }}
-              className={`text-2xl md:text-3xl text-gray-900 cursor-pointer transition-all duration-500 ${logo.class}`}
+              onClick={() => window.open(logo.link, "_blank", "noopener,noreferrer")}
+              whileHover={{ 
+                scale: 1.05, 
+                color: logo.name === "WHATSAPP" ? "#16a34a" : "#000" 
+              }}
+              className={`text-xl md:text-2xl text-gray-900 cursor-pointer transition-all duration-300 ${logo.class}`}
             >
               {logo.name}
             </motion.div>
