@@ -1,9 +1,18 @@
 // src/components/Navbar.jsx
-import React, { useState, useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { LanguageContext } from '../context/LanguageContext';
-import { Menu, X, User, Mic2, Video, GraduationCap, BookOpen, Newspaper } from 'lucide-react';
-
+import React, { useState, useContext } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { LanguageContext } from "../context/LanguageContext";
+import {
+  Menu,
+  X,
+  User,
+  Mic2,
+  Video,
+  GraduationCap,
+  BookOpen,
+  Newspaper,
+  Handshake,
+} from "lucide-react";
 
 const content = {
   ru: {
@@ -14,7 +23,8 @@ const content = {
     courses: "Курсы",
     books: "Книги",
     press: "Пресса",
-    role: "Предприниматель и филантроп"
+    collaboration: "Сотрудничество",
+    role: "Предприниматель и филантроп",
   },
   kg: {
     menu: "МЕНЮ",
@@ -24,8 +34,9 @@ const content = {
     courses: "Курстар",
     books: "Китептер",
     press: "Басылмалар",
-    role: "Ишкер жана филантроп"
-  }
+    collaboration: "Кызматташуу",
+    role: "Ишкер жана филантроп",
+  },
 };
 
 export const Navbar = () => {
@@ -39,7 +50,12 @@ export const Navbar = () => {
     { name: t.videoLibrary, href: "#videos", icon: <Video size={22} /> },
     { name: t.courses, href: "#courses", icon: <GraduationCap size={22} /> },
     { name: t.books, href: "#books", icon: <BookOpen size={22} /> },
-    { name: t.press, href: "#press", icon: <Newspaper size={22} /> }
+    { name: t.press, href: "#press", icon: <Newspaper size={22} /> },
+    {
+      name: t.collaboration,
+      href: "#collaboration",
+      icon: <Handshake size={22} />,
+    },
   ];
 
   return (
@@ -50,7 +66,9 @@ export const Navbar = () => {
         className="fixed top-6 left-6 z-50 flex items-center gap-2 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-full shadow-lg border border-gray-100 hover:scale-105 active:scale-95 transition-all group"
       >
         <Menu className="w-5 h-5 text-gray-800 group-hover:text-blue-600 transition-colors" />
-        <span className="font-bold text-gray-800 tracking-wide text-sm">{t.menu}</span>
+        <span className="font-bold text-gray-800 tracking-wide text-sm">
+          {t.menu}
+        </span>
       </button>
 
       <AnimatePresence>
@@ -67,10 +85,10 @@ export const Navbar = () => {
 
             {/* Сама панель меню */}
             <motion.div
-              initial={{ x: '-100%' }}
+              initial={{ x: "-100%" }}
               animate={{ x: 0 }}
-              exit={{ x: '-100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="absolute top-0 left-0 h-full w-full max-w-[320px] bg-white shadow-2xl flex flex-col"
             >
               {/* Хедер панели */}
@@ -79,11 +97,16 @@ export const Navbar = () => {
                   <h2 className="text-xl font-black tracking-tighter text-gray-900">
                     ADAMBEK NEEMAT
                   </h2>
-                  <button onClick={() => setIsMenuOpen(false)} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                  <button
+                    onClick={() => setIsMenuOpen(false)}
+                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  >
                     <X size={24} className="text-gray-400" />
                   </button>
                 </div>
-                <p className="text-blue-600 font-medium text-xs uppercase tracking-widest">{t.role}</p>
+                <p className="text-blue-600 font-medium text-xs uppercase tracking-widest">
+                  {t.role}
+                </p>
               </div>
 
               {/* Список ссылок */}
@@ -104,7 +127,9 @@ export const Navbar = () => {
                         <span className="text-gray-400 group-hover:text-blue-600 transition-colors">
                           {item.icon}
                         </span>
-                        <span className="font-semibold text-base">{item.name}</span>
+                        <span className="font-semibold text-base">
+                          {item.name}
+                        </span>
                       </a>
                     </motion.li>
                   ))}
@@ -113,9 +138,9 @@ export const Navbar = () => {
 
               {/* Футер меню */}
               <div className="p-8 bg-gray-50/50">
-                 <div className="flex gap-4">
-                    {/* Здесь можно добавить маленькие иконки соцсетей */}
-                 </div>
+                <div className="flex gap-4">
+                  {/* Здесь можно добавить маленькие иконки соцсетей */}
+                </div>
               </div>
             </motion.div>
           </div>

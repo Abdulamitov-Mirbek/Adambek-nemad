@@ -4,24 +4,30 @@ import { LanguageContext } from "../context/LanguageContext";
 
 const content = {
   ru: {
-    title: "ОБ АДАМБЕКЕ НЕЕМАТЕ",
-    description1: "Я учу людей приносить пользу через искусство продаж и развивать бизнес честным (адал) путем. Моя цель — раскрыть ваш потенциал и системно увеличить ваш доход.",
-    description2: "За 10 лет я превратил тысячи людей в профессиональных продавцов. Я прошел путь от обычных рынков до работы с крупнейшими компаниями, собирая только работающие инструменты.",
-    description3: "Мой подход — это не сухая теория. Это сочетание психологии и техники, где клиент не чувствует давления, а сам хочет совершить покупку.",
+    title: "ОБ АДАМБЕКЕ НЭЭМАТЕ",
+    description1:
+      "Я учу людей приносить пользу через искусство продаж и развивать бизнес честным (адал) путем. Моя цель — раскрыть ваш потенциал и системно увеличить ваш доход.",
+    description2:
+      "За 10 лет я превратил тысячи людей в профессиональных продавцов. Я прошел путь от обычных рынков до работы с крупнейшими компаниями, собирая только работающие инструменты.",
+    description3:
+      "Мой подход — это не сухая теория. Это сочетание психологии и техники, где клиент не чувствует давления, а сам хочет совершить покупку.",
     statsTitle: "В цифрах:",
     stat1: "10 лет опыта",
     stat2: "1000+ учеников",
-    stat3: "90% результат"
+    stat3: "90% результат",
   },
   kg: {
     title: "АДАМБЕК НЭЭМАТ ЖӨНҮНДӨ",
-    description1: "Сатуу өнөрү аркылуу адамдарга пайда алып келүүнү жана бизнести адал жол менен өстүрүүнү үйрөтөм. Менин максатым — сиздин потенциалыңызды ачуу.",
-    description2: "Мен — Адамбек Нээмат, 10 жыл ичинде миңдеген адамды профессионал сатуучуга айландырдым. Сиздин да бизнесиңизди жаңы деңгээлге чыгарууга убакыт келди!",
-    description3: "Мен базардан баштап ири компанияларга чейинки басып өткөн жолумдагы эң иштеген инструменттерди берем. Бул теория эмес, таза практика.",
+    description1:
+      "Сатуу өнөрү аркылуу адамдарга пайда алып келүүнү жана бизнести адал жол менен өстүрүүнү үйрөтөм. Менин максатым — сиздин потенциалыңызды ачуу.",
+    description2:
+      "Мен — Адамбек Нээмат, 10 жыл ичинде миңдеген адамды профессионал сатуучуга айландырдым. Сиздин да бизнесиңизди жаңы деңгээлге чыгарууга убакыт келди!",
+    description3:
+      "Мен базардан баштап ири компанияларга чейинки басып өткөн жолумдагы эң иштеген инструменттерди берем. Бул теория эмес, таза практика.",
     statsTitle: "Сандар менен:",
     stat1: "10 жыл тажрыйба",
     stat2: "1000+ окуучу",
-    stat3: "90% жыйынтык"
+    stat3: "90% жыйынтык",
   },
 };
 
@@ -33,9 +39,8 @@ export const About = () => {
     <section id="about" className="py-24 bg-white overflow-hidden">
       <div className="container-custom max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-16 items-center">
-          
           {/* Левая часть: Фото или визуал */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -51,13 +56,15 @@ export const About = () => {
             {/* Декоративная плашка с цифрой */}
             <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-8 rounded-2xl hidden md:block shadow-xl">
               <p className="text-4xl font-black italic">10</p>
-              <p className="text-xs uppercase tracking-widest opacity-80">{language === 'ru' ? 'Лет в бизнесе' : 'Жыл бизнесте'}</p>
+              <p className="text-xs uppercase tracking-widest opacity-80">
+                {language === "ru" ? "Лет в бизнесе" : "Жыл бизнесте"}
+              </p>
             </div>
           </motion.div>
 
           {/* Правая часть: Текст */}
           <div className="w-full md:w-1/2">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -65,15 +72,28 @@ export const About = () => {
             >
               {t.title}
             </motion.h2>
-            
+
             <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
-              <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.2 }}>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
                 {t.description1}
               </motion.p>
-              <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }} className="font-medium text-gray-900 border-l-4 border-blue-500 pl-4">
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="font-medium text-gray-900 border-l-4 border-blue-500 pl-4"
+              >
                 {t.description2}
               </motion.p>
-              <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.4 }}>
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+              >
                 {t.description3}
               </motion.p>
             </div>
@@ -81,20 +101,31 @@ export const About = () => {
             {/* Короткие факты */}
             <div className="mt-12 grid grid-cols-3 gap-4 border-t border-gray-100 pt-8">
               <div className="text-center">
-                <p className="text-xl font-bold text-blue-600">{t.stat1.split(' ')[0]}</p>
-                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">{t.stat1.split(' ').slice(1).join(' ')}</p>
+                <p className="text-xl font-bold text-blue-600">
+                  {t.stat1.split(" ")[0]}
+                </p>
+                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">
+                  {t.stat1.split(" ").slice(1).join(" ")}
+                </p>
               </div>
               <div className="text-center border-x border-gray-100 px-2">
-                <p className="text-xl font-bold text-blue-600">{t.stat2.split(' ')[0]}</p>
-                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">{t.stat2.split(' ').slice(1).join(' ')}</p>
+                <p className="text-xl font-bold text-blue-600">
+                  {t.stat2.split(" ")[0]}
+                </p>
+                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">
+                  {t.stat2.split(" ").slice(1).join(" ")}
+                </p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-bold text-blue-600">{t.stat3.split(' ')[0]}</p>
-                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">{t.stat3.split(' ').slice(1).join(' ')}</p>
+                <p className="text-xl font-bold text-blue-600">
+                  {t.stat3.split(" ")[0]}
+                </p>
+                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">
+                  {t.stat3.split(" ").slice(1).join(" ")}
+                </p>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
