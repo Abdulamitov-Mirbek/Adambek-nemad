@@ -1,35 +1,39 @@
-// src/components/Footer.jsx
 import React, { useContext } from "react";
 import { LanguageContext } from "../context/LanguageContext";
 
+import { AiFillInstagram } from "react-icons/ai";
+import { FaWhatsapp } from "react-icons/fa"; // Иконка WhatsApp
+import { TfiEmail } from "react-icons/tfi";
+import { MdAddCall } from "react-icons/md";
+
 const content = {
   ru: {
-    name: "Навин Джейн",
-    title: "Предприниматель и филантроп",
+    name: "Адамбек Нээмат",
+    title: "Предприниматель и бизнес-коуч",
     quickLinks: "Быстрые ссылки",
-    about: "О нас",
-    companies: "Компании",
+    about: "Обо мне",
+    companies: "Проекты",
     speaking: "Выступления",
     collaboration: "Сотрудничество",
     courses: "Курсы",
     connect: "Связаться",
-    newsletter: "Новости",
-    newsletterText: "Получайте последние обновления и инсайты",
+    newsletter: "Рассылка",
+    newsletterText: "Получайте инсайты по продажам и бизнесу",
     emailPlaceholder: "Ваш email",
     copyright: "Все права защищены",
   },
   kg: {
-    name: "Навин Жейн",
-    title: "Ишкер жана филантроп",
+    name: "Адамбек Нээмат",
+    title: "Ишкер жана бизнес-коуч",
     quickLinks: "Тез шилтемелер",
-    about: "Биз жөнүндө",
-    companies: "Компаниялар",
-    speaking: "Сүйлөөлөр",
+    about: "Мен жөнүндө",
+    companies: "Долбоорлор",
+    speaking: "Чыгуулар",
     collaboration: "Кызматташуу",
     courses: "Курстар",
     connect: "Байланыш",
     newsletter: "Жаңылыктар",
-    newsletterText: "Акыркы жаңыртууларды жана инсайттарды алыңыз",
+    newsletterText: "Сатуу жана бизнес боюнча инсайттарды алыңыз",
     emailPlaceholder: "Электрондук почтаңыз",
     copyright: "Бардык укуктар корголгон",
   },
@@ -40,80 +44,91 @@ export const Footer = () => {
   const t = content[language];
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
-      <div className="container-custom">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h3 className="text-xl font-bold mb-4">{t.name}</h3>
-            <p className="text-gray-400">{t.title}</p>
+    <footer className="bg-gray-950 text-white py-16">
+      <div className="container-custom max-w-6xl mx-auto px-6">
+        <div className="grid md:grid-cols-4 gap-12 mb-12">
+          
+          {/* Колонка 1: О Бренде */}
+          <div className="space-y-4">
+            <h3 className="text-2xl font-black tracking-tighter">{t.name}</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">{t.title}</p>
           </div>
+
+          {/* Колонка 2: Навигация */}
           <div>
-            <h4 className="font-semibold mb-4">{t.quickLinks}</h4>
-            <ul className="space-y-2 text-gray-400">
+            <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em] text-blue-500">
+              {t.quickLinks}
+            </h4>
+            <ul className="space-y-3 text-gray-400 text-sm">
+              <li><a href="#about" className="hover:text-white transition-colors">{t.about}</a></li>
+              <li><a href="#courses" className="hover:text-white transition-colors">{t.courses}</a></li>
+              <li><a href="#collaboration" className="hover:text-white transition-colors">{t.collaboration}</a></li>
+            </ul>
+          </div>
+
+          {/* Колонка 3: Контакты с иконками */}
+          <div>
+            <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em] text-blue-500">
+              {t.connect}
+            </h4>
+            <ul className="space-y-4 text-gray-400 text-sm">
               <li>
-                <a href="#about" className="hover:text-white transition">
-                  {t.about}
-                </a>
-              </li>
-              <li>
-                <a href="#courses" className="hover:text-white transition">
-                  {t.courses}
-                </a>
-              </li>
-              <li>
-                <a href="#companies" className="hover:text-white transition">
-                  {t.companies}
-                </a>
-              </li>
-              <li>
-                <a href="#speaking" className="hover:text-white transition">
-                  {t.speaking}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#collaboration"
-                  className="hover:text-white transition"
+                <a 
+                  href="https://wa.me/996704343756" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-green-500 transition-colors group"
                 >
-                  {t.collaboration}
+                  <FaWhatsapp className="text-xl group-hover:scale-110 transition-transform" />
+                  <span>WhatsApp</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://www.instagram.com/adambek.neemat" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-pink-500 transition-colors group"
+                >
+                  <AiFillInstagram className="text-xl group-hover:scale-110 transition-transform" />
+                  <span>Instagram</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="mailto:example@mail.com" 
+                  className="flex items-center gap-3 hover:text-blue-400 transition-colors group"
+                >
+                  <TfiEmail className="text-xl group-hover:scale-110 transition-transform" />
+                  <span>Email</span>
                 </a>
               </li>
             </ul>
           </div>
+
+          {/* Колонка 4: Подписка */}
           <div>
-            <h4 className="font-semibold mb-4">{t.connect}</h4>
-            <ul className="space-y-2 text-gray-400">
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  Twitter
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-white transition">
-                  Email
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">{t.newsletter}</h4>
-            <p className="text-gray-400 mb-2">{t.newsletterText}</p>
-            <input
-              type="email"
-              placeholder={t.emailPlaceholder}
-              className="w-full px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-blue-500"
-            />
+            <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em] text-blue-500">
+              {t.newsletter}
+            </h4>
+            <p className="text-gray-400 text-xs mb-4">{t.newsletterText}</p>
+            <div className="relative">
+              <input
+                type="email"
+                placeholder={t.emailPlaceholder}
+                className="w-full px-4 py-3 rounded-xl bg-gray-900 text-white border border-gray-800 focus:outline-none focus:border-blue-500 text-sm"
+              />
+            </div>
           </div>
         </div>
-        <div className="border-t border-gray-800 pt-8 text-center text-gray-400">
-          <p>
-            &copy; 2024 {t.name}. {t.copyright}
-          </p>
+
+        {/* Копирайт */}
+        <div className="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs">
+          <p>&copy; {new Date().getFullYear()} {t.name}. {t.copyright}</p>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-white transition">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition">Terms of Service</a>
+          </div>
         </div>
       </div>
     </footer>
