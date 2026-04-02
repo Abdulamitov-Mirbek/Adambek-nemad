@@ -5,7 +5,16 @@ import { LanguageContext } from "../context/LanguageContext";
 
 function InstagramGlyph({ className }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -19,40 +28,50 @@ const partners = [
     url: "https://www.instagram.com/diagonal.kg/",
     labelRu: "Diagonal KG",
     labelKg: "Diagonal KG",
-    descRu: "Магазин стильной мужской одежды в Бишкеке. Современный крой и качество.",
-    descKg: "Бишкектеги стилдүү эркектердин кийим дүкөнү. Заманбап стиль жана сапат.",
+    descRu:
+      "Магазин стильной мужской одежды в Бишкеке. Современный крой и качество.",
+    descKg:
+      "Бишкектеги стилдүү эркектердин кийим дүкөнү. Заманбап стиль жана сапат.",
   },
   {
     handle: "@asan_mavlonov",
     url: "https://www.instagram.com/asan_mavlonov/",
     labelRu: "Асан Мавлонов",
     labelKg: "Асан Мавлонов",
-    descRu: "Личный блог предпринимателя: о бизнесе, стратегии и внутренней кухне проектов.",
-    descKg: "Ишкердин жеке блогу: бизнес, стратегия жана долбоорлордун ички иштери.",
+    descRu:
+      "Личный блог предпринимателя: о бизнесе, стратегии и внутренней кухне проектов.",
+    descKg:
+      "Ишкердин жеке блогу: бизнес, стратегия жана долбоорлордун ички иштери.",
   },
   {
     handle: "@electro.adis",
     url: "https://www.instagram.com/electro.adis/",
     labelRu: "Electro Adis",
     labelKg: "Electro Adis",
-    descRu: "Лидер на рынке электротехники и профессионального оборудования в КР.",
-    descKg: "Кыргызстандагы электротехника жана кесипкөй жабдуулар рыногунун лидери.",
+    descRu:
+      "Лидер на рынке электротехники и профессионального оборудования в КР.",
+    descKg:
+      "Кыргызстандагы электротехника жана кесипкөй жабдуулар рыногунун лидери.",
   },
   {
     handle: "@techno.adis",
     url: "https://www.instagram.com/techno.adis/",
     labelRu: "Techno Adis",
     labelKg: "Techno Adis",
-    descRu: "Инновационные решения в сфере бытовой и специализированной техники.",
-    descKg: "Турмуш-тиричилик жана адистештирилген техникадагы инновациялык чечимдер.",
+    descRu:
+      "Инновационные решения в сфере бытовой и специализированной техники.",
+    descKg:
+      "Турмуш-тиричилик жана адистештирилген техникадагы инновациялык чечимдер.",
   },
   {
-    handle: "@electro.adis_osh",
-    url: "https://www.instagram.com/electro.adis_osh/",
-    labelRu: "Electro Adis — Ош",
-    labelKg: "Electro Adis — Ош",
-    descRu: "Официальный филиал в городе Ош. Качественный сервис для южного региона.",
-    descKg: "Ош шаарындагы расмий филиал. Түштүк аймагы үчүн сапаттуу сервис.",
+    handle: "@sbs.osh",
+    url: "https://www.instagram.com/sbs.osh",
+    labelRu: "SBS Business School",
+    labelKg: "SBS Бизнес Мектеби",
+    descRu:
+      "Официальная платформа тренингов Адамбека Немата. Здесь проходят крупнейшие обучающие модули и регистрация учеников.",
+    descKg:
+      "Адамбек Нээматтын расмий тренинг платформасы. Бул жерде эң чоң окутуу программалары жана окуучуларды каттоо ишке ашат.",
   },
   {
     handle: "@electro.adis_osh_jobs",
@@ -84,7 +103,10 @@ export const Collaboration = () => {
   const t = content[language];
 
   return (
-    <section id="collaboration" className="relative overflow-hidden py-24 bg-white">
+    <section
+      id="collaboration"
+      className="relative overflow-hidden py-24 bg-white"
+    >
       {/* Background Decorations */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-white pointer-events-none" />
       <div className="absolute -left-24 top-0 h-96 w-96 rounded-full bg-blue-50 blur-3xl opacity-50" />
@@ -118,12 +140,14 @@ export const Collaboration = () => {
             >
               <button
                 type="button"
-                onClick={() => window.open(p.url, "_blank", "noopener,noreferrer")}
+                onClick={() =>
+                  window.open(p.url, "_blank", "noopener,noreferrer")
+                }
                 className="group relative flex h-full min-h-[220px] w-full flex-col rounded-[2rem] border border-gray-100 bg-white p-8 text-left shadow-sm transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-2"
               >
                 {/* Инста-эффект при наведении */}
                 <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-orange-500/5 via-pink-500/5 to-purple-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                
+
                 <div className="relative flex items-center justify-between mb-6">
                   <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white shadow-lg">
                     <InstagramGlyph className="h-6 w-6" />
@@ -135,7 +159,9 @@ export const Collaboration = () => {
                   <h3 className="text-xl font-black text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
                     {language === "kg" ? p.labelKg : p.labelRu}
                   </h3>
-                  <p className="font-mono text-sm text-pink-600 mb-3">{p.handle}</p>
+                  <p className="font-mono text-sm text-pink-600 mb-3">
+                    {p.handle}
+                  </p>
                   <p className="text-sm text-gray-500 leading-relaxed line-clamp-3">
                     {language === "kg" ? p.descKg : p.descRu}
                   </p>
