@@ -7,6 +7,7 @@ import { FeaturedIn } from "./sections/FeaturedIn";
 import { VisionaryInsight } from "./sections/VisionaryInsight";
 import { Books } from "./sections/Books";
 import { Collaboration } from "./sections/Collaboration";
+import { InTheNews } from "./sections/InTheNews";
 import { Footer } from "./components/Footer";
 import { LanguageContext } from "./context/LanguageContext";
 import { Navbar } from "./components/Navbar";
@@ -29,6 +30,7 @@ function App() {
         <Awards />
         <VisionaryInsight />
         <Books />
+        <InTheNews />
         <VideoLibrary />
         <InTheNews />
         <Footer />

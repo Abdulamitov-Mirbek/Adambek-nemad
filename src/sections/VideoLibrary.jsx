@@ -1,6 +1,6 @@
 import React, { useContext, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, X } from "lucide-react"; // Добавили иконку закрытия
+import { Play, X } from "lucide-react"; 
 import { LanguageContext } from "../context/LanguageContext";
 
 const videos = [
@@ -36,14 +36,12 @@ const content = {
   ru: {
     kicker: "ОТЗЫВЫ",
     title: "Видео-отзывы",
-    lead: "Посмотрите, что говорят партнеры и ученики прямо здесь.",
-    close: "Закрыть"
+    lead: "Нажмите на карточку, чтобы запустить плеер.",
   },
   kg: {
     kicker: "ПИКИРЛЕР",
     title: "Видео-пикирлер",
-    lead: "Өнөктөштөр жана окуучулар эмне дешет, ушул жерден көрүңүз.",
-    close: "Жабуу"
+    lead: "Плеерди иштетүү үчүн карточканы басыңыз.",
   },
 };
 
@@ -73,44 +71,58 @@ export const VideoLibrary = () => {
           <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-blue-100 bg-blue-50 px-6 py-2 text-xs font-bold tracking-[0.2em] text-blue-700 uppercase">
             {t.kicker}
           </div>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-6">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-6 uppercase">
             {t.title}
           </h2>
-          <p className="text-lg text-gray-600">{t.lead}</p>
+          <p className="text-lg text-gray-600 leading-relaxed opacity-80">{t.lead}</p>
         </motion.div>
 
-        {/* Скролл-список */}
-        <div className="flex gap-6 overflow-x-auto pb-10 scroll-smooth snap-x snap-mandatory no-scrollbar">
-          {cards.map((v, idx) => (
-            <motion.div
-              key={v.id}
-              className="min-w-[280px] md:min-w-[320px] snap-start"
-              whileHover={{ y: -8 }}
-              onClick={() => setActiveVideo(v.id)}
-            >
-              <div className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 border-[6px] border-white shadow-xl transition-all hover:shadow-blue-200">
-                <img
-                  src={v.thumbCandidates[0]}
-                  alt="Preview"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform">
-                    <Play className="h-8 w-8 text-white fill-current" />
+        {/* Обертка для скролла с эффектом задымления */}
+        <div className="relative group/scroll">
+          
+          {/* !!! ВОТ ЭТОТ ДЫМОК (ПРАВЫЙ ОВЕРЛЕЙ) !!! */}
+          <div 
+            className="absolute top-0 bottom-10 right-0 w-32 z-10 pointer-events-none transition-opacity duration-500 group-hover/scroll:opacity-0"
+            style={{
+              background: "linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)"
+            }}
+            aria-hidden
+          />
+          {/* Также можно добавить левый дымок, если нужно */}
+          
+          {/* Скролл-список */}
+          <div className="flex gap-6 overflow-x-auto pb-10 scroll-smooth snap-x snap-mandatory no-scrollbar relative z-0">
+            {cards.map((v, idx) => (
+              <motion.div
+                key={v.id}
+                className="min-w-[280px] md:min-w-[320px] snap-start"
+                whileHover={{ y: -8 }}
+                onClick={() => setActiveVideo(v.id)}
+              >
+                <div className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 border-[6px] border-white shadow-xl transition-all hover:shadow-blue-200">
+                  <img
+                    src={v.thumbCandidates[0]}
+                    alt="Preview"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform">
+                      <Play className="h-8 w-8 text-white fill-current" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-6 left-6 right-6">
+                     <p className="text-white font-bold tracking-wide uppercase text-xs opacity-80 mb-1">{t.kicker} {idx + 1}</p>
+                     <div className="h-1 w-12 bg-blue-500 rounded-full" />
                   </div>
                 </div>
-                <div className="absolute bottom-6 left-6 right-6">
-                   <p className="text-white font-bold tracking-wide uppercase text-xs opacity-80 mb-1">{t.kicker} {idx + 1}</p>
-                   <div className="h-1 w-12 bg-blue-500 rounded-full" />
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* MODAL PLAYER */}
+      {/* MODAL PLAYER (оставляем как есть) */}
       <AnimatePresence>
         {activeVideo && (
           <motion.div
