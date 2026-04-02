@@ -328,7 +328,7 @@ export const InTheNews = () => {
     <>
       <section
         id="press"
-        className="py-20 md:py-32 bg-gradient-to-b from-white to-gray-50 overflow-hidden"
+        className="scroll-mt-24 py-20 md:py-32 bg-gradient-to-b from-white to-gray-50 overflow-hidden"
       >
         <div className="w-full px-4 sm:px-6 lg:px-8">
           {/* Header */}

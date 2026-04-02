@@ -104,8 +104,8 @@ export const Collaboration = () => {
 
   return (
     <section
-      id="collaboration"
-      className="relative overflow-hidden py-24 bg-white"
+      id="projects"
+      className="relative scroll-mt-24 overflow-hidden py-24 bg-white"
     >
       {/* Background Decorations */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-50/50 via-white to-white pointer-events-none" />

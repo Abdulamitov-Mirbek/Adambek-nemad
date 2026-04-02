@@ -66,7 +66,10 @@ export const VisionaryInsight = () => {
     );
 
   return (
-    <section className="py-24 bg-gradient-to-br from-blue-700 via-purple-700 to-indigo-900 text-white overflow-hidden relative">
+    <section
+      id="enterprises"
+      className="scroll-mt-24 py-24 bg-gradient-to-br from-blue-700 via-purple-700 to-indigo-900 text-white overflow-hidden relative"
+    >
       {/* Декоративные круги для стиля */}
       <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
 

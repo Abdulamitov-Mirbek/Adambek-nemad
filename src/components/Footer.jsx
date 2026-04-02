@@ -14,7 +14,7 @@ const content = {
     about: "Обо мне",
     companies: "Проекты",
     speaking: "Выступления",
-    collaboration: "Сотрудничество",
+    projects: "Проекты",
     courses: "Курсы",
     connect: "Связаться",
     newsletter: "Рассылка",
@@ -29,7 +29,7 @@ const content = {
     about: "Мен жөнүндө",
     companies: "Долбоорлор",
     speaking: "Чыгуулар",
-    collaboration: "Кызматташуу",
+    projects: "Долбоорлор",
     courses: "Курстар",
     connect: "Байланыш",
     newsletter: "Жаңылыктар",
@@ -44,7 +44,7 @@ export const Footer = () => {
   const t = content[language];
 
   return (
-    <footer className="bg-gray-950 text-white py-16">
+    <footer id="contact" className="scroll-mt-24 bg-gray-950 text-white py-16">
       <div className="container-custom max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Колонка 1: О Бренде */}
@@ -74,10 +74,10 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="#collaboration"
+                  href="#projects"
                   className="hover:text-white transition-colors"
                 >
-                  {t.collaboration}
+                  {t.projects}
                 </a>
               </li>
             </ul>

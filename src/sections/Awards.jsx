@@ -70,7 +70,10 @@ export const Awards = () => {
   const results = resultsData[language];
 
   return (
-    <section className="py-24 bg-gray-50 overflow-hidden">
+    <section
+      id="students"
+      className="scroll-mt-24 py-24 bg-gray-50 overflow-hidden"
+    >
       <div className="container-custom max-w-6xl mx-auto px-6">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}

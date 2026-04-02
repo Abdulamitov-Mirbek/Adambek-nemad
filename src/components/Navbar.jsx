@@ -6,35 +6,41 @@ import {
   Menu,
   X,
   User,
-  Mic2,
-  Video,
-  GraduationCap,
+  FolderKanban,
+  Users,
+  Building2,
   BookOpen,
-  Newspaper,
-  Handshake,
+  GraduationCap,
+  MessageSquare,
+  Mic2,
+  Phone,
 } from "lucide-react";
 
 const content = {
   ru: {
-    menu: "МЕНЮ",
-    about: "О нас",
-    speaking: "Выступления",
-    videoLibrary: "Видеотека",
-    courses: "Курсы",
+    menu: "Меню",
+    about: "Обо мне",
+    projects: "Проекты",
+    students: "Ученики",
+    enterprises: "Предприятия",
     books: "Книги",
-    press: "Пресса",
-    collaboration: "Сотрудничество",
+    course: "Курс",
+    reviews: "Отзывы",
+    interviews: "Интервью",
+    contacts: "Контакты",
     role: "Предприниматель и филантроп",
   },
   kg: {
-    menu: "МЕНЮ",
-    about: "Биз жөнүндө",
-    speaking: "Сүйлөөлөр",
-    videoLibrary: "Видеотека",
-    courses: "Курстар",
+    menu: "Меню",
+    about: "Мен жөнүндө",
+    projects: "Долбоорлор",
+    students: "Окуучулар",
+    enterprises: "Ишканалар",
     books: "Китептер",
-    press: "Басылмалар",
-    collaboration: "Кызматташуу",
+    course: "Курс",
+    reviews: "Пикирлер",
+    interviews: "Маектер",
+    contacts: "Байланыш",
     role: "Ишкер жана филантроп",
   },
 };
@@ -46,21 +52,26 @@ export const Navbar = () => {
 
   const menuItems = [
     { name: t.about, href: "#about", icon: <User size={22} /> },
-    { name: t.speaking, href: "#speaking", icon: <Mic2 size={22} /> },
-    { name: t.videoLibrary, href: "#videos", icon: <Video size={22} /> },
-    { name: t.courses, href: "#courses", icon: <GraduationCap size={22} /> },
-    { name: t.books, href: "#books", icon: <BookOpen size={22} /> },
-    { name: t.press, href: "#press", icon: <Newspaper size={22} /> },
+    { name: t.projects, href: "#projects", icon: <FolderKanban size={22} /> },
+    { name: t.students, href: "#students", icon: <Users size={22} /> },
     {
-      name: t.collaboration,
-      href: "#collaboration",
-      icon: <Handshake size={22} />,
+      name: t.enterprises,
+      href: "#enterprises",
+      icon: <Building2 size={22} />,
     },
+    { name: t.books, href: "#books", icon: <BookOpen size={22} /> },
+    { name: t.course, href: "#courses", icon: <GraduationCap size={22} /> },
+    {
+      name: t.reviews,
+      href: "#videos",
+      icon: <MessageSquare size={22} />,
+    },
+    { name: t.interviews, href: "#press", icon: <Mic2 size={22} /> },
+    { name: t.contacts, href: "#contact", icon: <Phone size={22} /> },
   ];
 
   return (
     <>
-      {/* Кнопка вызова меню */}
       <button
         onClick={() => setIsMenuOpen(true)}
         className="fixed top-6 left-6 z-50 flex items-center gap-2 bg-white/90 backdrop-blur-md px-5 py-2.5 rounded-full shadow-lg border border-gray-100 hover:scale-105 active:scale-95 transition-all group"
@@ -74,7 +85,6 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <div className="fixed inset-0 z-[60]">
-            {/* Оверлей с размытием */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -83,7 +93,6 @@ export const Navbar = () => {
               className="absolute inset-0 bg-black/40 backdrop-blur-sm"
             />
 
-            {/* Сама панель меню */}
             <motion.div
               initial={{ x: "-100%" }}
               animate={{ x: 0 }}
@@ -91,7 +100,6 @@ export const Navbar = () => {
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
               className="absolute top-0 left-0 h-full w-full max-w-[320px] bg-white shadow-2xl flex flex-col"
             >
-              {/* Хедер панели */}
               <div className="p-8 border-b border-gray-50">
                 <div className="flex justify-between items-center mb-2">
                   <h2 className="text-xl font-black tracking-tighter text-gray-900">
@@ -109,15 +117,14 @@ export const Navbar = () => {
                 </p>
               </div>
 
-              {/* Список ссылок */}
               <nav className="flex-1 overflow-y-auto p-6">
                 <ul className="space-y-1">
                   {menuItems.map((item, index) => (
                     <motion.li
-                      key={index}
+                      key={item.href}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.1 }}
+                      transition={{ delay: index * 0.06 }}
                     >
                       <a
                         href={item.href}
@@ -136,11 +143,8 @@ export const Navbar = () => {
                 </ul>
               </nav>
 
-              {/* Футер меню */}
               <div className="p-8 bg-gray-50/50">
-                <div className="flex gap-4">
-                  {/* Здесь можно добавить маленькие иконки соцсетей */}
-                </div>
+                <div className="flex gap-4" />
               </div>
             </motion.div>
           </div>
