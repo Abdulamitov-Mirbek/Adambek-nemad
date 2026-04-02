@@ -47,7 +47,6 @@ export const Footer = () => {
     <footer className="bg-gray-950 text-white py-16">
       <div className="container-custom max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
-          
           {/* Колонка 1: О Бренде */}
           <div className="space-y-4">
             <h3 className="text-2xl font-black tracking-tighter">{t.name}</h3>
@@ -60,9 +59,27 @@ export const Footer = () => {
               {t.quickLinks}
             </h4>
             <ul className="space-y-3 text-gray-400 text-sm">
-              <li><a href="#about" className="hover:text-white transition-colors">{t.about}</a></li>
-              <li><a href="#courses" className="hover:text-white transition-colors">{t.courses}</a></li>
-              <li><a href="#collaboration" className="hover:text-white transition-colors">{t.collaboration}</a></li>
+              <li>
+                <a href="#about" className="hover:text-white transition-colors">
+                  {t.about}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#courses"
+                  className="hover:text-white transition-colors"
+                >
+                  {t.courses}
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#collaboration"
+                  className="hover:text-white transition-colors"
+                >
+                  {t.collaboration}
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -73,9 +90,9 @@ export const Footer = () => {
             </h4>
             <ul className="space-y-4 text-gray-400 text-sm">
               <li>
-                <a 
-                  href="https://wa.me/996704343756" 
-                  target="_blank" 
+                <a
+                  href="https://wa.me/996704343756"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 hover:text-green-500 transition-colors group"
                 >
@@ -84,9 +101,9 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href="https://www.instagram.com/adambek.neemat" 
-                  target="_blank" 
+                <a
+                  href="https://www.instagram.com/adambek.neemat"
+                  target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 hover:text-pink-500 transition-colors group"
                 >
@@ -95,12 +112,15 @@ export const Footer = () => {
                 </a>
               </li>
               <li>
-                <a 
-                  href="mailto:example@mail.com" 
+                <a
+                  href="mailto:mmrek07@gmail.com"
+                  target="_blank"
                   className="flex items-center gap-3 hover:text-blue-400 transition-colors group"
                 >
                   <TfiEmail className="text-xl group-hover:scale-110 transition-transform" />
-                  <span>Email</span>
+                  <span className="font-mono text-sm break-all leading-tight">
+                    Email
+                  </span>
                 </a>
               </li>
             </ul>
@@ -124,10 +144,16 @@ export const Footer = () => {
 
         {/* Копирайт */}
         <div className="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs">
-          <p>&copy; {new Date().getFullYear()} {t.name}. {t.copyright}</p>
+          <p>
+            &copy; {new Date().getFullYear()} {t.name}. {t.copyright}
+          </p>
           <div className="flex gap-6">
-            <a href="#" className="hover:text-white transition">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition">Terms of Service</a>
+            <a href="#" className="hover:text-white transition">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-white transition">
+              Terms of Service
+            </a>
           </div>
         </div>
       </div>
