@@ -13,7 +13,6 @@ import { LanguageContext } from "./context/LanguageContext";
 import { Navbar } from "./components/Navbar";
 import Awards from "./sections/Awards";
 import { VideoLibrary } from "./sections/VideoLibrary";
-import InTheNews from "./sections/InTheNews";
 
 function App() {
   const [language, setLanguage] = useState("ru");
@@ -32,7 +31,6 @@ function App() {
         <Books />
         <InTheNews />
         <VideoLibrary />
-        <InTheNews />
         <Footer />
       </div>
     </LanguageContext.Provider>
