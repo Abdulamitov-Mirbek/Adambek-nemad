@@ -4,8 +4,9 @@ import { LanguageContext } from "../context/LanguageContext";
 
 import adambekPhoto1 from "../assets/images/Photo.jpg";
 import adambekPhoto2 from "../assets/images/Photo (2).jpg";
+import adambekPhoto3 from "../assets/images/Photo (3).jpg";
 
-const photos = [adambekPhoto1, adambekPhoto2];
+const photos = [adambekPhoto1, adambekPhoto2, adambekPhoto3];
 
 const content = {
   ru: {
@@ -71,7 +72,7 @@ export const About = () => {
                   initial={{ opacity: 0 }} // Начальное состояние (невидимый)
                   animate={{ opacity: 1 }} // Состояние при появлении (видимый)
                   exit={{ opacity: 0 }} // Состояние при исчезновении
-                  transition={{ duration: 0.8 }} // Длительность перехода (0.8 сек)
+                  transition={{ duration: 0.6 }} // Длительность перехода (0.8 сек)
                   className="absolute inset-0 w-full h-full object-cover object-center"
                 />
               </AnimatePresence>
