@@ -2,6 +2,9 @@ import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
 
+// Импортируй фото вверху файла (убедись, что путь верный относительно этого файла)
+import adambekPhoto from "../assets/images/Photo.jpg";
+
 const content = {
   ru: {
     title: "ОБ АДАМБЕКЕ НЭЭМАТЕ",
@@ -17,7 +20,7 @@ const content = {
     stat3: "90% результат",
   },
   kg: {
-    title: "АДАМБЕК НЭЭМАТ ЖӨНҮНДӨ",
+    title: "АДАМБЕК Нээмат ЖӨНҮНДӨ",
     description1:
       "Сатуу өнөрү аркылуу адамдарга пайда алып келүүнү жана бизнести адал жол менен өстүрүүнү үйрөтөм. Менин максатым — сиздин потенциалыңызды ачуу.",
     description2:
@@ -39,22 +42,28 @@ export const About = () => {
     <section id="about" className="scroll-mt-24 py-24 bg-white overflow-hidden">
       <div className="container-custom max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-16 items-center">
-          {/* Левая часть: Фото или визуал */}
+          {/* Левая часть: Фото */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="w-full md:w-1/2 relative"
           >
-            <div className="aspect-[4/5] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl">
-              {/* Сюда потом вставишь фото Адамбека */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-              <div className="flex items-center justify-center h-full text-gray-300 font-bold uppercase tracking-widest">
-                Photo Placeholder
-              </div>
+            {/* Контейнер с заданными пропорциями 4:5 */}
+            <div className="relative aspect-[4/5] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl z-0">
+              {/* Исправленный тег img */}
+              <img 
+                src={adambekPhoto} 
+                alt="Адамбек Нээмат" 
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              />
+              
+              {/* Легкий градиент поверх фото для объема (по желанию можно убрать) */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10" />
             </div>
+
             {/* Декоративная плашка с цифрой */}
-            <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-8 rounded-2xl hidden md:block shadow-xl">
+            <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-8 rounded-2xl hidden md:block shadow-xl z-20">
               <p className="text-4xl font-black italic">10</p>
               <p className="text-xs uppercase tracking-widest opacity-80">
                 {language === "ru" ? "Лет в бизнесе" : "Жыл бизнесте"}
@@ -68,7 +77,7 @@ export const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-4xl md:text-5xl font-black mb-8 tracking-tighter text-gray-900"
+              className="text-4xl md:text-5xl font-black mb-8 tracking-tighter text-gray-900uppercase"
             >
               {t.title}
             </motion.h2>
@@ -101,26 +110,26 @@ export const About = () => {
             {/* Короткие факты */}
             <div className="mt-12 grid grid-cols-3 gap-4 border-t border-gray-100 pt-8">
               <div className="text-center">
-                <p className="text-xl font-bold text-blue-600">
+                <p className="text-2xl font-bold text-blue-600">
                   {t.stat1.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">
+                <p className="text-[10px] uppercase text-gray-400 tracking-tight mt-1">
                   {t.stat1.split(" ").slice(1).join(" ")}
                 </p>
               </div>
               <div className="text-center border-x border-gray-100 px-2">
-                <p className="text-xl font-bold text-blue-600">
+                <p className="text-2xl font-bold text-blue-600">
                   {t.stat2.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">
+                <p className="text-[10px] uppercase text-gray-400 tracking-tight mt-1">
                   {t.stat2.split(" ").slice(1).join(" ")}
                 </p>
               </div>
               <div className="text-center">
-                <p className="text-xl font-bold text-blue-600">
+                <p className="text-2xl font-bold text-blue-600">
                   {t.stat3.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-gray-400 tracking-tighter">
+                <p className="text-[10px] uppercase text-gray-400 tracking-tight mt-1">
                   {t.stat3.split(" ").slice(1).join(" ")}
                 </p>
               </div>
