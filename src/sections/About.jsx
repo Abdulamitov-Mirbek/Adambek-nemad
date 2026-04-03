@@ -1,9 +1,11 @@
-import React, { useContext } from "react";
-import { motion } from "framer-motion";
+import React, { useContext, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
 
-// Импортируй фото вверху файла (убедись, что путь верный относительно этого файла)
-import adambekPhoto from "../assets/images/Photo.jpg";
+import adambekPhoto1 from "../assets/images/Photo.jpg";
+import adambekPhoto2 from "../assets/images/Photo (2).jpg";
+
+const photos = [adambekPhoto1, adambekPhoto2];
 
 const content = {
   ru: {
@@ -22,7 +24,7 @@ const content = {
   kg: {
     title: "АДАМБЕК Нээмат ЖӨНҮНДӨ",
     description1:
-      "Сатуу өнөрү аркылуу адамдарга пайда алып келүүнү жана бизнести адал жол менен өстүрүүнү үйрөтөм. Менин максатым — сиздин потенциалыңызды ачуу.",
+      "Сатуу өнөрү аркылуу адамдарга пайда алып келүүүнү жана бизнести адал жол менен өстүрүүнү үйрөтөм. Менин максатым — сиздин потенциалыңызды ачуу.",
     description2:
       "Мен — Адамбек Нээмат, 10 жыл ичинде миңдеген адамды профессионал сатуучуга айландырдым. Сиздин да бизнесиңизди жаңы деңгээлге чыгарууга убакыт келди!",
     description3:
@@ -38,31 +40,45 @@ export const About = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
 
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentPhotoIndex((prevIndex) =>
+        prevIndex === photos.length - 1 ? 0 : prevIndex + 1,
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section id="about" className="scroll-mt-24 py-24 bg-white overflow-hidden">
       <div className="container-custom max-w-6xl mx-auto px-6">
         <div className="flex flex-col md:flex-row gap-16 items-center">
-          {/* Левая часть: Фото */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="w-full md:w-1/2 relative"
           >
-            {/* Контейнер с заданными пропорциями 4:5 */}
             <div className="relative aspect-[4/5] bg-gray-100 rounded-2xl overflow-hidden shadow-2xl z-0">
-              {/* Исправленный тег img */}
-              <img 
-                src={adambekPhoto} 
-                alt="Адамбек Нээмат" 
-                className="absolute inset-0 w-full h-full object-cover object-center"
-              />
-              
-              {/* Легкий градиент поверх фото для объема (по желанию можно убрать) */}
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentPhotoIndex}
+                  src={photos[currentPhotoIndex]}
+                  alt="Адамбек Нээмат"
+                  initial={{ opacity: 0 }} // Начальное состояние (невидимый)
+                  animate={{ opacity: 1 }} // Состояние при появлении (видимый)
+                  exit={{ opacity: 0 }} // Состояние при исчезновении
+                  transition={{ duration: 0.8 }} // Длительность перехода (0.8 сек)
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                />
+              </AnimatePresence>
+
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent z-10" />
             </div>
 
-            {/* Декоративная плашка с цифрой */}
             <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-8 rounded-2xl hidden md:block shadow-xl z-20">
               <p className="text-4xl font-black italic">10</p>
               <p className="text-xs uppercase tracking-widest opacity-80">
@@ -71,7 +87,6 @@ export const About = () => {
             </div>
           </motion.div>
 
-          {/* Правая часть: Текст */}
           <div className="w-full md:w-1/2">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
@@ -107,7 +122,6 @@ export const About = () => {
               </motion.p>
             </div>
 
-            {/* Короткие факты */}
             <div className="mt-12 grid grid-cols-3 gap-4 border-t border-gray-100 pt-8">
               <div className="text-center">
                 <p className="text-2xl font-bold text-blue-600">
