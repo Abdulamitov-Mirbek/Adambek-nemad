@@ -6,6 +6,10 @@ A modern, responsive web application built with **React**, **Vite**, and **Tailw
 
 # Director Suite
 
+Director Suite — это современное, высокопроизводительное веб-приложение, разработанное на стеке React, Vite и Tailwind CSS. Сайт представляет собой премиальное портфолио для предпринимателя и коуча Адамбека Нээмата.
+
+Проект ориентирован на визуальную эстетику: здесь используются сложные анимации, кастомные видео-плееры и адаптивные сетки для отображения результатов учеников и медиа-активности.
+
 ## ✨ Features
 
 - ⚡ **Lightning-Fast Performance** - Built with Vite for instant HMR and optimized production builds
