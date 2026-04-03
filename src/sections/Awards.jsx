@@ -1,67 +1,146 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
+import { ExternalLink } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
+
+// Импорт ассетов
+import asanmavlonov from "../assets/images/asanmavlonov.jpg";
+import azasport from "../assets/images/azasport.jpg";
+import kutman_nurlanbek from "../assets/images/kutman_nurlanbek.jpg";
+import rahmanberdi from "../assets/images/rahmanberdi.jpg";
+import rayber_barbershop from "../assets/images/rayber_barbershop.jpg";
+import kutman_nurlanbekovich from "../assets/images/kutman_nurlanbekovich.jpg";
+
+function InstagramGlyph({ className }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+  );
+}
 
 const resultsData = {
   ru: [
     {
       name: "Асан Мавлонов",
       role: "Топ-ученик / Миллионер",
-      result: "20 000 → 1 000 000+ сом",
-      description: "Считает Адамбека своим главным наставником (устаз). Прошел путь от скромной зарплаты до статуса миллионера, внедрив систему продаж.",
-      isGold: true
+      result: "20k → 1M+ сом",
+      description: "Прошел путь от скромной зарплаты до статуса миллионера.",
+      isGold: true,
+      img: asanmavlonov,
+      handle: "@asan_mavlonov",
+      insta: "https://www.instagram.com/asan_mavlonov/",
     },
     {
-      name: "Нурбек",
-      role: "Менеджер по продажам",
-      result: "Зарплата: 25 000 → 1 000 000 сом",
-      description: "После курса полностью пересмотрел подход к переговорам и закрыл рекордные сделки.",
+      name: "Aza Sport",
+      role: "Владелец бизнеса",
+      result: "Системные продажи",
+      description: "Внедрение системы продаж в крупнейший магазин спорттоваров.",
+      img: azasport,
+      handle: "@azasport_bishkek",
+      insta: "https://www.instagram.com/azasport_bishkek/",
     },
     {
-      name: '"ГрандСтрой"',
-      role: "Строительная компания",
-      result: "Продажи х2 за месяц",
-      description: "Внедрение системы Адамбека позволило удвоить выручку без увеличения штата.",
-    },
-    {
-      name: "Айжамал",
+      name: "Рахманберди",
       role: "Предприниматель",
-      result: "Преодолела страх продаж",
-      description: "Теперь общение с клиентами приносит удовольствие и стабильный доход.",
+      result: "Результат х3",
+      description: "Увеличил личный доход и масштаб бизнеса после обучения.",
+      img: rahmanberdi,
+      handle: "@rahmanberdi_mavlonov",
+      insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
+    },
+    {
+      name: "Rayber Barber",
+      role: "Основатель сети",
+      result: "Масштабирование",
+      description: "Построил сильный бренд и наладил поток лояльных клиентов.",
+      img: rayber_barbershop,
+      handle: "@rayber_barbershop",
+      insta: "https://www.instagram.com/rayber_barbershop/",
+    },
+    {
+      name: "Кутман Нурланбекович",
+      role: "Эксперт / Продажи",
+      result: "Личный бренд",
+      description: "Выход на новый уровень чека и качества аудитории.",
+      img: kutman_nurlanbekovich,
+      handle: "@kutman_nurlanbekovich",
+      insta: "https://www.instagram.com/kutman_nurlanbekovich/",
+    },
+    {
+      name: "Кутман Нурланбек",
+      role: "Топ-менеджер",
+      result: "Профессиональный рост",
+      description: "Закрытие крупных сделок и внедрение скриптов Адамбека.",
+      img: kutman_nurlanbek,
+      handle: "@kutman_nurlanbek",
+      insta: "https://www.instagram.com/kutman_nurlanbek/",
     },
   ],
   kg: [
     {
       name: "Асан Мавлонов",
       role: "Алдыңкы окуучу / Миллионер",
-      result: "20 000 → 1 000 000+ сом",
-      description: "Адамбек мырзаны өзүнүн негизги устаты катары сыйлайт. 20 000 сомдук айлыктан миллионерге чейинки жолду басып өттү.",
-      isGold: true
+      result: "20k → 1M+ сом",
+      description: "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
+      isGold: true,
+      img: asanmavlonov,
+      handle: "@asan_mavlonov",
+      insta: "https://www.instagram.com/asan_mavlonov/",
     },
     {
-      name: "Нурбек",
-      role: "Сатуу менеджери",
-      result: "Айлык: 25 000 → 1 000 000 сом",
-      description: "Курстан кийин сүйлөшүү тактикасын толугу менен өзгөртүп, рекорддук келишимдерди түздү.",
+      name: "Aza Sport",
+      role: "Бизнес ээси",
+      result: "Системалуу сатуу",
+      description: "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
+      img: azasport,
+      handle: "@azasport_bishkek",
+      insta: "https://www.instagram.com/azasport_bishkek/",
     },
     {
-      name: '"ГрандСтрой"',
-      role: "Курулуш компаниясы",
-      result: "Сатуулар 1 айда 2 эсе өстү",
-      description: "Адамбектин системасын киргизүү кызматкерлерди көбөйтпөй туруп кирешени эки эсеге жогорулатты.",
-    },
-    {
-      name: "Айжамал",
+      name: "Рахманберди",
       role: "Ишкер",
-      result: "Сатуудан коркууну жеңди",
-      description: "Азыр ар бир кардар менен ырахаттанып сүйлөшөт жана туруктуу киреше табат.",
+      result: "Жыйынтык х3",
+      description: "Окуудан кийин жеке кирешесин жана бизнесин өстүрдү.",
+      img: rahmanberdi,
+      handle: "@rahmanberdi_mavlonov",
+      insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
+    },
+    {
+      name: "Rayber Barber",
+      role: "Тармактын негиздөөчүсү",
+      result: "Масштабдоо",
+      description: "Күчтүү бренд куруп, туруктуу кардарлар агымын түздү.",
+      img: rayber_barbershop,
+      handle: "@rayber_barbershop",
+      insta: "https://www.instagram.com/rayber_barbershop/",
+    },
+    {
+      name: "Кутман Нурланбекович",
+      role: "Эксперт / Сатуу",
+      result: "Жеке бренд",
+      description: "Жогорку чекке чыгуу жана аудиториянын сапатын жогорулатуу.",
+      img: kutman_nurlanbekovich,
+      handle: "@kutman_nurlanbekovich",
+      insta: "https://www.instagram.com/kutman_nurlanbekovich/",
+    },
+    {
+      name: "Кутман Нурланбек",
+      role: "Топ-менеджер",
+      result: "Кесиптик өсүү",
+      description: "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
+      img: kutman_nurlanbek,
+      handle: "@kutman_nurlanbek",
+      insta: "https://www.instagram.com/kutman_nurlanbek/",
     },
   ],
 };
 
 const content = {
-  ru: { title: "РЕЗУЛЬТАТЫ УЧЕНИКОВ" },
-  kg: { title: "ОКУУЧУЛАРДЫН ИЙГИЛИГИ" },
+  ru: { title: "РЕЗУЛЬТАТЫ УЧЕНИКОВ", cta: "Смотреть отзыв" },
+  kg: { title: "ОКУУЧУЛАРДЫН ИЙГИЛИГИ", cta: "Пикирди көрүү" },
 };
 
 export const Awards = () => {
@@ -70,75 +149,98 @@ export const Awards = () => {
   const results = resultsData[language];
 
   return (
-    <section
-      id="students"
-      className="scroll-mt-24 py-24 bg-gray-50 overflow-hidden"
-    >
-      <div className="container-custom max-w-6xl mx-auto px-6">
-        <motion.h2
+    <section id="students" className="py-24 bg-white overflow-hidden scroll-mt-24">
+      <div className="w-full">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6 }}
-          className="text-3xl md:text-5xl font-black text-center mb-16 tracking-tighter text-gray-900"
+          viewport={{ once: true }}
+          className="text-center mb-16 px-6"
         >
-          {t.title}
-        </motion.h2>
+          <span className="text-[10px] font-black tracking-[0.3em] text-blue-600 uppercase bg-blue-50 px-3 py-1 rounded-full">
+            SUCCESS STORIES
+          </span>
+          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mt-4 tracking-tighter uppercase leading-none">
+            {t.title}
+          </h2>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
-          {results.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{
-                y: -10,
-                scale: 1.02,
-                boxShadow: "0px 20px 40px rgba(0, 0, 0, 0.08)",
-              }}
-              className={`relative bg-white p-8 rounded-[2.5rem] border transition-all ${
-                item.isGold 
-                ? "border-yellow-400 shadow-yellow-100 shadow-2xl" 
-                : "border-gray-100 shadow-xl shadow-gray-200/50"
-              } flex flex-col justify-between cursor-pointer`}
-            >
-              {item.isGold && (
-                <div className="absolute -top-4 -right-4 bg-yellow-400 text-white text-xs font-black px-4 py-2 rounded-full shadow-lg uppercase tracking-tighter">
-                  Best Case
-                </div>
-              )}
-              
-              <div>
+        <div className="relative group/scroll">
+          {/* Градиент для скролла на мобилках */}
+          <div className="absolute top-0 bottom-10 right-0 w-24 z-10 pointer-events-none md:hidden"
+            style={{ background: "linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)" }}
+          />
+
+          <div className="overflow-x-auto pb-12 no-scrollbar scroll-smooth">
+            <div className="flex gap-6 px-6 md:justify-start lg:justify-center min-w-max">
+              {results.map((item, index) => (
                 <motion.div
-                  whileHover={{ rotate: [0, -10, 10, 0] }}
-                  className={`text-3xl mb-4 inline-block ${item.isGold ? "filter-none" : ""}`}
+                  key={index}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ y: -5 }}
+                  className="w-[280px] sm:w-[320px] flex-shrink-0"
                 >
-                  {item.isGold ? "👑" : "🚀"}
+                  <div 
+                    onClick={() => window.open(item.insta, "_blank")}
+                    className={`group relative flex flex-col bg-white rounded-[2.5rem] border cursor-pointer transition-all duration-500 overflow-hidden h-full ${
+                      item.isGold ? "border-yellow-400 shadow-2xl shadow-yellow-50" : "border-gray-100 shadow-xl shadow-gray-100/50"
+                    }`}
+                  >
+                    {/* Фото */}
+                    <div className="relative aspect-[4/5] overflow-hidden">
+                      <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 " />
+                      <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
+                      
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                         <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30">
+                            <InstagramGlyph className="w-8 h-8 text-white" />
+                         </div>
+                      </div>
+
+                      {item.isGold && (
+                        <div className="absolute top-5 left-5 bg-yellow-400 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase shadow-lg">
+                          Best Case
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Контент */}
+                    <div className="p-6">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white">
+                          <InstagramGlyph className="h-4 w-4" />
+                        </div>
+                        <div className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-600"}`}>
+                           {item.result}
+                        </div>
+                      </div>
+
+                      <h3 className="text-xl font-black text-gray-900 uppercase leading-tight">{item.name}</h3>
+                      <p className="text-[10px] font-mono text-pink-600 font-bold mb-3">{item.handle}</p>
+                      <p className="text-gray-500 text-xs leading-relaxed italic mb-6">"{item.description}"</p>
+
+                      <div className="pt-4 border-t border-gray-100 flex items-center justify-between group/cta">
+                        <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 group-hover:text-blue-800 transition-colors">
+                          {t.cta}
+                        </span>
+                        <ExternalLink size={14} className="text-gray-300 group-hover:text-blue-500 transition-colors" />
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
-
-                <h3 className="text-2xl font-black mb-1 text-gray-900 uppercase">
-                  {item.name}
-                </h3>
-                <p className={`text-sm font-bold uppercase tracking-widest mb-4 ${item.isGold ? "text-yellow-600" : "text-blue-500"}`}>
-                  {item.role}
-                </p>
-
-                <div className={`py-2 px-4 rounded-xl font-black text-xl mb-4 inline-block ${
-                  item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-700"
-                }`}>
-                  {item.result}
-                </div>
-
-                <p className="text-gray-600 leading-relaxed italic text-lg">
-                  "{item.description}"
-                </p>
-              </div>
-            </motion.div>
-          ))}
+              ))}
+            </div>
+          </div>
         </div>
       </div>
+
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </section>
   );
 };
