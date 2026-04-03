@@ -34,7 +34,7 @@ const content = {
     menu: "Меню",
     about: "Мен жөнүндө",
     projects: "Долбоорлор",
-    students: "Окуучулар",
+    students: "Шакирттер",
     enterprises: "Ишканалар",
     books: "Китептер",
     course: "Курс",

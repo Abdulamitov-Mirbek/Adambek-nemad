@@ -1,7 +1,15 @@
 // src/sections/InTheNews.jsx
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Play, X, Maximize2, Clock, Calendar } from "lucide-react";
+import {
+  Play,
+  X,
+  Maximize2,
+  Clock,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
 // Video data with more details
@@ -11,7 +19,7 @@ const videos = [
     duration: "14:12",
     date: "2024-03-01",
     views: "1.3K",
-    customThumb: null, // Use default YouTube thumbnail
+    customThumb: null,
     title: {
       kg: "Адамбек Нээмат: Банкрот болгон ишкер",
       ru: "Адамбек Нээмат: Предприниматель, который банкротился",
@@ -41,7 +49,6 @@ const videos = [
     duration: "25:30",
     date: "2023-10-11",
     views: "423",
-    // Custom thumbnail for third video
     customThumb: "https://i.ytimg.com/vi/crIz4zyNaww/hqdefault.jpg",
     title: {
       kg: "Адамбек Нээмат: Кеңири маек",
@@ -134,7 +141,7 @@ const VideoCard = ({ v, idx, language, onOpen }) => {
       className="group cursor-pointer flex-shrink-0"
       onClick={() => onOpen(v)}
     >
-      <div className="relative w-[380px] lg:w-[420px] bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20">
+      <div className="relative w-[340px] lg:w-[380px] bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/20">
         {/* Image Container */}
         <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800">
           {thumb && !imgError ? (
@@ -193,7 +200,7 @@ const VideoCard = ({ v, idx, language, onOpen }) => {
 
         {/* Content */}
         <div className="p-5 bg-white">
-          <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+          <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
             {title}
           </h3>
           <p className="text-gray-600 text-sm line-clamp-2 mb-4">
@@ -310,6 +317,10 @@ export const InTheNews = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
   const [selectedVideo, setSelectedVideo] = useState(null);
+  const scrollContainerRef = useRef(null);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [maxScroll, setMaxScroll] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const cards = useMemo(
     () =>
@@ -324,6 +335,49 @@ export const InTheNews = () => {
     [],
   );
 
+  // Update scroll position and active index
+  const updateScrollInfo = () => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const currentScroll = container.scrollLeft;
+      const maxScrollValue = container.scrollWidth - container.clientWidth;
+      setScrollPosition(currentScroll);
+      setMaxScroll(maxScrollValue);
+
+      // Calculate which card is active (based on scroll position)
+      const cardWidth = 340 + 32; // card width + gap
+      const newIndex = Math.round(currentScroll / cardWidth);
+      setActiveIndex(Math.min(newIndex, cards.length - 1));
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      updateScrollInfo();
+      container.addEventListener("scroll", updateScrollInfo);
+      window.addEventListener("resize", updateScrollInfo);
+      return () => {
+        container.removeEventListener("scroll", updateScrollInfo);
+        window.removeEventListener("resize", updateScrollInfo);
+      };
+    }
+  }, [cards.length]);
+
+  const scroll = (direction) => {
+    if (scrollContainerRef.current) {
+      const cardWidth = 340 + 32; // card width + gap
+      const scrollAmount = direction === "left" ? -cardWidth : cardWidth;
+      const newScrollLeft =
+        scrollContainerRef.current.scrollLeft + scrollAmount;
+
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <>
       <section
@@ -337,7 +391,7 @@ export const InTheNews = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16 max-w-7xl mx-auto"
+            className="text-center mb-12 max-w-7xl mx-auto"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 mb-6">
               <span className="relative flex h-2 w-2">
@@ -359,17 +413,32 @@ export const InTheNews = () => {
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">{t.lead}</p>
           </motion.div>
 
-          {/* Horizontal Scrollable Row - No white space */}
-          <div className="relative max-w-full overflow-hidden">
+          {/* Horizontal Scrollable Row with Arrow Buttons */}
+          <div className="relative group max-w-full overflow-hidden">
+            {/* Left Arrow Button */}
+            <button
+              onClick={() => scroll("left")}
+              className={`absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg transition-all duration-300 hover:bg-white hover:scale-110 ${
+                scrollPosition <= 0
+                  ? "opacity-30 cursor-not-allowed"
+                  : "opacity-0 group-hover:opacity-100"
+              }`}
+              disabled={scrollPosition <= 0}
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="w-5 h-5 text-gray-700" />
+            </button>
+
             {/* Scrollable Container */}
-            <div className="overflow-x-auto pb-6 scrollbar-custom px-4">
-              <div
-                className="flex gap-8 min-w-max"
-                style={{
-                  paddingLeft: "calc((100% - 1400px) / 2)",
-                  paddingRight: "calc((100% - 1400px) / 2)",
-                }}
-              >
+            <div
+              ref={scrollContainerRef}
+              className="overflow-x-auto pb-6 scrollbar-custom scroll-smooth"
+              style={{
+                scrollbarWidth: "thin",
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              <div className="flex gap-8 min-w-max px-4">
                 {cards.map((v, idx) => (
                   <VideoCard
                     key={v.url}
@@ -381,23 +450,46 @@ export const InTheNews = () => {
                 ))}
               </div>
             </div>
+
+            {/* Right Arrow Button */}
+            <button
+              onClick={() => scroll("right")}
+              className={`absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg transition-all duration-300 hover:bg-white hover:scale-110 ${
+                scrollPosition >= maxScroll - 10
+                  ? "opacity-30 cursor-not-allowed"
+                  : "opacity-0 group-hover:opacity-100"
+              }`}
+              disabled={scrollPosition >= maxScroll - 10}
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="w-5 h-5 text-gray-700" />
+            </button>
           </div>
 
-          {/* Scroll Hint */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
-            className="text-center mt-8"
-          >
-            <p className="text-sm text-gray-400 flex items-center justify-center gap-2">
-              <span>←</span>
-              <span>
-                {language === "kg" ? "Жылдыруу үчүн" : "Листайте для просмотра"}
-              </span>
-              <span>→</span>
-            </p>
-          </motion.div>
+          {/* Counter Dots */}
+          <div className="flex justify-center gap-2 mt-6">
+            {cards.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  if (scrollContainerRef.current) {
+                    const cardWidth = 340 + 32;
+                    const scrollTo = idx * cardWidth;
+                    scrollContainerRef.current.scrollTo({
+                      left: scrollTo,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
+                className={`transition-all duration-300 rounded-full ${
+                  activeIndex === idx
+                    ? "w-6 h-2 bg-gradient-to-r from-blue-600 to-purple-600"
+                    : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to video ${idx + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -408,7 +500,6 @@ export const InTheNews = () => {
         language={language}
       />
 
-      {/* Исправленный блок стилей без атрибута jsx */}
       <style>{`
         .scrollbar-custom::-webkit-scrollbar {
           height: 6px;
@@ -421,7 +512,6 @@ export const InTheNews = () => {
           background: linear-gradient(90deg, #3b82f6, #8b5cf6);
           border-radius: 10px;
         }
-        /* Tailwind уже имеет класс line-clamp-2, но если версия старая, оставим этот фикс */
         .line-clamp-2 {
           display: -webkit-box;
           -webkit-line-clamp: 2;
