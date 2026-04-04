@@ -235,7 +235,7 @@ const content = {
     title: "УЧЕНИКИ",
     enterpriseTitle: "ПРЕДПРИЯТИЯ",
 
-    title: "УЧЕНИКОВ",
+    title: "УЧЕНИКИ",
     cta: "Смотреть отзыв",
     showAll: "Показать всех →",
     hideAll: "Свернуть",
@@ -244,7 +244,7 @@ const content = {
     title: "ШАКИРТТЕРИМ",
     enterpriseTitle: "ИШКАНАЛАР",
 
-    title: "ШЕКИРТТЕРДИН ИЙГИЛИГИ",
+    title: "ШАКИРТТЕРИМ",
     cta: "Пикирди көрүү",
     showAll: "Бардыгын көрүү →",
     hideAll: "Жабуу",
