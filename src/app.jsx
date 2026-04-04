@@ -23,13 +23,13 @@ function App() {
       <div className="bg-white">
         {/* Порядок секций совпадает с пунктами меню (после Hero) */}
         <About />
-        <FeaturedIn />
         <Collaboration />
         <Awards />
         <Books />
         <Courses />
         <VideoLibrary />
         <InTheNews />
+        <FeaturedIn />
         <Footer />
       </div>
     </LanguageContext.Provider>

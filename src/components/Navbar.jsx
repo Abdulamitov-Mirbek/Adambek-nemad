@@ -54,6 +54,7 @@ export const Navbar = () => {
     { name: t.about, href: "#about", icon: <User size={22} /> },
     { name: t.projects, href: "#projects", icon: <FolderKanban size={22} /> },
     { name: t.students, href: "#students", icon: <Users size={22} /> },
+
     {
       name: t.enterprises,
       href: "#enterprises",
