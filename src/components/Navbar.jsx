@@ -56,7 +56,7 @@ export const Navbar = () => {
     { name: t.students, href: "#students", icon: <Users size={22} /> },
     {
       name: t.enterprises,
-      href: "#projects",
+      href: "#enterprises",
       icon: <Building2 size={22} />,
     },
     { name: t.books, href: "#books", icon: <BookOpen size={22} /> },

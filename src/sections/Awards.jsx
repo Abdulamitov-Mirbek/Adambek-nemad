@@ -1,9 +1,8 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
-import { followValue, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ExternalLink, ChevronRight } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
-// Импорт ассетов
 import asanmavlonov from "../assets/images/asanmavlonov.jpg";
 import azasport from "../assets/images/azasport.jpg";
 import kutman_nurlanbek from "../assets/images/kutman_nurlanbek.jpg";
@@ -13,6 +12,15 @@ import kutman_nurlanbekovich from "../assets/images/kutman_nurlanbekovich.jpg";
 import _barbershop from "../assets/images/_barbershop01.jpg";
 import turan_ned from "../assets/images/turan_ned.jpg";
 import turan_nedvizhimost from "../assets/images/turan_nedvizh.jpg";
+
+/** Instagram handles для кейсов компаний / брендов (остальные — ученики). */
+const ENTERPRISE_HANDLES = new Set([
+  "@turan_ned",
+  "@azasport_bishkek",
+  "@turan_nedvizhimost",
+  "@_barbershop01.kg",
+  "@rayber_barbershop",
+]);
 
 function InstagramGlyph({ className }) {
   return (
@@ -32,6 +40,7 @@ function InstagramGlyph({ className }) {
     </svg>
   );
 }
+
 const resultsData = {
   ru: [
     {
@@ -102,7 +111,7 @@ const resultsData = {
       role: "Владелец сети",
       result: "Лояльные клиенты",
       description: "Построение системы сервиса и стабильного потока записей.",
-      img: _barbershop, // Проверьте импорт этого ассета
+      img: _barbershop,
       handle: "@_barbershop01.kg",
       insta: "https://www.instagram.com/_barbershop01.kg/",
     },
@@ -224,74 +233,72 @@ const resultsData = {
     },
   ],
 };
+
 const content = {
   ru: {
     title: "УЧЕНИКИ",
+    enterpriseTitle: "ПРЕДПРИЯТИЯ",
     cta: "Смотреть отзыв",
-    showAll: "Показать всех учеников →",
-    hideAll: "Подождите немного, скоро будет больше",
+    showAll: "Показать всех →",
+    hideAll: "Свернуть",
   },
   kg: {
     title: "ШАКИРТТЕРИМ",
+    enterpriseTitle: "ИШКАНАЛАР",
     cta: "Пикирди көрүү",
-    showAll: "Бардык шекирттерди көрүү →",
-    hideAll: "Бир аз күтө тур, жакында дагы келет",
+    showAll: "Бардыгын көрүү →",
+    hideAll: "Жабуу",
   },
 };
 
-export const Awards = () => {
-  const { language } = useContext(LanguageContext);
-  const t = content[language];
-  const results = resultsData[language];
+function StoriesSection({ id, title, results, t, bgClass }) {
   const [showAll, setShowAll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScroll, setCanScroll] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const handleScroll = () => {
-    if (scrollRef.current) {
-      const container = scrollRef.current;
-      const scrollLeft = container.scrollLeft;
-      const cardWidth = 280 + 24;
-      const index = Math.round(scrollLeft / cardWidth);
-      setActiveIndex(index);
-    }
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const cardWidth = 280 + 24;
+    const index = Math.round(container.scrollLeft / cardWidth);
+    setActiveIndex(index);
   };
 
   useEffect(() => {
     const container = scrollRef.current;
-    if (container) {
-      const checkScroll = () => {
-        setCanScroll(container.scrollWidth > container.clientWidth);
-      };
-      checkScroll();
-      container.addEventListener("scroll", handleScroll);
-      window.addEventListener("resize", checkScroll);
-      return () => {
-        container.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("resize", checkScroll);
-      };
-    }
-  }, []);
+    if (!container) return;
+    const checkScroll = () => {
+      setCanScroll(container.scrollWidth > container.clientWidth);
+    };
+    checkScroll();
+    container.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", checkScroll);
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [results.length]);
 
-  // На мобилке показываем 4 карточки, если showAll = false
-  const displayedResults = !isMobile || showAll ? results : results.slice(0, 4);
+  const displayedResults =
+    !isMobile || showAll ? results : results.slice(0, 4);
+
+  const dotSlots = Math.min(4, results.length);
+
+  if (results.length === 0) return null;
 
   return (
     <section
-      id="students"
-      className="py-24 bg-white overflow-hidden scroll-mt-24"
+      id={id}
+      className={`scroll-mt-24 py-24 overflow-hidden ${bgClass}`}
     >
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
@@ -304,7 +311,7 @@ export const Awards = () => {
             SUCCESS STORIES
           </span>
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 mt-4 tracking-tighter uppercase leading-none">
-            {t.title}
+            {title}
           </h2>
         </motion.div>
 
@@ -319,7 +326,7 @@ export const Awards = () => {
           >
             {displayedResults.map((item, index) => (
               <motion.div
-                key={index}
+                key={`${item.handle}-${index}`}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -375,7 +382,7 @@ export const Awards = () => {
                       {item.handle}
                     </p>
                     <p className="text-gray-500 text-[11px] leading-relaxed italic mb-6">
-                      "{item.description}"
+                      &quot;{item.description}&quot;
                     </p>
 
                     <div className="pt-4 border-t border-gray-100 flex items-center justify-between group/cta">
@@ -393,10 +400,9 @@ export const Awards = () => {
             ))}
           </div>
 
-          {/* Пагинация (точки) - только на мобилках и если есть скролл */}
-          {canScroll && !showAll && isMobile && (
+          {canScroll && !showAll && isMobile && dotSlots > 0 && (
             <div className="flex justify-center gap-2 mt-4">
-              {results.slice(0, 4).map((_, idx) => (
+              {Array.from({ length: dotSlots }).map((_, idx) => (
                 <div
                   key={idx}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -410,10 +416,10 @@ export const Awards = () => {
           )}
         </div>
 
-        {/* КНОПКА "ПОКАЗАТЬ ВСЕХ" ВНУТРИ СЕКЦИИ AWARDS */}
         {!showAll && results.length > 4 && (
           <div className="flex justify-center mt-10">
             <button
+              type="button"
               onClick={() => setShowAll(true)}
               className="group inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
@@ -423,10 +429,10 @@ export const Awards = () => {
           </div>
         )}
 
-        {/* КНОПКА "СКРЫТЬ" (если показали всех) */}
         {showAll && results.length > 4 && (
           <div className="flex justify-center mt-10">
             <button
+              type="button"
               onClick={() => setShowAll(false)}
               className="group inline-flex items-center gap-2 px-8 py-3 bg-gray-100 text-gray-600 rounded-full font-bold text-sm hover:bg-gray-200 transition-all duration-300"
             >
@@ -441,6 +447,33 @@ export const Awards = () => {
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </section>
+  );
+}
+
+export const Awards = () => {
+  const { language } = useContext(LanguageContext);
+  const t = content[language];
+  const all = resultsData[language];
+  const students = all.filter((r) => !ENTERPRISE_HANDLES.has(r.handle));
+  const enterprises = all.filter((r) => ENTERPRISE_HANDLES.has(r.handle));
+
+  return (
+    <>
+      <StoriesSection
+        id="students"
+        title={t.title}
+        results={students}
+        t={t}
+        bgClass="bg-white"
+      />
+      <StoriesSection
+        id="enterprises"
+        title={t.enterpriseTitle}
+        results={enterprises}
+        t={t}
+        bgClass="bg-gray-50"
+      />
+    </>
   );
 };
 

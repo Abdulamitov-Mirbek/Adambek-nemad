@@ -21,14 +21,15 @@ function App() {
       <Navbar />
       <Hero />
       <div className="bg-white">
+        {/* Порядок секций совпадает с пунктами меню (после Hero) */}
         <About />
-        <Courses />
         <FeaturedIn />
         <Collaboration />
         <Awards />
         <Books />
-        <InTheNews />
+        <Courses />
         <VideoLibrary />
+        <InTheNews />
         <Footer />
       </div>
     </LanguageContext.Provider>

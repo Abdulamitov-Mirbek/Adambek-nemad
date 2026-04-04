@@ -6,9 +6,11 @@ import { FaWhatsapp } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
 import { MdSend } from "react-icons/md";
 
-// НАСТРОЙКИ ДЛЯ TELEGRAM (ДЛЯ 2 ПОЛУЧАТЕЛЕЙ)
-const TELEGRAM_BOT_TOKEN = "8465338781:AAG8jJPsRaSQV1AfJXyOX5NttsP7eCUz2R4";
-const TELEGRAM_CHAT_IDS = ["8362752737", "5125578925"]; // Массив из двух ID
+const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
+const TELEGRAM_CHAT_IDS = [
+  import.meta.env.VITE_TELEGRAM_CHAT_ID_1,
+  import.meta.env.VITE_TELEGRAM_CHAT_ID_2,
+].filter(Boolean); // Фильтруем, чтобы исключить неустановленные переменные
 
 const content = {
   ru: {
