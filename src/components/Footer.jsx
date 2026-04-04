@@ -6,9 +6,9 @@ import { FaWhatsapp } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
 import { MdSend } from "react-icons/md";
 
-// НАСТРОЙКИ ДЛЯ TELEGRAM (ПРАВИЛЬНЫЕ)
+// НАСТРОЙКИ ДЛЯ TELEGRAM (ДЛЯ 2 ПОЛУЧАТЕЛЕЙ)
 const TELEGRAM_BOT_TOKEN = "8465338781:AAG8jJPsRaSQV1AfJXyOX5NttsP7eCUz2R4";
-const TELEGRAM_CHAT_ID = "8362752737"; // Ваш правильный chat_id
+const TELEGRAM_CHAT_IDS = ["8362752737", "5125578925"]; // Массив из двух ID
 
 const content = {
   ru: {
@@ -70,29 +70,40 @@ export const Footer = () => {
     });
   };
 
-  // Отправка через Telegram
+  // Отправка через Telegram ДВУМ получателям
   const sendToTelegram = async (fullName, phone) => {
     const message = `📋 *Новая заявка с сайта*\n\n👤 *ФИО:* ${fullName}\n📞 *Телефон:* ${phone}\n🌐 *Язык:* ${language === "kg" ? "Кыргызча" : "Русский"}\n⏰ *Время:* ${new Date().toLocaleString()}`;
 
     const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
     try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: message,
-          parse_mode: "Markdown",
+      // Отправляем каждому получателю отдельно
+      const promises = TELEGRAM_CHAT_IDS.map((chatId) =>
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            chat_id: chatId, // Здесь строка, а не массив!
+            text: message,
+            parse_mode: "Markdown",
+          }),
         }),
-      });
+      );
 
-      const data = await response.json();
-      console.log("Telegram response:", data);
+      const responses = await Promise.all(promises);
+      const allSuccess = responses.every((res) => res.ok);
 
-      return response.ok;
+      if (allSuccess) {
+        const data = await Promise.all(responses.map((res) => res.json()));
+        console.log("Telegram responses:", data);
+      } else {
+        const errors = await Promise.all(responses.map((res) => res.text()));
+        console.error("Telegram errors:", errors);
+      }
+
+      return allSuccess;
     } catch (error) {
       console.error("Telegram error:", error);
       return false;
