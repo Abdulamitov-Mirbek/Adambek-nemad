@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, ChevronRight } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
 // Импорт ассетов
@@ -74,7 +74,6 @@ const resultsData = {
       handle: "@kutman_nurlanbekovich",
       insta: "https://www.instagram.com/kutman_nurlanbekovich/",
     },
-
     {
       name: "Rayber Barber",
       followers: 3500,
@@ -85,7 +84,6 @@ const resultsData = {
       handle: "@rayber_barbershop",
       insta: "https://www.instagram.com/rayber_barbershop/",
     },
-
     {
       name: "Рахманберди",
       followers: 500,
@@ -97,13 +95,14 @@ const resultsData = {
       insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
     },
   ],
- kg: [
+  kg: [
     {
       name: "Aza Sport",
       followers: 34000,
       role: "Бизнес ээси",
       result: "Системалуу сатуу",
-      description: "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
+      description:
+        "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -113,7 +112,8 @@ const resultsData = {
       followers: 29000,
       role: "Топ-менеджер",
       result: "Кесиптик өсүү",
-      description: "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
+      description:
+        "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
       img: kutman_nurlanbek,
       handle: "@kutman_nurlanbek",
       insta: "https://www.instagram.com/kutman_nurlanbek/",
@@ -123,7 +123,8 @@ const resultsData = {
       followers: 16000,
       role: "Алдыңкы окуучу / Миллионер",
       result: "20k → 1M+ сом",
-      description: "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
+      description:
+        "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
       isGold: true,
       img: asanmavlonov,
       handle: "@asan_mavlonov",
@@ -163,25 +164,45 @@ const resultsData = {
 };
 
 const content = {
-  ru: { title: "РЕЗУЛЬТАТЫ УЧЕНИКОВ", cta: "Смотреть отзыв" },
-  kg: { title: "ШЕКИРТТЕРДИН ИЙГИЛИГИ", cta: "Пикирди көрүү" },
+  ru: {
+    title: "РЕЗУЛЬТАТЫ УЧЕНИКОВ",
+    cta: "Смотреть отзыв",
+    showAll: "Показать всех учеников →",
+    hideAll: "Подождите немного, скоро будет больше",
+  },
+  kg: {
+    title: "ШЕКИРТТЕРДИН ИЙГИЛИГИ",
+    cta: "Пикирди көрүү",
+    showAll: "Бардык шекирттерди көрүү →",
+    hideAll: "Бир аз күтө тур, жакында дагы келет",
+  },
 };
 
 export const Awards = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
   const results = resultsData[language];
+  const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Рефы и состояния для скролла
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScroll, setCanScroll] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const handleScroll = () => {
     if (scrollRef.current) {
       const container = scrollRef.current;
       const scrollLeft = container.scrollLeft;
-      const cardWidth = 280 + 24; // w-[280px] + gap-6
+      const cardWidth = 280 + 24;
       const index = Math.round(scrollLeft / cardWidth);
       setActiveIndex(index);
     }
@@ -193,17 +214,18 @@ export const Awards = () => {
       const checkScroll = () => {
         setCanScroll(container.scrollWidth > container.clientWidth);
       };
-
       checkScroll();
       container.addEventListener("scroll", handleScroll);
       window.addEventListener("resize", checkScroll);
-
       return () => {
         container.removeEventListener("scroll", handleScroll);
         window.removeEventListener("resize", checkScroll);
       };
     }
   }, []);
+
+  // На мобилке показываем 4 карточки, если showAll = false
+  const displayedResults = !isMobile || showAll ? results : results.slice(0, 4);
 
   return (
     <section
@@ -228,14 +250,13 @@ export const Awards = () => {
         <div className="relative">
           <div
             ref={scrollRef}
-            className="
+            className={`
               flex gap-6 overflow-x-auto pb-8 no-scrollbar
               snap-x snap-mandatory 
-              md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 
-              md:justify-center md:gap-y-12
-            "
+              ${!isMobile || showAll ? "md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 md:justify-center md:gap-y-12" : ""}
+            `}
           >
-            {results.map((item, index) => (
+            {displayedResults.map((item, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
@@ -257,7 +278,7 @@ export const Awards = () => {
                     <img
                       src={item.img}
                       alt={item.name}
-                      className="w-full h-full object-cover transition-transform duration-700"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
 
@@ -312,9 +333,9 @@ export const Awards = () => {
           </div>
 
           {/* Пагинация (точки) - только на мобилках и если есть скролл */}
-          {canScroll && (
-            <div className="flex justify-center gap-2 mt-4 md:hidden">
-              {results.map((_, idx) => (
+          {canScroll && !showAll && isMobile && (
+            <div className="flex justify-center gap-2 mt-4">
+              {results.slice(0, 4).map((_, idx) => (
                 <div
                   key={idx}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -327,6 +348,31 @@ export const Awards = () => {
             </div>
           )}
         </div>
+
+        {/* КНОПКА "ПОКАЗАТЬ ВСЕХ" ВНУТРИ СЕКЦИИ AWARDS */}
+        {!showAll && results.length > 4 && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => setShowAll(true)}
+              className="group inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+            >
+              <span>{t.showAll}</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        )}
+
+        {/* КНОПКА "СКРЫТЬ" (если показали всех) */}
+        {showAll && results.length > 4 && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={() => setShowAll(false)}
+              className="group inline-flex items-center gap-2 px-8 py-3 bg-gray-100 text-gray-600 rounded-full font-bold text-sm hover:bg-gray-200 transition-all duration-300"
+            >
+              <span>{t.hideAll}</span>
+            </button>
+          </div>
+        )}
       </div>
 
       <style>{`
