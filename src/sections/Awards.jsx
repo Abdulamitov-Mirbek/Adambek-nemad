@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { followValue, motion } from "framer-motion";
 import { ExternalLink, ChevronRight } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
@@ -10,6 +10,9 @@ import kutman_nurlanbek from "../assets/images/kutman_nurlanbek.jpg";
 import rahmanberdi from "../assets/images/rahmanberdi.jpg";
 import rayber_barbershop from "../assets/images/rayber_barbershop.jpg";
 import kutman_nurlanbekovich from "../assets/images/kutman_nurlanbekovich.jpg";
+import _barbershop from "../assets/images/_barbershop01.jpg"
+import turan_ned from "../assets/images/turan_ned.jpg" 
+import turan_nedvizhimost from "../assets/images/turan_nedvizh.jpg" 
 
 function InstagramGlyph({ className }) {
   return (
@@ -29,16 +32,24 @@ function InstagramGlyph({ className }) {
     </svg>
   );
 }
-
 const resultsData = {
   ru: [
+    {
+      name: "turan_ned",
+      followers: 52000,
+      role: "Эксперт / Недвижимость",
+      result: "Масштабный рост",
+      description: "Лидер рынка в нише зарубежной недвижимости и инвестиций.",
+      img: turan_ned,
+      handle: "@turan_ned",
+      insta: "https://www.instagram.com/turan_ned/",
+    },
     {
       name: "Aza Sport",
       followers: 34000,
       role: "Владелец бизнеса",
       result: "Системные продажи",
-      description:
-        "Внедрение системы продаж в крупнейший магазин спорттоваров.",
+      description: "Внедрение системы продаж в крупнейший магазин спорттоваров.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -75,6 +86,26 @@ const resultsData = {
       insta: "https://www.instagram.com/kutman_nurlanbekovich/",
     },
     {
+      name: "turan_nedvizhimost",
+      followers: 7500,
+      role: "Агентство / Инвестиции",
+      result: "Сильный бренд",
+      description: "Создание качественного медиа-присутствия в сфере жилья.",
+      img: turan_nedvizhimost,
+      handle: "@turan_nedvizhimost",
+      insta: "https://www.instagram.com/turan_nedvizhimost/",
+    },
+    {
+      name: "_barbershop01.kg",
+      followers: 5700,
+      role: "Владелец сети",
+      result: "Лояльные клиенты",
+      description: "Построение системы сервиса и стабильного потока записей.",
+      img: _barbershop, // Проверьте импорт этого ассета
+      handle: "@_barbershop01.kg",
+      insta: "https://www.instagram.com/_barbershop01.kg/",
+    },
+    {
       name: "Rayber Barber",
       followers: 3500,
       role: "Основатель сети",
@@ -97,12 +128,21 @@ const resultsData = {
   ],
   kg: [
     {
+      name: "turan_ned",
+      followers: 52000,
+      role: "Эксперт / Кыймылсыз мүлк",
+      result: "Масштабдуу өсүү",
+      description: "Инвестиция жана чет өлкөлүк мүлк рыногунун лидери.",
+      img: turan_ned,
+      handle: "@turan_ned",
+      insta: "https://www.instagram.com/turan_ned/",
+    },
+    {
       name: "Aza Sport",
       followers: 34000,
       role: "Бизнес ээси",
       result: "Системалуу сатуу",
-      description:
-        "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
+      description: "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -112,8 +152,7 @@ const resultsData = {
       followers: 29000,
       role: "Топ-менеджер",
       result: "Кесиптик өсүү",
-      description:
-        "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
+      description: "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
       img: kutman_nurlanbek,
       handle: "@kutman_nurlanbek",
       insta: "https://www.instagram.com/kutman_nurlanbek/",
@@ -123,8 +162,7 @@ const resultsData = {
       followers: 16000,
       role: "Алдыңкы окуучу / Миллионер",
       result: "20k → 1M+ сом",
-      description:
-        "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
+      description: "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
       isGold: true,
       img: asanmavlonov,
       handle: "@asan_mavlonov",
@@ -139,6 +177,26 @@ const resultsData = {
       img: kutman_nurlanbekovich,
       handle: "@kutman_nurlanbekovich",
       insta: "https://www.instagram.com/kutman_nurlanbekovich/",
+    },
+    {
+      name: "turan_nedvizhimost",
+      followers: 7500,
+      role: "Агенттик / Инвестиция",
+      result: "Күчтүү бренд",
+      description: "Турак жай тармагында сапаттуу медиа-контент түзүү.",
+      img: turan_nedvizhimost,
+      handle: "@turan_nedvizhimost",
+      insta: "https://www.instagram.com/turan_nedvizhimost/",
+    },
+    {
+      name: "_barbershop01.kg",
+      followers: 5700,
+      role: "Тармактын ээси",
+      result: "Туруктуу кардарлар",
+      description: "Тейлөө тутумун жана жазылуулардын туруктуу агымын түзүү.",
+      img: _barbershop,
+      handle: "@_barbershop01.kg",
+      insta: "https://www.instagram.com/_barbershop01.kg/",
     },
     {
       name: "Rayber Barber",
@@ -162,10 +220,9 @@ const resultsData = {
     },
   ],
 };
-
 const content = {
   ru: {
-    title: "РЕЗУЛЬТАТЫ УЧЕНИКОВ",
+    title: "УЧЕНИКОВ",
     cta: "Смотреть отзыв",
     showAll: "Показать всех учеников →",
     hideAll: "Подождите немного, скоро будет больше",
