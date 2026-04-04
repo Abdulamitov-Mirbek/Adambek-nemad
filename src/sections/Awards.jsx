@@ -13,7 +13,16 @@ import kutman_nurlanbekovich from "../assets/images/kutman_nurlanbekovich.jpg";
 
 function InstagramGlyph({ className }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -23,20 +32,133 @@ function InstagramGlyph({ className }) {
 
 const resultsData = {
   ru: [
-    { name: "Асан Мавлонов", role: "Топ-ученик / Миллионер", result: "20k → 1M+ сом", description: "Прошел путь от скромной зарплаты до статуса миллионера.", isGold: true, img: asanmavlonov, handle: "@asan_mavlonov", insta: "https://www.instagram.com/asan_mavlonov/" },
-    { name: "Aza Sport", role: "Владелец бизнеса", result: "Системные продажи", description: "Внедрение системы продаж в крупнейший магазин спорттоваров.", img: azasport, handle: "@azasport_bishkek", insta: "https://www.instagram.com/azasport_bishkek/" },
-    { name: "Рахманберди", role: "Предприниматель", result: "Результат х3", description: "Увеличил личный доход и масштаб бизнеса после обучения.", img: rahmanberdi, handle: "@rahmanberdi_mavlonov", insta: "https://www.instagram.com/rahmanberdi_mavlonov/" },
-    { name: "Rayber Barber", role: "Основатель сети", result: "Масштабирование", description: "Построил сильный бренд и наладил поток лояльных клиентов.", img: rayber_barbershop, handle: "@rayber_barbershop", insta: "https://www.instagram.com/rayber_barbershop/" },
-    { name: "Кутман Нурланбекович", role: "Эксперт / Продажи", result: "Личный бренд", description: "Выход на новый уровень чека и качества аудитории.", img: kutman_nurlanbekovich, handle: "@kutman_nurlanbekovich", insta: "https://www.instagram.com/kutman_nurlanbekovich/" },
-    { name: "Кутман Нурланбек", role: "Топ-менеджер", result: "Профессиональный рост", description: "Закрытие крупных сделок и внедрение скриптов Адамбека.", img: kutman_nurlanbek, handle: "@kutman_nurlanbek", insta: "https://www.instagram.com/kutman_nurlanbek/" },
+    {
+      name: "Aza Sport",
+      followers: 34000,
+      role: "Владелец бизнеса",
+      result: "Системные продажи",
+      description:
+        "Внедрение системы продаж в крупнейший магазин спорттоваров.",
+      img: azasport,
+      handle: "@azasport_bishkek",
+      insta: "https://www.instagram.com/azasport_bishkek/",
+    },
+    {
+      name: "Кутман Нурланбек",
+      followers: 29000,
+      role: "Топ-менеджер",
+      result: "Профессиональный рост",
+      description: "Закрытие крупных сделок и внедрение скриптов Адамбека.",
+      img: kutman_nurlanbek,
+      handle: "@kutman_nurlanbek",
+      insta: "https://www.instagram.com/kutman_nurlanbek/",
+    },
+    {
+      name: "Асан Мавлонов",
+      followers: 16000,
+      role: "Топ-ученик / Миллионер",
+      result: "20k → 1M+ сом",
+      description: "Прошел путь от скромной зарплаты до статуса миллионера.",
+      isGold: true,
+      img: asanmavlonov,
+      handle: "@asan_mavlonov",
+      insta: "https://www.instagram.com/asan_mavlonov/",
+    },
+    {
+      name: "Кутман Нурланбекович",
+      followers: 9000,
+      role: "Эксперт / Продажи",
+      result: "Личный бренд",
+      description: "Выход на новый уровень чека и качества аудитории.",
+      img: kutman_nurlanbekovich,
+      handle: "@kutman_nurlanbekovich",
+      insta: "https://www.instagram.com/kutman_nurlanbekovich/",
+    },
+
+    {
+      name: "Rayber Barber",
+      followers: 3500,
+      role: "Основатель сети",
+      result: "Масштабирование",
+      description: "Построил сильный бренд и наладил поток лояльных клиентов.",
+      img: rayber_barbershop,
+      handle: "@rayber_barbershop",
+      insta: "https://www.instagram.com/rayber_barbershop/",
+    },
+
+    {
+      name: "Рахманберди",
+      followers: 500,
+      role: "Предприниматель",
+      result: "Результат х3",
+      description: "Увеличил личный доход и масштаб бизнеса после обучения.",
+      img: rahmanberdi,
+      handle: "@rahmanberdi_mavlonov",
+      insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
+    },
   ],
-  kg: [
-    { name: "Асан Мавлонов", role: "Алдыңкы окуучу / Миллионер", result: "20k → 1M+ сом", description: "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.", isGold: true, img: asanmavlonov, handle: "@asan_mavlonov", insta: "https://www.instagram.com/asan_mavlonov/" },
-    { name: "Aza Sport", role: "Бизнес ээси", result: "Системалуу сатуу", description: "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.", img: azasport, handle: "@azasport_bishkek", insta: "https://www.instagram.com/azasport_bishkek/" },
-    { name: "Рахманберди", role: "Ишкер", result: "Жыйынтык х3", description: "Окуудан кийин жеке кирешесин жана бизнесин өстүрдү.", img: rahmanberdi, handle: "@rahmanberdi_mavlonov", insta: "https://www.instagram.com/rahmanberdi_mavlonov/" },
-    { name: "Rayber Barber", role: "Тармактын негиздөөчүсү", result: "Масштабдоо", description: "Күчтүү бренд куруп, туруктуу кардарлар агымын түздү.", img: rayber_barbershop, handle: "@rayber_barbershop", insta: "https://www.instagram.com/rayber_barbershop/" },
-    { name: "Кутман Нурланбекович", role: "Эксперт / Сатуу", result: "Жеке бренд", description: "Жогорку чекке чыгуу жана аудиториянын сапатын жогорулатуу.", img: kutman_nurlanbekovich, handle: "@kutman_nurlanbekovich", insta: "https://www.instagram.com/kutman_nurlanbekovich/" },
-    { name: "Кутман Нурланбек", role: "Топ-менеджер", result: "Кесиптик өсүү", description: "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.", img: kutman_nurlanbek, handle: "@kutman_nurlanbek", insta: "https://www.instagram.com/kutman_nurlanbek/" },
+ kg: [
+    {
+      name: "Aza Sport",
+      followers: 34000,
+      role: "Бизнес ээси",
+      result: "Системалуу сатуу",
+      description: "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
+      img: azasport,
+      handle: "@azasport_bishkek",
+      insta: "https://www.instagram.com/azasport_bishkek/",
+    },
+    {
+      name: "Кутман Нурланбек",
+      followers: 29000,
+      role: "Топ-менеджер",
+      result: "Кесиптик өсүү",
+      description: "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
+      img: kutman_nurlanbek,
+      handle: "@kutman_nurlanbek",
+      insta: "https://www.instagram.com/kutman_nurlanbek/",
+    },
+    {
+      name: "Асан Мавлонов",
+      followers: 16000,
+      role: "Алдыңкы окуучу / Миллионер",
+      result: "20k → 1M+ сом",
+      description: "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
+      isGold: true,
+      img: asanmavlonov,
+      handle: "@asan_mavlonov",
+      insta: "https://www.instagram.com/asan_mavlonov/",
+    },
+    {
+      name: "Кутман Нурланбекович",
+      followers: 9000,
+      role: "Эксперт / Сатуу",
+      result: "Жеке бренд",
+      description: "Жогорку чекке чыгуу жана аудиториянын сапатын жогорулатуу.",
+      img: kutman_nurlanbekovich,
+      handle: "@kutman_nurlanbekovich",
+      insta: "https://www.instagram.com/kutman_nurlanbekovich/",
+    },
+    {
+      name: "Rayber Barber",
+      followers: 3500,
+      role: "Тармактын негиздөөчүсү",
+      result: "Масштабдоо",
+      description: "Күчтүү бренд куруп, туруктуу кардарлар агымын түздү.",
+      img: rayber_barbershop,
+      handle: "@rayber_barbershop",
+      insta: "https://www.instagram.com/rayber_barbershop/",
+    },
+    {
+      name: "Рахманберди",
+      followers: 500,
+      role: "Ишкер",
+      result: "Жыйынтык х3",
+      description: "Окуудан кийин жеке кирешесин жана бизнесин өстүрдү.",
+      img: rahmanberdi,
+      handle: "@rahmanberdi_mavlonov",
+      insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
+    },
   ],
 };
 
@@ -71,11 +193,11 @@ export const Awards = () => {
       const checkScroll = () => {
         setCanScroll(container.scrollWidth > container.clientWidth);
       };
-      
+
       checkScroll();
       container.addEventListener("scroll", handleScroll);
       window.addEventListener("resize", checkScroll);
-      
+
       return () => {
         container.removeEventListener("scroll", handleScroll);
         window.removeEventListener("resize", checkScroll);
@@ -84,7 +206,10 @@ export const Awards = () => {
   }, []);
 
   return (
-    <section id="students" className="py-24 bg-white overflow-hidden scroll-mt-24">
+    <section
+      id="students"
+      className="py-24 bg-white overflow-hidden scroll-mt-24"
+    >
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -123,11 +248,17 @@ export const Awards = () => {
                 <div
                   onClick={() => window.open(item.insta, "_blank")}
                   className={`group relative flex flex-col bg-white rounded-[2.5rem] border cursor-pointer transition-all duration-500 overflow-hidden h-full ${
-                    item.isGold ? "border-yellow-400 shadow-2xl shadow-yellow-50" : "border-gray-100 shadow-xl shadow-gray-100/50"
+                    item.isGold
+                      ? "border-yellow-400 shadow-2xl shadow-yellow-50"
+                      : "border-gray-100 shadow-xl shadow-gray-100/50"
                   }`}
                 >
                   <div className="relative aspect-[7/9] overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700" />
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-700"
+                    />
                     <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
 
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -148,20 +279,31 @@ export const Awards = () => {
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white">
                         <InstagramGlyph className="h-4 w-4" />
                       </div>
-                      <div className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-600"}`}>
+                      <div
+                        className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-600"}`}
+                      >
                         {item.result}
                       </div>
                     </div>
 
-                    <h3 className="text-xl font-black text-gray-900 uppercase leading-tight">{item.name}</h3>
-                    <p className="text-[10px] font-mono text-pink-600 font-bold mb-3">{item.handle}</p>
-                    <p className="text-gray-500 text-[11px] leading-relaxed italic mb-6">"{item.description}"</p>
+                    <h3 className="text-xl font-black text-gray-900 uppercase leading-tight">
+                      {item.name}
+                    </h3>
+                    <p className="text-[10px] font-mono text-pink-600 font-bold mb-3">
+                      {item.handle}
+                    </p>
+                    <p className="text-gray-500 text-[11px] leading-relaxed italic mb-6">
+                      "{item.description}"
+                    </p>
 
                     <div className="pt-4 border-t border-gray-100 flex items-center justify-between group/cta">
                       <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 group-hover:text-blue-800 transition-colors">
                         {t.cta}
                       </span>
-                      <ExternalLink size={14} className="text-gray-300 group-hover:text-blue-500 transition-colors" />
+                      <ExternalLink
+                        size={14}
+                        className="text-gray-300 group-hover:text-blue-500 transition-colors"
+                      />
                     </div>
                   </div>
                 </div>
@@ -176,7 +318,9 @@ export const Awards = () => {
                 <div
                   key={idx}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"
+                    activeIndex === idx
+                      ? "w-6 bg-blue-600"
+                      : "w-1.5 bg-gray-200"
                   }`}
                 />
               ))}
