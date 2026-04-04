@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
-// Импорт ассетов (оставляем как было)
+// Импорт ассетов
 import asanmavlonov from "../assets/images/asanmavlonov.jpg";
 import azasport from "../assets/images/azasport.jpg";
 import kutman_nurlanbek from "../assets/images/kutman_nurlanbek.jpg";
@@ -13,7 +13,7 @@ import kutman_nurlanbekovich from "../assets/images/kutman_nurlanbekovich.jpg";
 
 function InstagramGlyph({ className }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -50,6 +50,39 @@ export const Awards = () => {
   const t = content[language];
   const results = resultsData[language];
 
+  // Рефы и состояния для скролла
+  const scrollRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [canScroll, setCanScroll] = useState(false);
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      const container = scrollRef.current;
+      const scrollLeft = container.scrollLeft;
+      const cardWidth = 280 + 24; // w-[280px] + gap-6
+      const index = Math.round(scrollLeft / cardWidth);
+      setActiveIndex(index);
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (container) {
+      const checkScroll = () => {
+        setCanScroll(container.scrollWidth > container.clientWidth);
+      };
+      
+      checkScroll();
+      container.addEventListener("scroll", handleScroll);
+      window.addEventListener("resize", checkScroll);
+      
+      return () => {
+        container.removeEventListener("scroll", handleScroll);
+        window.removeEventListener("resize", checkScroll);
+      };
+    }
+  }, []);
+
   return (
     <section id="students" className="py-24 bg-white overflow-hidden scroll-mt-24">
       <div className="max-w-7xl mx-auto px-6">
@@ -68,12 +101,15 @@ export const Awards = () => {
         </motion.div>
 
         <div className="relative">
-          {/* Сетка: на мобилках свайп, на ноутах 2 ряда по 3 карточки */}
-          <div className="
-            flex gap-6 overflow-x-auto pb-12 no-scrollbar
-            md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 
-            md:justify-center md:gap-y-12
-          ">
+          <div
+            ref={scrollRef}
+            className="
+              flex gap-6 overflow-x-auto pb-8 no-scrollbar
+              snap-x snap-mandatory 
+              md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 
+              md:justify-center md:gap-y-12
+            "
+          >
             {results.map((item, index) => (
               <motion.div
                 key={index}
@@ -82,23 +118,22 @@ export const Awards = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ y: -8 }}
-                className="w-[280px] sm:w-[320px] md:w-full flex-shrink-0"
+                className="w-[280px] sm:w-[320px] md:w-full flex-shrink-0 snap-center"
               >
-                <div 
+                <div
                   onClick={() => window.open(item.insta, "_blank")}
                   className={`group relative flex flex-col bg-white rounded-[2.5rem] border cursor-pointer transition-all duration-500 overflow-hidden h-full ${
                     item.isGold ? "border-yellow-400 shadow-2xl shadow-yellow-50" : "border-gray-100 shadow-xl shadow-gray-100/50"
                   }`}
                 >
-                  {/* Фото (оставил твой стиль) */}
-                  <div className="relative aspect-[4/5] overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <div className="relative aspect-[7/9] overflow-hidden">
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700" />
                     <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
-                    
+
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                       <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30">
-                          <InstagramGlyph className="w-8 h-8 text-white" />
-                       </div>
+                      <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30">
+                        <InstagramGlyph className="w-8 h-8 text-white" />
+                      </div>
                     </div>
 
                     {item.isGold && (
@@ -108,14 +143,13 @@ export const Awards = () => {
                     )}
                   </div>
 
-                  {/* Контент */}
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white">
                         <InstagramGlyph className="h-4 w-4" />
                       </div>
                       <div className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-600"}`}>
-                         {item.result}
+                        {item.result}
                       </div>
                     </div>
 
@@ -134,6 +168,20 @@ export const Awards = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Пагинация (точки) - только на мобилках и если есть скролл */}
+          {canScroll && (
+            <div className="flex justify-center gap-2 mt-4 md:hidden">
+              {results.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

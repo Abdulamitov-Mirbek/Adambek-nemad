@@ -1,6 +1,6 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useMemo, useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, X } from "lucide-react"; 
+import { Play, X, ChevronLeft, ChevronRight } from "lucide-react"; 
 import { LanguageContext } from "../context/LanguageContext";
 
 const videos = [
@@ -49,6 +49,10 @@ export const VideoLibrary = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
   const [activeVideo, setActiveVideo] = useState(null);
+  
+  const scrollRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [scrollInfo, setScrollInfo] = useState({ current: 0, max: 0 });
 
   const cards = useMemo(() =>
     videos.map((url) => {
@@ -57,11 +61,41 @@ export const VideoLibrary = () => {
     }), []
   );
 
+  const updateScrollStatus = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      setScrollInfo({ current: scrollLeft, max: scrollWidth - clientWidth });
+
+      const cardWidth = 280 + 24; 
+      setActiveIndex(Math.round(scrollLeft / cardWidth));
+    }
+  };
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (container) {
+      updateScrollStatus();
+      container.addEventListener("scroll", updateScrollStatus);
+      window.addEventListener("resize", updateScrollStatus);
+      return () => {
+        container.removeEventListener("scroll", updateScrollStatus);
+        window.removeEventListener("resize", updateScrollStatus);
+      };
+    }
+  }, [cards]);
+
+  const scroll = (direction) => {
+    if (scrollRef.current) {
+      const cardWidth = 320 + 24;
+      const amount = direction === "left" ? -cardWidth : cardWidth;
+      scrollRef.current.scrollBy({ left: amount, behavior: "smooth" });
+    }
+  };
+
   return (
     <section id="videos" className="scroll-mt-24 py-24 bg-white overflow-hidden">
-      <div className="container-custom max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6">
         
-        {/* Заголовок */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -77,25 +111,26 @@ export const VideoLibrary = () => {
           <p className="text-lg text-gray-600 leading-relaxed opacity-80">{t.lead}</p>
         </motion.div>
 
-        {/* Обертка для скролла с эффектом задымления */}
-        <div className="relative group/scroll">
-          
-          {/* !!! ВОТ ЭТОТ ДЫМОК (ПРАВЫЙ ОВЕРЛЕЙ) !!! */}
+        <div className="relative group/container">
+          {/* Стрелка Влево - видна на десктопах при ховере */}
+          <button
+            onClick={() => scroll("left")}
+            className={`absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-xl transition-all duration-300 hidden md:flex items-center justify-center hover:bg-blue-600 hover:text-white ${
+                scrollInfo.current <= 5 ? "opacity-0 pointer-events-none" : "opacity-0 group-hover/container:opacity-100"
+            }`}
+          >
+            <ChevronLeft size={24} />
+          </button>
+
+          {/* Список видео */}
           <div 
-            className="absolute top-0 bottom-10 right-0 w-32 z-10 pointer-events-none transition-opacity duration-500 group-hover/scroll:opacity-0"
-            style={{
-              background: "linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)"
-            }}
-            aria-hidden
-          />
-          {/* Также можно добавить левый дымок, если нужно */}
-          
-          {/* Скролл-список */}
-          <div className="flex gap-6 overflow-x-auto pb-10 scroll-smooth snap-x snap-mandatory no-scrollbar relative z-0">
+            ref={scrollRef}
+            className="flex gap-6 overflow-x-auto pb-10 scroll-smooth snap-x snap-mandatory no-scrollbar relative z-0"
+          >
             {cards.map((v, idx) => (
               <motion.div
                 key={v.id}
-                className="min-w-[280px] md:min-w-[320px] snap-start"
+                className="min-w-[280px] md:min-w-[320px] snap-center"
                 whileHover={{ y: -8 }}
                 onClick={() => setActiveVideo(v.id)}
               >
@@ -107,7 +142,7 @@ export const VideoLibrary = () => {
                   />
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/30 group-hover:scale-110 transition-transform">
+                    <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/30 group-hover:scale-120 transition-transform">
                       <Play className="h-8 w-8 text-white fill-current" />
                     </div>
                   </div>
@@ -119,33 +154,52 @@ export const VideoLibrary = () => {
               </motion.div>
             ))}
           </div>
+
+          {/* Стрелка Вправо - видна на десктопах при ховере */}
+          <button
+            onClick={() => scroll("right")}
+            className={`absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-xl transition-all duration-300 hidden md:flex items-center justify-center hover:bg-blue-600 hover:text-white ${
+                scrollInfo.current >= scrollInfo.max - 5 ? "opacity-0 pointer-events-none" : "opacity-0 group-hover/container:opacity-100"
+            }`}
+          >
+            <ChevronRight size={24} />
+          </button>
+
+          {/* Точки (Pagination) - всегда видны, если контента много */}
+          {scrollInfo.max > 0 && (
+            <div className="flex justify-center gap-2 mt-4">
+              {cards.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* MODAL PLAYER (оставляем как есть) */}
+      {/* MODAL PLAYER */}
       <AnimatePresence>
         {activeVideo && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4"
             onClick={() => setActiveVideo(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, y: 40 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 40 }}
+              initial={{ scale: 0.9, y: 40 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 40 }}
               className="relative w-full max-w-[400px] aspect-[9/16] bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setActiveVideo(null)}
-                className="absolute top-4 right-4 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
+                className="absolute top-4 right-4 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
               >
                 <X size={24} />
               </button>
-              
               <iframe
                 className="h-full w-full"
                 src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0`}
@@ -158,6 +212,11 @@ export const VideoLibrary = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <style>{`
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
     </section>
   );
 };

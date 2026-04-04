@@ -13,8 +13,7 @@ const content = {
   ru: {
     kicker: "КУРСЫ",
     title: "Обучение для бизнеса и продаж",
-    lead:
-      "Адамбек Нээмат — предприниматель и бизнес-аналитик: помогает разобраться в цифрах, процессах и клиентах, чтобы рост был измеримым, а не случайным. На курсах — структура, практика и обратная связь.",
+    lead: "Адамбек Нээмат — предприниматель и бизнес-аналитик: помогает разобраться в цифрах, процессах и клиентах, чтобы рост был измеримым, а не случайным. На курсах — структура, практика и обратная связь.",
     ctaTitle: "Свяжитесь с нами",
     ctaBody:
       "Напишите в WhatsApp или подпишитесь на Instagram — будьте в курсе новых курсов и материалов.",
@@ -39,8 +38,7 @@ const content = {
   kg: {
     kicker: "КУРСТАР",
     title: "Бизнес жана сатуу боюнча окутуу",
-    lead:
-      "Адамбек Нээмат — ишкер жана бизнес-аналитик: сандарды, процесстерди жана кардарларды түшүнүүгө жардам берет. Курстарда — түзүлүш, практика жана байланыш.",
+    lead: "Адамбек Нээмат — ишкер жана бизнес-аналитик: сандарды, процесстерди жана кардарларды түшүнүүгө жардам берет. Курстарда — түзүлүш, практика жана байланыш.",
     ctaTitle: "Биз менен байланышыңыз",
     ctaBody:
       "WhatsApp аркылуу жазыңыз же Instagram'га жазылыңыз — жаңы курстар жана материалдар жөнүндө кабардар болуңуз.",
@@ -68,13 +66,13 @@ const icons = [ChartLine, TrendingUp, ClipboardList];
 
 // Instagram SVG Icon - No external dependencies
 const InstagramIcon = () => (
-  <svg 
-    className="h-5 w-5 shrink-0" 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
+  <svg
+    className="h-5 w-5 shrink-0"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
     strokeLinejoin="round"
   >
     <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -170,12 +168,12 @@ export const Courses = () => {
           <p className="mb-8 text-base leading-relaxed text-blue-100 md:text-lg">
             {t.ctaBody}
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             {/* WhatsApp Button */}
             <button
               type="button"
               onClick={openWa}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition hover:bg-blue-50 hover:shadow-xl active:scale-[0.98] sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition-all duration-300 hover:bg-blue-50 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
             >
               <MessageCircle className="h-5 w-5 shrink-0" />
               {t.whatsappButton}
@@ -185,7 +183,7 @@ export const Courses = () => {
             <button
               type="button"
               onClick={openInstagram}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-8 py-4 text-base font-bold text-white shadow-lg transition hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
             >
               <InstagramIcon />
               {t.instagramButton}
@@ -193,6 +191,8 @@ export const Courses = () => {
           </div>
           <p className="mt-5 text-xs text-blue-200/90">{t.ctaNote}</p>
         </motion.div>
+
+        
       </div>
     </section>
   );

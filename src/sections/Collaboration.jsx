@@ -76,9 +76,11 @@ export const Collaboration = () => {
       const container = scrollContainerRef.current;
       const currentScroll = container.scrollLeft;
       const maxScrollValue = container.scrollWidth - container.clientWidth;
+      
       setScrollPosition(currentScroll);
       setMaxScroll(maxScrollValue);
 
+      // Рассчитываем индекс активной карточки для точек
       const cardWidth = 320 + 24; 
       const newIndex = Math.round(currentScroll / cardWidth);
       setActiveIndex(Math.min(newIndex, partners.length - 1));
@@ -88,10 +90,12 @@ export const Collaboration = () => {
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (container) {
-      updateScrollInfo();
+      // Задержка, чтобы DOM успел отрисоваться и размеры были точными
+      const timer = setTimeout(updateScrollInfo, 100);
       container.addEventListener("scroll", updateScrollInfo);
       window.addEventListener("resize", updateScrollInfo);
       return () => {
+        clearTimeout(timer);
         container.removeEventListener("scroll", updateScrollInfo);
         window.removeEventListener("resize", updateScrollInfo);
       };
@@ -112,8 +116,9 @@ export const Collaboration = () => {
   };
 
   return (
-    <section id="collaboration" className="py-24 bg-white overflow-hidden">
+    <section id="projects" className="py-24 bg-white overflow-hidden scroll-mt-20">
       <div className="w-full">
+        {/* Заголовок */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -129,22 +134,21 @@ export const Collaboration = () => {
         </motion.div>
 
         <div className="relative group">
-          {/* Left Button - Hidden on Desktop Center */}
+          {/* Кнопка Влево (только мобилки) */}
           <button
             onClick={() => scroll("left")}
             className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg transition-all duration-300 md:hidden ${
-              scrollPosition <= 0 ? "opacity-30" : "opacity-100"
+              scrollPosition <= 5 ? "opacity-0 pointer-events-none" : "opacity-100"
             }`}
-            disabled={scrollPosition <= 0}
           >
             <ChevronLeft className="w-5 h-5 text-gray-700" />
           </button>
 
+          {/* Контейнер со скроллом */}
           <div
             ref={scrollContainerRef}
-            className="overflow-x-auto pb-8 scrollbar-custom scroll-smooth no-scrollbar"
+            className="overflow-x-auto pb-8 scroll-smooth no-scrollbar snap-x snap-mandatory"
           >
-            {/* md:justify-center центрирует карточки на ноутах */}
             <div className="flex gap-6 min-w-full px-6 md:justify-center">
               {partners.map((p, index) => (
                 <motion.div
@@ -153,16 +157,22 @@ export const Collaboration = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="w-[280px] sm:w-[320px] flex-shrink-0"
+                  className="w-[280px] sm:w-[320px] flex-shrink-0 snap-center"
                 >
                   <button
                     onClick={() => window.open(p.url, "_blank", "noopener,noreferrer")}
                     className="group flex w-full flex-col bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden text-left"
                   >
+                    {/* Изображение статичное */}
                     <div className="relative aspect-square overflow-hidden bg-gray-50">
-                      <img src={p.img} alt={p.handle} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      <img 
+                        src={p.img} 
+                        alt={p.handle} 
+                        className="w-full h-full object-cover" 
+                      />
                     </div>
 
+                    {/* Контент карточки */}
                     <div className="p-6">
                       <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white shadow-md mb-4">
                         <InstagramGlyph className="h-5 w-5" />
@@ -177,8 +187,11 @@ export const Collaboration = () => {
                         {language === "kg" ? p.descKg : p.descRu}
                       </p>
 
+                      {/* Футер карточки (CTA) */}
                       <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-blue-600">{t.cta}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-blue-600">
+                          {t.cta}
+                        </span>
                         <ExternalLink size={14} className="text-gray-300 group-hover:text-blue-500 transition-colors" />
                       </div>
                     </div>
@@ -188,24 +201,30 @@ export const Collaboration = () => {
             </div>
           </div>
 
-          {/* Right Button - Hidden on Desktop Center */}
+          {/* Кнопка Вправо (только мобилки) */}
           <button
             onClick={() => scroll("right")}
             className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg transition-all duration-300 md:hidden ${
-              scrollPosition >= maxScroll - 10 ? "opacity-30" : "opacity-100"
+              scrollPosition >= maxScroll - 5 ? "opacity-0 pointer-events-none" : "opacity-100"
             }`}
-            disabled={scrollPosition >= maxScroll - 10}
           >
             <ChevronRight className="w-5 h-5 text-gray-700" />
           </button>
         </div>
 
-        {/* Dots - Hidden on Desktop */}
-        <div className="flex justify-center gap-2 mt-2 md:hidden">
-          {partners.map((_, idx) => (
-            <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"}`} />
-          ))}
-        </div>
+        {/* Точки (Pagination) - скрываются, если скролл не нужен */}
+        {maxScroll > 0 && (
+          <div className="flex justify-center gap-2 mt-2 md:hidden">
+            {partners.map((_, idx) => (
+              <div 
+                key={idx} 
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"
+                }`} 
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       <style>{`
