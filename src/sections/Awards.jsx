@@ -10,9 +10,9 @@ import kutman_nurlanbek from "../assets/images/kutman_nurlanbek.jpg";
 import rahmanberdi from "../assets/images/rahmanberdi.jpg";
 import rayber_barbershop from "../assets/images/rayber_barbershop.jpg";
 import kutman_nurlanbekovich from "../assets/images/kutman_nurlanbekovich.jpg";
-import _barbershop from "../assets/images/_barbershop01.jpg"
-import turan_ned from "../assets/images/turan_ned.jpg" 
-import turan_nedvizhimost from "../assets/images/turan_nedvizh.jpg" 
+import _barbershop from "../assets/images/_barbershop01.jpg";
+import turan_ned from "../assets/images/turan_ned.jpg";
+import turan_nedvizhimost from "../assets/images/turan_nedvizh.jpg";
 
 function InstagramGlyph({ className }) {
   return (
@@ -49,7 +49,8 @@ const resultsData = {
       followers: 34000,
       role: "Владелец бизнеса",
       result: "Системные продажи",
-      description: "Внедрение системы продаж в крупнейший магазин спорттоваров.",
+      description:
+        "Внедрение системы продаж в крупнейший магазин спорттоваров.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -142,7 +143,8 @@ const resultsData = {
       followers: 34000,
       role: "Бизнес ээси",
       result: "Системалуу сатуу",
-      description: "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
+      description:
+        "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -152,7 +154,8 @@ const resultsData = {
       followers: 29000,
       role: "Топ-менеджер",
       result: "Кесиптик өсүү",
-      description: "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
+      description:
+        "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
       img: kutman_nurlanbek,
       handle: "@kutman_nurlanbek",
       insta: "https://www.instagram.com/kutman_nurlanbek/",
@@ -162,7 +165,8 @@ const resultsData = {
       followers: 16000,
       role: "Алдыңкы окуучу / Миллионер",
       result: "20k → 1M+ сом",
-      description: "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
+      description:
+        "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
       isGold: true,
       img: asanmavlonov,
       handle: "@asan_mavlonov",
@@ -222,13 +226,13 @@ const resultsData = {
 };
 const content = {
   ru: {
-    title: "УЧЕНИКОВ",
+    title: "УЧЕНИКИ",
     cta: "Смотреть отзыв",
     showAll: "Показать всех учеников →",
     hideAll: "Подождите немного, скоро будет больше",
   },
   kg: {
-    title: "ШЕКИРТТЕРДИН ИЙГИЛИГИ",
+    title: "ШАКИРТТЕРИМ",
     cta: "Пикирди көрүү",
     showAll: "Бардык шекирттерди көрүү →",
     hideAll: "Бир аз күтө тур, жакында дагы келет",

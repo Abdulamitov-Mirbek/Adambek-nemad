@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { LanguageContext } from "../context/LanguageContext";
 
 import { AiFillInstagram } from "react-icons/ai";
-import { FaWhatsapp } from "react-icons/fa"; // Иконка WhatsApp
+import { FaWhatsapp } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
-import { MdAddCall } from "react-icons/md";
+import { MdSend } from "react-icons/md";
+
+// НАСТРОЙКИ ДЛЯ TELEGRAM (ПРАВИЛЬНЫЕ)
+const TELEGRAM_BOT_TOKEN = "8465338781:AAG8jJPsRaSQV1AfJXyOX5NttsP7eCUz2R4";
+const TELEGRAM_CHAT_ID = "8362752737"; // Ваш правильный chat_id
 
 const content = {
   ru: {
@@ -17,9 +21,13 @@ const content = {
     projects: "Проекты",
     courses: "Курсы",
     connect: "Связаться",
-    newsletter: "Рассылка",
-    newsletterText: "Получайте инсайты по продажам и бизнесу",
-    emailPlaceholder: "Ваш email",
+    contactUs: "Связаться с нами",
+    fullName: "ФИО",
+    phone: "Номер телефона",
+    send: "Отправить",
+    sending: "Отправка...",
+    successMessage: "✅ Сообщение отправлено! Мы свяжемся с вами.",
+    errorMessage: "❌ Ошибка! Попробуйте позже.",
     copyright: "Все права защищены",
   },
   kg: {
@@ -32,9 +40,13 @@ const content = {
     projects: "Долбоорлор",
     courses: "Курстар",
     connect: "Байланыш",
-    newsletter: "Жаңылыктар",
-    newsletterText: "Сатуу жана бизнес боюнча инсайттарды алыңыз",
-    emailPlaceholder: "Электрондук почтаңыз",
+    contactUs: "Биз менен байланышуу",
+    fullName: "Аты-жөнү",
+    phone: "Тел номери",
+    send: "Жөнөтүү",
+    sending: "Жөнөтүлүүдө...",
+    successMessage: "✅ Кат жөнөтүлдү! Биз сизге байланышабыз.",
+    errorMessage: "❌ Катташуу! Кийинчерээк аракет кылыңыз.",
     copyright: "Бардык укуктар корголгон",
   },
 };
@@ -42,6 +54,76 @@ const content = {
 export const Footer = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phone: "",
+  });
+  const [isSending, setIsSending] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Отправка через Telegram
+  const sendToTelegram = async (fullName, phone) => {
+    const message = `📋 *Новая заявка с сайта*\n\n👤 *ФИО:* ${fullName}\n📞 *Телефон:* ${phone}\n🌐 *Язык:* ${language === "kg" ? "Кыргызча" : "Русский"}\n⏰ *Время:* ${new Date().toLocaleString()}`;
+
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: message,
+          parse_mode: "Markdown",
+        }),
+      });
+
+      const data = await response.json();
+      console.log("Telegram response:", data);
+
+      return response.ok;
+    } catch (error) {
+      console.error("Telegram error:", error);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSending(true);
+    setShowSuccess(false);
+    setShowError(false);
+
+    try {
+      const success = await sendToTelegram(formData.fullName, formData.phone);
+
+      if (success) {
+        setShowSuccess(true);
+        setFormData({ fullName: "", phone: "" });
+        setTimeout(() => setShowSuccess(false), 4000);
+      } else {
+        setShowError(true);
+        setTimeout(() => setShowError(false), 4000);
+      }
+    } catch (error) {
+      console.error("Ошибка:", error);
+      setShowError(true);
+      setTimeout(() => setShowError(false), 4000);
+    } finally {
+      setIsSending(false);
+    }
+  };
 
   return (
     <footer id="contact" className="scroll-mt-24 bg-gray-950 text-white py-16">
@@ -83,7 +165,7 @@ export const Footer = () => {
             </ul>
           </div>
 
-          {/* Колонка 3: Контакты с иконками */}
+          {/* Колонка 3: Социальные сети */}
           <div>
             <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em] text-blue-500">
               {t.connect}
@@ -118,27 +200,66 @@ export const Footer = () => {
                   className="flex items-center gap-3 hover:text-blue-400 transition-colors group"
                 >
                   <TfiEmail className="text-xl group-hover:scale-110 transition-transform" />
-                  <span className="font-mono text-sm break-all leading-tight">
-                    Email
-                  </span>
+                  <span>Email</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Колонка 4: Подписка */}
+          {/* Колонка 4: Форма */}
           <div>
             <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em] text-blue-500">
-              {t.newsletter}
+              {t.contactUs}
             </h4>
-            <p className="text-gray-400 text-xs mb-4">{t.newsletterText}</p>
-            <div className="relative">
+
+            {showSuccess && (
+              <div className="mb-4 p-3 bg-green-500/20 border border-green-500 rounded-lg text-green-400 text-xs text-center">
+                {t.successMessage}
+              </div>
+            )}
+
+            {showError && (
+              <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg text-red-400 text-xs text-center">
+                {t.errorMessage}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-3">
               <input
-                type="email"
-                placeholder={t.emailPlaceholder}
-                className="w-full px-4 py-3 rounded-xl bg-gray-900 text-white border border-gray-800 focus:outline-none focus:border-blue-500 text-sm"
+                type="text"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                placeholder={t.fullName}
+                required
+                className="w-full px-4 py-2.5 rounded-xl bg-gray-900 text-white border border-gray-800 focus:outline-none focus:border-blue-500 text-sm transition-colors"
               />
-            </div>
+
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder={t.phone}
+                required
+                className="w-full px-4 py-2.5 rounded-xl bg-gray-900 text-white border border-gray-800 focus:outline-none focus:border-blue-500 text-sm transition-colors"
+              />
+
+              <button
+                type="submit"
+                disabled={isSending}
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2.5 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSending ? (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <>
+                    <MdSend className="text-base" />
+                    {t.send}
+                  </>
+                )}
+              </button>
+            </form>
           </div>
         </div>
 
@@ -160,3 +281,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer;
