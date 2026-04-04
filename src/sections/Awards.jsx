@@ -288,18 +288,12 @@ function StoriesSection({ id, title, results, t, bgClass }) {
     };
   }, [results.length]);
 
-  const displayedResults =
-    !isMobile || showAll ? results : results.slice(0, 4);
-
-  const dotSlots = Math.min(4, results.length);
+const displayedResults = showAll ? results : results.slice(0, isMobile ? 3 : 3);
 
   if (results.length === 0) return null;
 
   return (
-    <section
-      id={id}
-      className={`scroll-mt-24 py-24 overflow-hidden ${bgClass}`}
-    >
+    <section id={id} className={`scroll-mt-24 py-24 overflow-hidden ${bgClass}`}>
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -319,9 +313,9 @@ function StoriesSection({ id, title, results, t, bgClass }) {
           <div
             ref={scrollRef}
             className={`
-              flex gap-6 overflow-x-auto pb-8 no-scrollbar
-              snap-x snap-mandatory 
-              ${!isMobile || showAll ? "md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 md:justify-center md:gap-y-12" : ""}
+              flex gap-6 overflow-x-auto pb-8 no-scrollbar snap-x snap-mandatory 
+              /* Если не мобилка ИЛИ нажато 'Показать всех' — включаем грид */
+              ${(!isMobile || showAll) ? "md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 md:justify-center md:gap-y-12" : ""}
             `}
           >
             {displayedResults.map((item, index) => (
@@ -334,6 +328,7 @@ function StoriesSection({ id, title, results, t, bgClass }) {
                 whileHover={{ y: -8 }}
                 className="w-[280px] sm:w-[320px] md:w-full flex-shrink-0 snap-center"
               >
+                {/* Карточка (остается без изменений) */}
                 <div
                   onClick={() => window.open(item.insta, "_blank")}
                   className={`group relative flex flex-col bg-white rounded-[2.5rem] border cursor-pointer transition-all duration-500 overflow-hidden h-full ${
@@ -343,109 +338,56 @@ function StoriesSection({ id, title, results, t, bgClass }) {
                   }`}
                 >
                   <div className="relative aspect-[7/9] overflow-hidden">
-                    <img
-                      src={item.img}
-                      alt={item.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                    <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
-
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30">
-                        <InstagramGlyph className="w-8 h-8 text-white" />
-                      </div>
-                    </div>
-
                     {item.isGold && (
                       <div className="absolute top-5 left-5 bg-yellow-400 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase shadow-lg">
                         Best Case
                       </div>
                     )}
                   </div>
-
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white">
                         <InstagramGlyph className="h-4 w-4" />
                       </div>
-                      <div
-                        className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-600"}`}
-                      >
+                      <div className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-600"}`}>
                         {item.result}
                       </div>
                     </div>
-
-                    <h3 className="text-xl font-black text-gray-900 uppercase leading-tight">
-                      {item.name}
-                    </h3>
-                    <p className="text-[10px] font-mono text-pink-600 font-bold mb-3">
-                      {item.handle}
-                    </p>
-                    <p className="text-gray-500 text-[11px] leading-relaxed italic mb-6">
-                      &quot;{item.description}&quot;
-                    </p>
-
+                    <h3 className="text-xl font-black text-gray-900 uppercase leading-tight">{item.name}</h3>
+                    <p className="text-[10px] font-mono text-pink-600 font-bold mb-3">{item.handle}</p>
+                    <p className="text-gray-500 text-[11px] leading-relaxed italic mb-6">"{item.description}"</p>
                     <div className="pt-4 border-t border-gray-100 flex items-center justify-between group/cta">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 group-hover:text-blue-800 transition-colors">
-                        {t.cta}
-                      </span>
-                      <ExternalLink
-                        size={14}
-                        className="text-gray-300 group-hover:text-blue-500 transition-colors"
-                      />
+                      <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 group-hover:text-blue-800 transition-colors">{t.cta}</span>
+                      <ExternalLink size={14} className="text-gray-300 group-hover:text-blue-500 transition-colors" />
                     </div>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
-
-          {canScroll && !showAll && isMobile && dotSlots > 0 && (
-            <div className="flex justify-center gap-2 mt-4">
-              {Array.from({ length: dotSlots }).map((_, idx) => (
-                <div
-                  key={idx}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeIndex === idx
-                      ? "w-6 bg-blue-600"
-                      : "w-1.5 bg-gray-200"
-                  }`}
-                />
-              ))}
-            </div>
-          )}
         </div>
 
-        {!showAll && results.length > 4 && (
-          <div className="flex justify-center mt-10">
+        {/* КНОПКА ПОКАЗАТЬ ВСЕХ / СВЕРНУТЬ */}
+        {results.length > (isMobile ? 3 : 3) && (
+          <div className="flex justify-center mt-12">
             <button
-              type="button"
-              onClick={() => setShowAll(true)}
-              className="group inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              onClick={() => setShowAll(!showAll)}
+              className={`
+                group flex items-center gap-2 px-8 py-3 rounded-full font-bold text-sm transition-all duration-300
+                ${showAll 
+                  ? "bg-gray-100 text-gray-600 hover:bg-gray-200" 
+                  : "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-105"
+                }
+              `}
             >
-              <span>{t.showAll}</span>
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-        )}
-
-        {showAll && results.length > 4 && (
-          <div className="flex justify-center mt-10">
-            <button
-              type="button"
-              onClick={() => setShowAll(false)}
-              className="group inline-flex items-center gap-2 px-8 py-3 bg-gray-100 text-gray-600 rounded-full font-bold text-sm hover:bg-gray-200 transition-all duration-300"
-            >
-              <span>{t.hideAll}</span>
+              <span>{showAll ? t.hideAll : t.showAll}</span>
+              {!showAll && <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
             </button>
           </div>
         )}
       </div>
-
-      <style>{`
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
     </section>
   );
 }

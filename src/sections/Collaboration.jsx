@@ -1,8 +1,9 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink, ChevronRight } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
+// Импорты картинок (оставь свои пути)
 import diagonalImg from "../assets/images/Dioganal.jpg";
 import electroImg from "../assets/images/Electro.jpg";
 import electroImgosh from "../assets/images/electro_adis_osh.jpg";
@@ -21,102 +22,52 @@ function InstagramGlyph({ className }) {
 }
 
 const partners = [
-  {
-    handle: "@navis.academy",
-    url: "https://www.instagram.com/navis.academy/",
-    img: navisImg,
-    labelRu: "Navis Academy",
-    labelKg: "Navis Academy",
-    descRu: "IT курсы в Бишкеке.",
-    descKg: "Бишкектеги IT курстар.",
-  },
-  {
-    handle: "@navis.academyosh",
-    url: "https://www.instagram.com/navis.academyosh/",
-    img: navisImgosh,
-    labelRu: "Navis Osh",
-    labelKg: "Navis Ош",
-    descRu: "IT курсы в Оше.",
-    descKg: "Оштогу IT курстар.",
-  },
-  {
-    handle: "@diagonal.brand",
-    url: "https://www.instagram.com/diagonal.brand/",
-    img: diagonalImg,
-    labelRu: "Diagonal KG",
-    labelKg: "Diagonal KG",
-    descRu: "Мужская одежда.",
-    descKg: "Эркектердин кийимдери.",
-  },
-  {
-    handle: "@electro.adis",
-    url: "https://www.instagram.com/electro.adis/",
-    img: electroImg,
-    labelRu: "Electro Adis",
-    labelKg: "Electro Adis",
-    descRu: "Электротехника в Бишкеке.",
-    descKg: "Электротехника Бишкек.",
-  },
-  {
-    handle: "@electro.adis_osh",
-    url: "https://www.instagram.com/electro.adis_osh/",
-    img: electroImgosh,
-    labelRu: "Electro Adis Osh",
-    labelKg: "Electro Adis Ош",
-    descRu: "Электротехника в Оше.",
-    descKg: "Электротехника Ош.",
-  },
-  {
-    handle: "@techno.adis",
-    url: "https://www.instagram.com/techno.adis/",
-    img: technoImg,
-    labelRu: "Techno Adis",
-    labelKg: "Techno Adis",
-    descRu: "Бытовая техника.",
-    descKg: "Турмуш-тиричилик техникасы.",
-  },
+  { handle: "@navis.academy", url: "https://instagram.com/navis.academy/", img: navisImg, labelRu: "Navis Academy", labelKg: "Navis Academy", descRu: "IT курсы в Бишкеке.", descKg: "Бишкектеги IT курстар." },
+  { handle: "@navis.academyosh", url: "https://instagram.com/navis.academyosh/", img: navisImgosh, labelRu: "Navis Osh", labelKg: "Navis Ош", descRu: "IT курсы в Оше.", descKg: "Оштогу IT курстар." },
+  { handle: "@diagonal.brand", url: "https://instagram.com/diagonal.brand/", img: diagonalImg, labelRu: "Diagonal KG", labelKg: "Diagonal KG", descRu: "Мужская одежда.", descKg: "Эркектердин кийимдери." },
+  { handle: "@electro.adis", url: "https://instagram.com/electro.adis/", img: electroImg, labelRu: "Electro Adis", labelKg: "Electro Adis", descRu: "Электротехника в Бишкеке.", descKg: "Электротехника Бишкек." },
+  { handle: "@electro.adis_osh", url: "https://instagram.com/electro.adis_osh/", img: electroImgosh, labelRu: "Electro Adis Osh", labelKg: "Electro Adis Ош", descRu: "Электротехника в Оше.", descKg: "Электротехника Ош." },
+  { handle: "@techno.adis", url: "https://instagram.com/techno.adis/", img: technoImg, labelRu: "Techno Adis", labelKg: "Techno Adis", descRu: "Бытовая техника.", descKg: "Турмуш-тиричилик техникасы." },
 ];
 
 const content = {
-  ru: { kicker: "СОТРУДНИЧЕСТВО", title: "Проекты", cta: "Перейти", next: "Далее" },
-  kg: { kicker: "КЫЗМАТТАШЫК", title: "Долбоорлор", cta: "Көрүү", next: "Кийинки" },
+  ru: { kicker: "СОТРУДНИЧЕСТВО", title: "Проекты", cta: "Перейти", next: "Далее →" },
+  kg: { kicker: "КЫЗМАТТАШЫК", title: "Долбоорлор", cta: "Көрүү", next: "Кийинки →" },
 };
 
 export const Collaboration = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
-  const scrollContainerRef = useRef(null);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [maxScroll, setMaxScroll] = useState(0);
+  const scrollRef = useRef(null);
+  
+  // Стейты для отслеживания возможности скролла
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const updateScrollInfo = () => {
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      setScrollPosition(container.scrollLeft);
-      setMaxScroll(container.scrollWidth - container.clientWidth);
+  const checkScroll = () => {
+    if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+      // Если прокрутили почти до конца (запас 10px)
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
     }
   };
 
   useEffect(() => {
-    const container = scrollContainerRef.current;
+    const container = scrollRef.current;
     if (container) {
-      updateScrollInfo();
-      container.addEventListener("scroll", updateScrollInfo, { passive: true });
-      window.addEventListener("resize", updateScrollInfo);
+      checkScroll();
+      container.addEventListener("scroll", checkScroll);
+      window.addEventListener("resize", checkScroll);
       return () => {
-        container.removeEventListener("scroll", updateScrollInfo);
-        window.removeEventListener("resize", updateScrollInfo);
+        container.removeEventListener("scroll", checkScroll);
+        window.removeEventListener("resize", checkScroll);
       };
     }
   }, []);
 
-  const scroll = (direction) => {
-    if (scrollContainerRef.current) {
-      const cardWidth = 304; 
-      scrollContainerRef.current.scrollBy({ 
-        left: direction === "left" ? -cardWidth : cardWidth, 
-        behavior: "smooth" 
-      });
+  const handleNextScroll = () => {
+    if (scrollRef.current) {
+      const cardWidth = 300; // Ширина карточки + отступ
+      scrollRef.current.scrollBy({ left: cardWidth, behavior: "smooth" });
     }
   };
 
@@ -124,12 +75,7 @@ export const Collaboration = () => {
     <section id="projects" className="py-24 bg-white overflow-hidden scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6">
         
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
+        <motion.div className="text-center mb-16">
           <span className="text-[10px] font-bold tracking-[0.3em] text-blue-600 uppercase bg-blue-50 px-4 py-1.5 rounded-full">
             {t.kicker}
           </span>
@@ -138,30 +84,14 @@ export const Collaboration = () => {
           </h2>
         </motion.div>
 
-        <div className="relative group/container">
-          {/* Левая кнопка */}
-          <button
-            type="button"
-            onClick={() => scroll("left")}
-            className={`absolute -left-4 top-1/2 -translate-y-1/2 z-30 bg-white border border-gray-100 shadow-xl rounded-full p-3 transition-all duration-300 hover:bg-blue-600 hover:text-white ${
-              scrollPosition <= 10 ? "opacity-0 pointer-events-none -translate-x-4" : "opacity-100"
-            }`}
-          >
-            <ChevronLeft size={24} />
-          </button>
-
-          {/* Контейнер */}
+        <div className="relative">
           <div
-            ref={scrollContainerRef}
+            ref={scrollRef}
             className="flex gap-6 overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory"
           >
             {partners.map((p, index) => (
               <motion.div
                 key={p.handle}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
                 className="w-[280px] sm:w-[320px] flex-shrink-0 snap-center"
               >
                 <div
@@ -193,37 +123,27 @@ export const Collaboration = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* Правая кнопка */}
-          <button
-            type="button"
-            onClick={() => scroll("right")}
-            className={`absolute -right-4 top-1/2 -translate-y-1/2 z-30 bg-white border border-gray-100 shadow-xl rounded-full p-3 transition-all duration-300 hover:bg-blue-600 hover:text-white ${
-              scrollPosition >= maxScroll - 10 ? "opacity-0 pointer-events-none translate-x-4" : "opacity-100"
-            }`}
-          >
-            <ChevronRight size={24} />
-          </button>
         </div>
 
-        {/* Кнопка снизу для мобилок */}
+        {/* Кнопка "Далее", которая просто скроллит */}
         <div className="flex justify-center mt-6">
-            <button
-              onClick={() => scroll("right")}
-              className={`flex items-center gap-2 px-6 py-3 bg-gray-900 text-white rounded-full font-bold text-xs transition-all active:scale-95 ${
-                scrollPosition >= maxScroll - 10 ? "opacity-30 pointer-events-none" : "opacity-100"
-              }`}
-            >
-              <span>{t.next}</span>
-              <ChevronRight size={16} />
-            </button>
+          <button
+            type="button"
+            onClick={handleNextScroll}
+            className={`
+              group inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95
+              ${!canScrollRight ? "opacity-30 grayscale pointer-events-none" : "opacity-100"}
+            `}
+          >
+            <span>{t.next}</span>
+            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
         </div>
       </div>
 
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
       `}</style>
     </section>
   );
