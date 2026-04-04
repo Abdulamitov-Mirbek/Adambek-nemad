@@ -22,13 +22,13 @@ function App() {
       <Hero />
       <div className="bg-white">
         <About />
-        <Courses />
-        <FeaturedIn />
         <Collaboration />
         <Awards />
         <Books />
-        <InTheNews />
+        <Courses />
         <VideoLibrary />
+        <InTheNews />
+        <FeaturedIn />
         <Footer />
       </div>
     </LanguageContext.Provider>
