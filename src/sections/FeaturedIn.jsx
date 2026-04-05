@@ -29,7 +29,7 @@ export const FeaturedIn = () => {
   const t = content[language];
 
   return (
-    <section className="py-16 bg-white border-y border-gray-50">
+    <section id="press" className="py-16 bg-white border-y border-gray-50">
       <div className="max-w-7xl mx-auto px-6">
         <motion.p
           initial={{ opacity: 0, y: 10 }}
