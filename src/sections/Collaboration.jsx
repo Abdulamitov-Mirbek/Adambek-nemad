@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, ChevronRight } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
-// Импорты картинок (оставь свои пути)
+// Импорты картинок
 import diagonalImg from "../assets/images/Dioganal.jpg";
 import electroImg from "../assets/images/Electro.jpg";
 import electroImgosh from "../assets/images/electro_adis_osh.jpg";
@@ -39,35 +39,37 @@ export const Collaboration = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
   const scrollRef = useRef(null);
-  
-  // Стейты для отслеживания возможности скролла
+
+  const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const checkScroll = () => {
-    if (scrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
-      // Если прокрутили почти до конца (запас 10px)
-      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10);
-    }
+  // Основная функция обработки скролла
+  const handleScroll = () => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const { scrollLeft, scrollWidth, clientWidth } = container;
+
+    // 1. Расчет активного индекса для точек
+    // Ширина карточки (320) + gap (24) = 344. Используем это для точности.
+    const cardWidthWithGap = 344; 
+    const index = Math.round(scrollLeft / cardWidthWithGap);
+    setActiveIndex(index);
+
+    // 2. Проверка возможности скролла дальше (для кнопки)
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
   };
 
   useEffect(() => {
-    const container = scrollRef.current;
-    if (container) {
-      checkScroll();
-      container.addEventListener("scroll", checkScroll);
-      window.addEventListener("resize", checkScroll);
-      return () => {
-        container.removeEventListener("scroll", checkScroll);
-        window.removeEventListener("resize", checkScroll);
-      };
-    }
+    // Вызываем один раз при загрузке, чтобы проверить состояние кнопки
+    handleScroll();
+    window.addEventListener("resize", handleScroll);
+    return () => window.removeEventListener("resize", handleScroll);
   }, []);
 
   const handleNextScroll = () => {
     if (scrollRef.current) {
-      const cardWidth = 300; // Ширина карточки + отступ
-      scrollRef.current.scrollBy({ left: cardWidth, behavior: "smooth" });
+      const cardWidthWithGap = 344;
+      scrollRef.current.scrollBy({ left: cardWidthWithGap, behavior: "smooth" });
     }
   };
 
@@ -85,11 +87,13 @@ export const Collaboration = () => {
         </motion.div>
 
         <div className="relative">
+          {/* ВАЖНО: Добавлен onScroll={handleScroll} */}
           <div
             ref={scrollRef}
+            onScroll={handleScroll}
             className="flex gap-6 overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory"
           >
-            {partners.map((p, index) => (
+            {partners.map((p) => (
               <motion.div
                 key={p.handle}
                 className="w-[280px] sm:w-[320px] flex-shrink-0 snap-center"
@@ -125,7 +129,19 @@ export const Collaboration = () => {
           </div>
         </div>
 
-        {/* Кнопка "Далее", которая просто скроллит */}
+        {/* Индикаторы-точки */}
+        <div className="flex justify-center gap-2 mt-4 mb-6">
+          {partners.map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"
+              }`}
+            />
+          ))}
+        </div>
+
+        {/* Кнопка управления */}
         <div className="flex justify-center mt-6">
           <button
             type="button"

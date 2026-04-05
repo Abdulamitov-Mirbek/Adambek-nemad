@@ -1,19 +1,19 @@
 import React, { useContext, useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, ChevronRight } from "lucide-react";
+import { ExternalLink, ChevronRight } from "lucide-react"; // Если lucide-react, замени обратно
 import { LanguageContext } from "../context/LanguageContext";
 
+// Импорты картинок
 import asanmavlonov from "../assets/images/asanmavlonov.jpg";
 import azasport from "../assets/images/azasport.jpg";
 import kutman_nurlanbek from "../assets/images/kutman_nurlanbek.jpg";
 import rahmanberdi from "../assets/images/rahmanberdi.jpg";
 import rayber_barbershop from "../assets/images/rayber_barbershop.jpg";
 import kutman_nurlanbekovich from "../assets/images/kutman_nurlanbekovich.jpg";
-import _barbershop from "../assets/images/_barbershop01.jpg"
-import turan_ned from "../assets/images/turan_ned.jpg" 
-import turan_nedvizhimost from "../assets/images/turan_nedvizh.jpg" 
+import _barbershop from "../assets/images/_barbershop01.jpg";
+import turan_ned from "../assets/images/turan_ned.jpg";
+import turan_nedvizhimost from "../assets/images/turan_nedvizh.jpg";
 
-/** Instagram handles для кейсов компаний / брендов (остальные — ученики). */
 const ENTERPRISE_HANDLES = new Set([
   "@turan_ned",
   "@azasport_bishkek",
@@ -58,7 +58,8 @@ const resultsData = {
       followers: 34000,
       role: "Владелец бизнеса",
       result: "Системные продажи",
-      description: "Внедрение системы продаж в крупнейший магазин спорттоваров.",
+      description:
+        "Внедрение системы продаж в крупнейший магазин спорттоваров.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -151,7 +152,8 @@ const resultsData = {
       followers: 34000,
       role: "Бизнес ээси",
       result: "Системалуу сатуу",
-      description: "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
+      description:
+        "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -161,7 +163,8 @@ const resultsData = {
       followers: 29000,
       role: "Топ-менеджер",
       result: "Кесиптик өсүү",
-      description: "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
+      description:
+        "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
       img: kutman_nurlanbek,
       handle: "@kutman_nurlanbek",
       insta: "https://www.instagram.com/kutman_nurlanbek/",
@@ -171,7 +174,8 @@ const resultsData = {
       followers: 16000,
       role: "Алдыңкы окуучу / Миллионер",
       result: "20k → 1M+ сом",
-      description: "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
+      description:
+        "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
       isGold: true,
       img: asanmavlonov,
       handle: "@asan_mavlonov",
@@ -232,18 +236,14 @@ const resultsData = {
 
 const content = {
   ru: {
-    title: "УЧЕНИКИ",
     enterpriseTitle: "ПРЕДПРИЯТИЯ",
-
     title: "УЧЕНИКИ",
     cta: "Смотреть отзыв",
     showAll: "Показать все ",
     hideAll: "Свернуть",
   },
   kg: {
-    title: "ШАКИРТТЕРИМ",
     enterpriseTitle: "ИШКАНАЛАР",
-
     title: "ШAКИРТТЕР",
     cta: "Пикирди көрүү",
     showAll: "Бардыгын көрүү ",
@@ -256,7 +256,6 @@ function StoriesSection({ id, title, results, t, bgClass }) {
   const [isMobile, setIsMobile] = useState(false);
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [canScroll, setCanScroll] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -268,32 +267,21 @@ function StoriesSection({ id, title, results, t, bgClass }) {
   const handleScroll = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
-    const cardWidth = 280 + 24;
-    const index = Math.round(container.scrollLeft / cardWidth);
+    // Ширина карточки (280/320) + gap (24)
+    const cardWidth = container.querySelector("div")?.clientWidth || 300;
+    const index = Math.round(container.scrollLeft / (cardWidth + 24));
     setActiveIndex(index);
   };
 
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const checkScroll = () => {
-      setCanScroll(container.scrollWidth > container.clientWidth);
-    };
-    checkScroll();
-    container.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", checkScroll);
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", checkScroll);
-    };
-  }, [results.length]);
-
-const displayedResults = showAll ? results : results.slice(0, isMobile ? 3 : 3);
-
-  if (results.length === 0) return null;
+  const displayedResults = showAll
+    ? results
+    : results.slice(0, isMobile ? 3 : 3);
 
   return (
-    <section id={id} className={`scroll-mt-24 py-24 overflow-hidden ${bgClass}`}>
+    <section
+      id={id}
+      className={`scroll-mt-24 py-24 overflow-hidden ${bgClass}`}
+    >
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -312,10 +300,10 @@ const displayedResults = showAll ? results : results.slice(0, isMobile ? 3 : 3);
         <div className="relative">
           <div
             ref={scrollRef}
+            onScroll={handleScroll}
             className={`
               flex gap-6 overflow-x-auto pb-8 no-scrollbar snap-x snap-mandatory 
-              /* Если не мобилка ИЛИ нажато 'Показать всех' — включаем грид */
-              ${(!isMobile || showAll) ? "md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 md:justify-center md:gap-y-12" : ""}
+              ${!isMobile || showAll ? "md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 md:justify-center md:gap-y-12" : ""}
             `}
           >
             {displayedResults.map((item, index) => (
@@ -328,7 +316,6 @@ const displayedResults = showAll ? results : results.slice(0, isMobile ? 3 : 3);
                 whileHover={{ y: -8 }}
                 className="w-[280px] sm:w-[320px] md:w-full flex-shrink-0 snap-center"
               >
-                {/* Карточка (остается без изменений) */}
                 <div
                   onClick={() => window.open(item.insta, "_blank")}
                   className={`group relative flex flex-col bg-white rounded-[2.5rem] border cursor-pointer transition-all duration-500 overflow-hidden h-full ${
@@ -338,10 +325,13 @@ const displayedResults = showAll ? results : results.slice(0, isMobile ? 3 : 3);
                   }`}
                 >
                   <div className="relative aspect-[7/9] overflow-hidden">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors" />
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
                     {item.isGold && (
-                      <div className="absolute top-5 left-5 bg-yellow-400 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase shadow-lg">
+                      <div className="absolute top-5 left-5 bg-yellow-400 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase">
                         Best Case
                       </div>
                     )}
@@ -351,16 +341,26 @@ const displayedResults = showAll ? results : results.slice(0, isMobile ? 3 : 3);
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white">
                         <InstagramGlyph className="h-4 w-4" />
                       </div>
-                      <div className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-600"}`}>
+                      <div
+                        className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase ${item.isGold ? "bg-yellow-100 text-yellow-700" : "bg-blue-50 text-blue-600"}`}
+                      >
                         {item.result}
                       </div>
                     </div>
-                    <h3 className="text-xl font-black text-gray-900 uppercase leading-tight">{item.name}</h3>
-                    <p className="text-[10px] font-mono text-pink-600 font-bold mb-3">{item.handle}</p>
-                    <p className="text-gray-500 text-[11px] leading-relaxed italic mb-6">"{item.description}"</p>
-                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between group/cta">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-blue-600 group-hover:text-blue-800 transition-colors">{t.cta}</span>
-                      <ExternalLink size={14} className="text-gray-300 group-hover:text-blue-500 transition-colors" />
+                    <h3 className="text-xl font-black text-gray-900 uppercase">
+                      {item.name}
+                    </h3>
+                    <p className="text-[10px] font-mono text-pink-600 font-bold mb-3">
+                      {item.handle}
+                    </p>
+                    <p className="text-gray-500 text-[11px] leading-relaxed italic mb-6">
+                      "{item.description}"
+                    </p>
+                    <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+                      <span className="text-[10px] font-black uppercase text-blue-600">
+                        {t.cta}
+                      </span>
+                      <ExternalLink size={14} className="text-gray-300" />
                     </div>
                   </div>
                 </div>
@@ -369,21 +369,36 @@ const displayedResults = showAll ? results : results.slice(0, isMobile ? 3 : 3);
           </div>
         </div>
 
-        {/* КНОПКА ПОКАЗАТЬ ВСЕХ / СВЕРНУТЬ */}
-        {results.length > (isMobile ? 3 : 3) && (
+        {/* ТОЧКИ (ИНДИКАТОРЫ) */}
+        <div
+          className={`
+  flex justify-center gap-2 mt-6 transition-all duration-500
+  /* Скрываем точки на десктопе, если включена сетка (showAll) */
+  ${showAll ? "md:opacity-0 md:pointer-events-none" : "opacity-100"}
+`}
+        >
+          {displayedResults.map((_, idx) => (
+            <div
+              key={idx}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                // Если сетка развернута, подсвечиваем все точки тускло, либо только первую
+                activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"
+              }`}
+            />
+          ))}
+        </div>
+
+        {results.length > 3 && (
           <div className="flex justify-center mt-12">
             <button
               onClick={() => setShowAll(!showAll)}
               className={`
                 group flex items-center gap-2 px-8 py-3 rounded-full font-bold text-sm transition-all duration-300
-                ${showAll 
-                  ? "bg-gray-100 text-gray-600 hover:bg-gray-200" 
-                  : "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:scale-105"
-                }
+                ${showAll ? "bg-gray-100 text-gray-600" : "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"}
               `}
             >
               <span>{showAll ? t.hideAll : t.showAll}</span>
-              {!showAll && <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
+              {!showAll && <ChevronRight className="w-4 h-4" />}
             </button>
           </div>
         )}
