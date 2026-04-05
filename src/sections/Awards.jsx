@@ -237,7 +237,7 @@ const content = {
 
     title: "УЧЕНИКИ",
     cta: "Смотреть отзыв",
-    showAll: "Показать всех →",
+    showAll: "Показать все ",
     hideAll: "Свернуть",
   },
   kg: {
@@ -246,7 +246,7 @@ const content = {
 
     title: "ШAКИРТТЕР",
     cta: "Пикирди көрүү",
-    showAll: "Бардыгын көрүү →",
+    showAll: "Бардыгын көрүү ",
     hideAll: "Жабуу",
   },
 };
