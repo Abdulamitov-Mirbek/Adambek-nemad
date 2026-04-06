@@ -15,7 +15,7 @@ export default defineConfig({
 
   build: {
     sourcemap: false, // Обязательно отключаем карты кода
-    minify: 'terser',
+    // minify: 'terser',
     rollupOptions: {
       plugins: [
         obfuscator({
