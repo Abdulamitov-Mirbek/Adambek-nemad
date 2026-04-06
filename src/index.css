@@ -36,3 +36,25 @@
 .animate-fade-in-up {
   animation: fadeInUp 0.6s ease-out;
 }
+
+
+/* Запрет выделения текста и перетаскивания объектов */
+body {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  /* Запрет перетаскивания картинок и ссылок */
+  -webkit-user-drag: none;
+}
+
+/* Разрешить выделение только там, где оно нужно */
+input, textarea, [contenteditable="true"] {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Запрет сохранения картинок через долгое нажатие (на мобилках) */
+img {
+  -webkit-touch-callout: none;
+  pointer-events: none; /* Это полностью отключит клики по картинкам, если они не ссылки */
+}
