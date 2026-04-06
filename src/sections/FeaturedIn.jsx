@@ -1,19 +1,40 @@
 import React, { useContext } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react"; // или 'framer-motion'
+import { FaYoutube, FaInstagram } from "react-icons/fa";
 import { LanguageContext } from "../context/LanguageContext";
+
+// Кастомная иконка Instagram для соответствия стилю Lucide
+const InstagramIcon = ({ size = 24 }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
 
 const featuredPartners = [
   {
     name: "INSTAGRAM",
     link: "https://www.instagram.com/adambek.neemat",
-    icon: "📷",
-    gradient: "from-pink-500 via-red-500 to-yellow-500",
+    icon: <InstagramIcon size={48} />,
+    gradient: "from-[#f9ce34] via-[#ee2a7b] to-[#6228d7]",
+    hoverColor: "group-hover:text-[#ee2a7b]",
   },
   {
     name: "YOUTUBE",
     link: "https://www.youtube.com/@adambek.neemat",
-    icon: "▶️",
-    gradient: "from-red-600 to-red-700",
+    icon: <FaYoutube size={48} />, // ИСПРАВЛЕНО: используем импортированный FaYoutube
+    gradient: "from-[#FF0000] to-[#cc0000]",
+    hoverColor: "group-hover:text-[#FF0000]",
   },
 ];
 
@@ -24,6 +45,7 @@ const content = {
     titleGradient: "СЛЕДИТЕ ЗА НАМИ",
     description:
       "Будьте в курсе всех новостей, анонсов и бесплатных материалов",
+    footerText: "Присоединяйтесь к нам в соцсетях",
   },
   kg: {
     badge: "ЖАЗЫЛЫҢЫЗ",
@@ -31,6 +53,7 @@ const content = {
     titleGradient: "БИЗДИ КӨЗӨМӨЛДӨҢҮЗ",
     description:
       "Бардык жаңылыктар, анонстор жана акысыз материалдардан кабардар болуңуз",
+    footerText: "Соцтармактарга кошулуңуз",
   },
 };
 
@@ -46,12 +69,11 @@ export const FeaturedIn = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-20">
-        {/* Заголовок */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
           <div className="inline-block px-4 py-1.5 mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
             <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
@@ -67,12 +89,11 @@ export const FeaturedIn = () => {
             </span>
           </h2>
 
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto italic">
             {t.description}
           </p>
         </motion.div>
 
-        {/* Социальные сети */}
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
           {featuredPartners.map((social, index) => (
             <motion.div
@@ -84,41 +105,47 @@ export const FeaturedIn = () => {
               onClick={() =>
                 window.open(social.link, "_blank", "noopener,noreferrer")
               }
-              whileHover={{
-                scale: 1.05,
-                y: -5,
-              }}
+              whileHover={{ scale: 1.05, y: -5 }}
               className="group cursor-pointer"
             >
               <div
-                className={`w-40 h-40 md:w-48 md:h-48 rounded-2xl bg-gradient-to-br ${social.gradient} p-[2px] transition-all duration-300 group-hover:shadow-xl`}
+                className={`w-40 h-40 md:w-48 md:h-48 rounded-3xl bg-gradient-to-br ${social.gradient} p-[1px] transition-all duration-500 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-current`}
+                style={{
+                  // Передаем текущий цвет тени через переменную для shadow-current
+                  color: social.name === "YOUTUBE" ? "#FF0000" : "#ee2a7b",
+                }}
               >
-                <div className="w-full h-full rounded-2xl bg-black/90 backdrop-blur-sm flex flex-col items-center justify-center gap-3 transition-all duration-300 group-hover:bg-black/70">
-                  <span className="text-5xl md:text-6xl">{social.icon}</span>
-                  <span
-                    className={`text-sm md:text-base font-bold tracking-wider text-white`}
-                  >
-                    {social.name}
-                  </span>
-                  <div className="w-8 h-[2px] bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="relative w-full h-full rounded-3xl bg-[#0a0a0a] overflow-hidden flex flex-col items-center justify-center gap-4 transition-all duration-500">
+                  {/* Слой заливки, который плавно появляется при ховере */}
+                  <div
+                    className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${social.gradient}`}
+                  />
+
+                  {/* Контент (z-10 чтобы быть над градиентом выше) */}
+                  <div className="relative z-10 flex flex-col items-center gap-4">
+                    <div className="text-white transition-transform duration-300 group-hover:scale-110">
+                      {social.icon}
+                    </div>
+                    <span className="text-xs md:text-sm font-black tracking-[0.2em] text-white uppercase">
+                      {social.name}
+                    </span>
+                    <div className="w-10 h-[1px] bg-white/20 group-hover:bg-white/60 transition-colors" />
+                  </div>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Декоративный элемент снизу */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="text-center mt-16"
+          className="text-center mt-20"
         >
-          <p className="text-xs text-gray-500 tracking-wider">
-            {language === "ru"
-              ? "Присоединяйтесь к нам в соцсетях"
-              : "Соцтармактарга кошулуңуз"}
+          <p className="text-[10px] text-gray-500 uppercase tracking-[0.3em] font-medium">
+            {t.footerText}
           </p>
         </motion.div>
       </div>
