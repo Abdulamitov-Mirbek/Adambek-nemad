@@ -101,12 +101,12 @@ export const VideoLibrary = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-16 max-w-3xl text-center"
+          className="mx-auto mb-10 max-w-3xl text-center"
         >
-          <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-blue-100 bg-blue-50 px-6 py-2 text-xs font-bold tracking-[0.2em] text-blue-700 uppercase">
+          <div className="mb-3 inline-flex items-center gap-3 rounded-full border border-blue-100 bg-blue-50 px-6 py-2 text-xs font-bold tracking-[0.2em] text-blue-700 uppercase">
             {t.kicker}
           </div>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-6 uppercase">
+          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-3 uppercase">
             {t.title}
           </h2>
           <p className="text-lg text-gray-600 leading-relaxed opacity-80">{t.lead}</p>
