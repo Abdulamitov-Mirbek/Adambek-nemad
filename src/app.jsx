@@ -15,6 +15,9 @@ import { VideoLibrary } from "./sections/VideoLibrary";
 
 function App() {
   const [language, setLanguage] = useState("ru");
+  useEffect(() => {
+    document.body.classList.add('animate-fade-in-up');
+  }, []);
 
   // useEffect(() => {
   //   const handleContextMenu = (e) => {
