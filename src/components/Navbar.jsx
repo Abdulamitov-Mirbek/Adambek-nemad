@@ -22,7 +22,6 @@ const content = {
     about: "Обо мне",
     projects: "Проекты",
     students: "Ученики",
-    enterprises: "Предприятия",
     books: "Книги",
     course: "Курс",
     reviews: "Отзывы",
@@ -35,7 +34,6 @@ const content = {
     about: "Мен жөнүндө",
     projects: "Долбоорлор",
     students: "Шакирттер",
-    enterprises: "Ишканалар",
     books: "Китептер",
     course: "Курс",
     reviews: "Пикирлер",
@@ -54,12 +52,6 @@ export const Navbar = () => {
     { name: t.about, href: "#about", icon: <User size={22} /> },
     { name: t.projects, href: "#projects", icon: <FolderKanban size={22} /> },
     { name: t.students, href: "#students", icon: <Users size={22} /> },
-
-    {
-      name: t.enterprises,
-      href: "#enterprises",
-      icon: <Building2 size={22} />,
-    },
     { name: t.books, href: "#books", icon: <BookOpen size={22} /> },
     { name: t.course, href: "#courses", icon: <GraduationCap size={22} /> },
     {

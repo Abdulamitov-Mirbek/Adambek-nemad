@@ -18,7 +18,7 @@ const content = {
     ctaBody:
       "Напишите в WhatsApp или подпишитесь на Instagram — будьте в курсе новых курсов и материалов.",
     whatsappButton: "Написать в WhatsApp",
-    instagramButton: "Подписаться в Instagram",
+    instagramButton: "Перейти в Instagram",
     ctaNote: "Ответим в рабочее время · без обязательств на первом сообщении",
     features: [
       {
@@ -43,7 +43,7 @@ const content = {
     ctaBody:
       "WhatsApp аркылуу жазыңыз же Instagram'га жазылыңыз — жаңы курстар жана материалдар жөнүндө кабардар болуңуз.",
     whatsappButton: "WhatsApp аркылуу жазуу",
-    instagramButton: "Instagram'га жазылуу",
+    instagramButton: "Instagram'га ",
     ctaNote: "Жумуш убактысында жооп беребиз · биринчи кабарда милдеттүү эмес",
     features: [
       {
