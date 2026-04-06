@@ -93,10 +93,11 @@ export const VideoLibrary = () => {
   };
 
   return (
-    <section id="videos" className="scroll-mt-24 py-24 bg-white overflow-hidden">
+    <section  className="scroll-mt-24 py-24 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
         <motion.div
+        id="videos"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -111,7 +112,7 @@ export const VideoLibrary = () => {
           <p className="text-lg text-gray-600 leading-relaxed opacity-80">{t.lead}</p>
         </motion.div>
 
-        <div className="relative group/container">
+        <div  className="relative group/container">
           {/* Стрелка Влево - видна на десктопах при ховере */}
           <button
             onClick={() => scroll("left")}
