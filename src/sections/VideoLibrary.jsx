@@ -34,14 +34,16 @@ function getThumbCandidates(id) {
 
 const content = {
   ru: {
-    kicker: "ОТЗЫВЫ",
-    title: "Видео-отзывы",
-    lead: "Нажмите на карточку, чтобы запустить плеер.",
+    badge: "ВИДЕОКОНТЕНТ",
+    title: "ВИДЕО-ОТЗЫВЫ",
+    titleGradient: "КЛИЕНТОВ",
+    lead: "Реальные истории успеха наших учеников. Нажмите на карточку, чтобы запустить видео.",
   },
   kg: {
-    kicker: "ПИКИРЛЕР",
-    title: "Видео-пикирлер",
-    lead: "Плеерди иштетүү үчүн карточканы басыңыз.",
+    badge: "ВИДЕОКОНТЕНТ",
+    title: "ВИДЕО-ПИКИРЛЕР",
+    titleGradient: "КЛИЕНТТЕРДИН",
+    lead: "Окуучуларыбыздын чыныгы ийгилик тарыхтары. Видеону көрүү үчүн карточканы басыңыз.",
   },
 };
 
@@ -65,7 +67,6 @@ export const VideoLibrary = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       setScrollInfo({ current: scrollLeft, max: scrollWidth - clientWidth });
-
       const cardWidth = 280 + 24; 
       setActiveIndex(Math.round(scrollLeft / cardWidth));
     }
@@ -93,34 +94,49 @@ export const VideoLibrary = () => {
   };
 
   return (
-    <section  className="scroll-mt-24 py-24 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="videos" className="relative py-32 overflow-hidden bg-black scroll-mt-24">
+      {/* Фоновые градиенты */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-20">
         
+        {/* Заголовок */}
         <motion.div
-        id="videos"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mx-auto mb-10 max-w-3xl text-center"
+          className="mx-auto mb-12 max-w-3xl text-center"
         >
-          <div className="mb-3 inline-flex items-center gap-3 rounded-full border border-blue-100 bg-blue-50 px-6 py-2 text-xs font-bold tracking-[0.2em] text-blue-700 uppercase">
-            {t.kicker}
+          <div className="inline-block px-4 py-1.5 mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
+              {t.badge}
+            </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-3 uppercase">
-            {t.title}
+          
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-4 tracking-tighter">
+            {t.title}<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+              {t.titleGradient}
+            </span>
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed opacity-80">{t.lead}</p>
+          
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            {t.lead}
+          </p>
         </motion.div>
 
-        <div  className="relative group/container">
-          {/* Стрелка Влево - видна на десктопах при ховере */}
+        {/* Карусель видео */}
+        <div className="relative group/container">
+          {/* Стрелка Влево */}
           <button
             onClick={() => scroll("left")}
-            className={`absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-xl transition-all duration-300 hidden md:flex items-center justify-center hover:bg-blue-600 hover:text-white ${
+            className={`absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
                 scrollInfo.current <= 5 ? "opacity-0 pointer-events-none" : "opacity-0 group-hover/container:opacity-100"
             }`}
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={20} className="text-white" />
           </button>
 
           {/* Список видео */}
@@ -135,45 +151,57 @@ export const VideoLibrary = () => {
                 whileHover={{ y: -8 }}
                 onClick={() => setActiveVideo(v.id)}
               >
-                <div className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-[2.5rem] bg-gray-100 border-[6px] border-white shadow-xl transition-all hover:shadow-blue-200">
+                <div className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-800 to-gray-900 shadow-xl transition-all duration-500 hover:border-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/20">
                   <img
                     src={v.thumbCandidates[0]}
                     alt="Preview"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    onError={(e) => { e.target.src = v.thumbCandidates[1]; }}
                   />
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  
+                  {/* Play Button */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-16 w-16 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md border border-white/30 group-hover:scale-120 transition-transform">
-                      <Play className="h-8 w-8 text-white fill-current" />
+                    <div className="relative">
+                      <div className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
+                      <div className="relative h-16 w-16 flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg group-hover:scale-110 transition-transform">
+                        <Play className="h-8 w-8 text-white fill-current ml-1" />
+                      </div>
                     </div>
                   </div>
+                  
+                  {/* Bottom Label */}
                   <div className="absolute bottom-6 left-6 right-6">
-                     <p className="text-white font-bold tracking-wide uppercase text-xs opacity-80 mb-1">{t.kicker} {idx + 1}</p>
-                     <div className="h-1 w-12 bg-blue-500 rounded-full" />
+                    <p className="text-white font-bold tracking-wide text-xs opacity-80 mb-1">
+                      {language === "kg" ? "ПИКИР" : "ОТЗЫВ"} {idx + 1}
+                    </p>
+                    <div className="h-0.5 w-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          {/* Стрелка Вправо - видна на десктопах при ховере */}
+          {/* Стрелка Вправо */}
           <button
             onClick={() => scroll("right")}
-            className={`absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white rounded-full p-3 shadow-xl transition-all duration-300 hidden md:flex items-center justify-center hover:bg-blue-600 hover:text-white ${
+            className={`absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
                 scrollInfo.current >= scrollInfo.max - 5 ? "opacity-0 pointer-events-none" : "opacity-0 group-hover/container:opacity-100"
             }`}
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={20} className="text-white" />
           </button>
 
-          {/* Точки (Pagination) - всегда видны, если контента много */}
+          {/* Точки пагинации */}
           {scrollInfo.max > 0 && (
-            <div className="flex justify-center gap-2 mt-4">
+            <div className="flex justify-center gap-2 mt-6">
               {cards.map((_, idx) => (
                 <div
                   key={idx}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"
+                    activeIndex === idx 
+                      ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500" 
+                      : "w-1.5 bg-white/20"
                   }`}
                 />
               ))}
@@ -186,20 +214,24 @@ export const VideoLibrary = () => {
       <AnimatePresence>
         {activeVideo && (
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-4"
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4"
             onClick={() => setActiveVideo(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, y: 40 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 40 }}
-              className="relative w-full max-w-[400px] aspect-[9/16] bg-black rounded-3xl overflow-hidden shadow-2xl border border-white/10"
+              initial={{ scale: 0.9, y: 40 }} 
+              animate={{ scale: 1, y: 0 }} 
+              exit={{ scale: 0.9, y: 40 }}
+              className="relative w-full max-w-[400px] aspect-[9/16] bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl overflow-hidden shadow-2xl border border-white/20"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setActiveVideo(null)}
-                className="absolute top-4 right-4 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20"
+                className="absolute top-4 right-4 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors backdrop-blur-sm"
               >
-                <X size={24} />
+                <X size={20} />
               </button>
               <iframe
                 className="h-full w-full"

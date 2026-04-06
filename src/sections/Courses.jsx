@@ -11,15 +11,15 @@ import { LanguageContext } from "../context/LanguageContext";
 
 const content = {
   ru: {
-    kicker: "КУРСЫ",
-    title: "Обучение для бизнеса и продаж",
-    lead: "Адамбек Нээмат — предприниматель и бизнес-аналитик: помогает разобраться в цифрах, процессах и клиентах, чтобы рост был измеримым, а не случайным. На курсах — структура, практика и обратная связь.",
-    ctaTitle: "Свяжитесь с нами",
-    ctaBody:
-      "Напишите в WhatsApp или подпишитесь на Instagram — будьте в курсе новых курсов и материалов.",
+    badge: "ОБУЧЕНИЕ",
+    title: "КУРСЫ",
+    titleGradient: "ПРОГРАММЫ",
+    lead: "Адамбек Нээмат — предприниматель и бизнес-аналитик: помогает разобраться в цифрах, процессах и клиентах, чтобы рост был измеримым, а не случайным.",
+    ctaTitle: "Начните свой путь",
+    ctaBody: "Выберите удобный способ связи — мы подберём формат обучения под ваши задачи",
     whatsappButton: "Написать в WhatsApp",
     instagramButton: "Перейти в Instagram",
-    ctaNote: "Ответим в рабочее время · без обязательств на первом сообщении",
+    ctaNote: "Ответим в рабочее время · без обязательств",
     features: [
       {
         title: "Бизнес-аналитика",
@@ -36,15 +36,15 @@ const content = {
     ],
   },
   kg: {
-    kicker: "КУРСТАР",
-    title: "Бизнес жана сатуу боюнча окутуу",
-    lead: "Адамбек Нээмат — ишкер жана бизнес-аналитик: сандарды, процесстерди жана кардарларды түшүнүүгө жардам берет. Курстарда — түзүлүш, практика жана байланыш.",
-    ctaTitle: "Биз менен байланышыңыз",
-    ctaBody:
-      "WhatsApp аркылуу жазыңыз же Instagram'га жазылыңыз — жаңы курстар жана материалдар жөнүндө кабардар болуңуз.",
+    badge: "ОКУТУУ",
+    title: "КУРСТАР",
+    titleGradient: "ПРОГРАММАЛАР",
+    lead: "Адамбек Нээмат — ишкер жана бизнес-аналитик: сандарды, процесстерди жана кардарларды түшүнүүгө жардам берет.",
+    ctaTitle: "Сапарыңызды баштаңыз",
+    ctaBody: "Өзүңүзгө ыңгайлуу байланыш жолун тандаңыз — биз сизге ылайыктуу окуу форматын сунуштайбыз",
     whatsappButton: "WhatsApp аркылуу жазуу",
-    instagramButton: "Instagram'га ",
-    ctaNote: "Жумуш убактысында жооп беребиз · биринчи кабарда милдеттүү эмес",
+    instagramButton: "Instagram'га өтүү",
+    ctaNote: "Жумуш убактысында жооп беребиз · милдеттүү эмес",
     features: [
       {
         title: "Бизнес-аналитика",
@@ -64,7 +64,7 @@ const content = {
 
 const icons = [ChartLine, TrendingUp, ClipboardList];
 
-// Instagram SVG Icon - No external dependencies
+// Instagram SVG Icon
 const InstagramIcon = () => (
   <svg
     className="h-5 w-5 shrink-0"
@@ -100,19 +100,20 @@ export const Courses = () => {
     window.open(instagramLink, "_blank", "noopener,noreferrer");
 
   return (
-    <section
-      id="courses"
-      className="relative scroll-mt-24 overflow-hidden border-y border-gray-100 bg-gradient-to-b from-slate-50 to-white py-24 md:py-28"
-    >
-      <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 translate-x-1/3 rounded-full bg-blue-200/40 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 left-0 h-48 w-48 -translate-x-1/4 rounded-full bg-violet-200/35 blur-3xl" />
+    <section id="courses" className="relative py-32 overflow-hidden bg-black scroll-mt-24">
+      {/* Фоновые градиенты */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
 
-      <div className="container-custom relative max-w-6xl">
+      <div className="container-custom relative max-w-6xl mx-auto px-6 z-20">
+        {/* Заголовок */}
         <div className="mb-4 flex justify-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-blue-600 shadow-sm">
-            <GraduationCap className="h-4 w-4" strokeWidth={2.5} />
-            {t.kicker}
-          </span>
+          <div className="inline-block px-4 py-1.5 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
+              {t.badge}
+            </span>
+          </div>
         </div>
 
         <motion.div
@@ -122,15 +123,19 @@ export const Courses = () => {
           transition={{ duration: 0.45 }}
           className="mx-auto mb-12 max-w-3xl text-center"
         >
-          <h2 className="mb-5 text-3xl font-black tracking-tight text-gray-900 md:text-4xl">
-            {t.title}
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-4 tracking-tighter">
+            {t.title}<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+              {t.titleGradient}
+            </span>
           </h2>
-          <p className="text-lg leading-relaxed text-gray-600 md:text-xl">
+          <p className="text-lg leading-relaxed text-gray-400 md:text-xl">
             {t.lead}
           </p>
         </motion.div>
 
-        <ul className="mb-14 grid gap-5 md:grid-cols-3">
+        {/* Карточки преимуществ */}
+        <ul className="mb-14 grid gap-6 md:grid-cols-3">
           {t.features.map((f, i) => {
             const Icon = icons[i];
             return (
@@ -141,14 +146,14 @@ export const Courses = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08, duration: 0.4 }}
               >
-                <div className="h-full rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
-                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white">
-                    <Icon className="h-5 w-5" strokeWidth={2} />
+                <div className="h-full rounded-2xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-blue-500/30 hover:transform hover:-translate-y-2">
+                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
+                    <Icon className="h-6 w-6" strokeWidth={2} />
                   </div>
-                  <h3 className="mb-2 text-lg font-bold text-gray-900">
+                  <h3 className="mb-2 text-xl font-bold text-white">
                     {f.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-gray-600">
+                  <p className="text-sm leading-relaxed text-gray-400">
                     {f.text}
                   </p>
                 </div>
@@ -157,25 +162,29 @@ export const Courses = () => {
           })}
         </ul>
 
+        {/* CTA Блок */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mx-auto max-w-2xl rounded-3xl border border-blue-100 bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700 p-8 text-center text-white shadow-xl shadow-blue-900/20 md:p-10"
+          className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 backdrop-blur-sm p-8 text-center shadow-2xl md:p-10"
         >
-          <h3 className="mb-3 text-2xl font-black md:text-3xl">{t.ctaTitle}</h3>
-          <p className="mb-8 text-base leading-relaxed text-blue-100 md:text-lg">
+          <h3 className="mb-3 text-2xl font-black text-white md:text-3xl">
+            {t.ctaTitle}
+          </h3>
+          <p className="mb-8 text-base leading-relaxed text-gray-300 md:text-lg">
             {t.ctaBody}
           </p>
+          
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             {/* WhatsApp Button */}
             <button
               type="button"
               onClick={openWa}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition-all duration-300 hover:bg-blue-50 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
             >
-              <MessageCircle className="h-5 w-5 shrink-0" />
+              <MessageCircle className="h-5 w-5 shrink-0 transition-transform group-hover:scale-110" />
               {t.whatsappButton}
             </button>
 
@@ -183,16 +192,15 @@ export const Courses = () => {
             <button
               type="button"
               onClick={openInstagram}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
             >
               <InstagramIcon />
               {t.instagramButton}
             </button>
           </div>
-          <p className="mt-5 text-xs text-blue-200/90">{t.ctaNote}</p>
+          
+          <p className="mt-5 text-xs text-gray-400">{t.ctaNote}</p>
         </motion.div>
-
-        
       </div>
     </section>
   );

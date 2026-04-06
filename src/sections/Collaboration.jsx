@@ -13,7 +13,16 @@ import technoImg from "../assets/images/Techno.jpg";
 
 function InstagramGlyph({ className }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
@@ -22,17 +31,79 @@ function InstagramGlyph({ className }) {
 }
 
 const partners = [
-  { handle: "@navis.academy", url: "https://instagram.com/navis.academy/", img: navisImg, labelRu: "Navis Academy", labelKg: "Navis Academy", descRu: "IT курсы в Бишкеке.", descKg: "Бишкектеги IT курстар." },
-  { handle: "@navis.academyosh", url: "https://instagram.com/navis.academyosh/", img: navisImgosh, labelRu: "Navis Osh", labelKg: "Navis Ош", descRu: "IT курсы в Оше.", descKg: "Оштогу IT курстар." },
-  { handle: "@diagonal.brand", url: "https://instagram.com/diagonal.brand/", img: diagonalImg, labelRu: "Diagonal KG", labelKg: "Diagonal KG", descRu: "Мужская одежда.", descKg: "Эркектердин кийимдери." },
-  { handle: "@electro.adis", url: "https://instagram.com/electro.adis/", img: electroImg, labelRu: "Electro Adis", labelKg: "Electro Adis", descRu: "Электротехника в Бишкеке.", descKg: "Электротехника Бишкек." },
-  { handle: "@electro.adis_osh", url: "https://instagram.com/electro.adis_osh/", img: electroImgosh, labelRu: "Electro Adis Osh", labelKg: "Electro Adis Ош", descRu: "Электротехника в Оше.", descKg: "Электротехника Ош." },
-  { handle: "@techno.adis", url: "https://instagram.com/techno.adis/", img: technoImg, labelRu: "Techno Adis", labelKg: "Techno Adis", descRu: "Бытовая техника.", descKg: "Турмуш-тиричилик техникасы." },
+  {
+    handle: "@navis.academy",
+    url: "https://instagram.com/navis.academy/",
+    img: navisImg,
+    labelRu: "Navis Academy",
+    labelKg: "Navis Academy",
+    descRu: "IT курсы в Бишкеке.",
+    descKg: "Бишкектеги IT курстар.",
+  },
+  {
+    handle: "@navis.academyosh",
+    url: "https://instagram.com/navis.academyosh/",
+    img: navisImgosh,
+    labelRu: "Navis Osh",
+    labelKg: "Navis Ош",
+    descRu: "IT курсы в Оше.",
+    descKg: "Оштогу IT курстар.",
+  },
+  {
+    handle: "@diagonal.brand",
+    url: "https://instagram.com/diagonal.brand/",
+    img: diagonalImg,
+    labelRu: "Diagonal KG",
+    labelKg: "Diagonal KG",
+    descRu: "Мужская одежда.",
+    descKg: "Эркектердин кийимдери.",
+  },
+  {
+    handle: "@electro.adis",
+    url: "https://instagram.com/electro.adis/",
+    img: electroImg,
+    labelRu: "Electro Adis",
+    labelKg: "Electro Adis",
+    descRu: "Электротехника в Бишкеке.",
+    descKg: "Электротехника Бишкек.",
+  },
+  {
+    handle: "@electro.adis_osh",
+    url: "https://instagram.com/electro.adis_osh/",
+    img: electroImgosh,
+    labelRu: "Electro Adis Osh",
+    labelKg: "Electro Adis Ош",
+    descRu: "Электротехника в Оше.",
+    descKg: "Электротехника Ош.",
+  },
+  {
+    handle: "@techno.adis",
+    url: "https://instagram.com/techno.adis/",
+    img: technoImg,
+    labelRu: "Techno Adis",
+    labelKg: "Techno Adis",
+    descRu: "Бытовая техника.",
+    descKg: "Турмуш-тиричилик техникасы.",
+  },
 ];
 
 const content = {
-  ru: { kicker: "СОТРУДНИЧЕСТВО", title: "Проекты", cta: "Перейти", next: "Далее " },
-  kg: { kicker: "КЫЗМАТТАШЫК", title: "Долбоорлор", cta: "Көрүү", next: "Кийинки " },
+  ru: {
+    badge: "ПАРТНЕРЫ",
+    title: "ПРОЕКТЫ",
+    titleGradient: "И КОМПАНИИ",
+    cta: "Перейти",
+    next: "Далее",
+    description: "Компании, которые доверяют мне и растут вместе со мной",
+  },
+  kg: {
+    badge: "БИЗДИН ӨНӨКТӨШТӨР",
+    title: "ДОЛБООРЛОР",
+    titleGradient: "ЖАНА КОМПАНИЯЛАР",
+    cta: "Көрүү",
+    next: "Кийинки",
+    description: "Бизге ишенип, биз менен чогуу өскөн компаниялар",
+  },
 };
 
 export const Collaboration = () => {
@@ -43,24 +114,17 @@ export const Collaboration = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  // Основная функция обработки скролла
   const handleScroll = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
     const { scrollLeft, scrollWidth, clientWidth } = container;
-
-    // 1. Расчет активного индекса для точек
-    // Ширина карточки (320) + gap (24) = 344. Используем это для точности.
-    const cardWidthWithGap = 344; 
+    const cardWidthWithGap = 344;
     const index = Math.round(scrollLeft / cardWidthWithGap);
     setActiveIndex(index);
-
-    // 2. Проверка возможности скролла дальше (для кнопки)
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
   };
 
   useEffect(() => {
-    // Вызываем один раз при загрузке, чтобы проверить состояние кнопки
     handleScroll();
     window.addEventListener("resize", handleScroll);
     return () => window.removeEventListener("resize", handleScroll);
@@ -69,58 +133,100 @@ export const Collaboration = () => {
   const handleNextScroll = () => {
     if (scrollRef.current) {
       const cardWidthWithGap = 344;
-      scrollRef.current.scrollBy({ left: cardWidthWithGap, behavior: "smooth" });
+      scrollRef.current.scrollBy({
+        left: cardWidthWithGap,
+        behavior: "smooth",
+      });
     }
   };
 
   return (
-    <section id="projects" className="py-24 bg-white overflow-hidden scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-6">
-        
-        <motion.div className="text-center mb-16">
-          <span className="text-[10px] font-bold tracking-[0.3em] text-blue-600 uppercase bg-blue-50 px-4 py-1.5 rounded-full">
-            {t.kicker}
-          </span>
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900 mt-6 tracking-tighter uppercase">
+    <section
+      id="projects"
+      className="relative py-32 overflow-hidden bg-black scroll-mt-20"
+    >
+      {/* Фоновые градиенты */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-20">
+        {/* Заголовок */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <div className="inline-block px-4 py-1.5 mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
+              {t.badge}
+            </span>
+          </div>
+
+          <h2 className="text-5xl md:text-6xl font-black text-white mb-4 tracking-tighter">
             {t.title}
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+              {t.titleGradient}
+            </span>
           </h2>
+
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto mt-4">
+            {t.description}
+          </p>
         </motion.div>
 
+        {/* Карточки партнеров */}
         <div className="relative">
-          {/* ВАЖНО: Добавлен onScroll={handleScroll} */}
           <div
             ref={scrollRef}
             onScroll={handleScroll}
             className="flex gap-6 overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory"
           >
-            {partners.map((p) => (
+            {partners.map((p, idx) => (
               <motion.div
                 key={p.handle}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.05 }}
                 className="w-[280px] sm:w-[320px] flex-shrink-0 snap-center"
               >
                 <div
                   onClick={() => window.open(p.url, "_blank")}
-                  className="group flex flex-col h-full bg-white rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden text-left cursor-pointer"
+                  className="group flex flex-col h-full bg-white/5 border border-white/10 rounded-2xl hover:border-blue-500/30 transition-all duration-500 overflow-hidden text-left cursor-pointer hover:transform hover:-translate-y-2"
                 >
-                  <div className="relative aspect-square overflow-hidden bg-gray-50">
-                    <img src={p.img} alt={p.handle} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                    <div className="absolute inset-0 bg-black/5" />
+                  <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+                    <img
+                      src={p.img}
+                      alt={p.handle}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
 
                   <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white mb-4">
-                      <InstagramGlyph className="h-5 w-5" />
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                      <InstagramGlyph className="h-6 w-6" />
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 leading-tight">
+                    <h3 className="text-lg font-bold text-white leading-tight group-hover:text-blue-400 transition-colors">
                       {language === "kg" ? p.labelKg : p.labelRu}
                     </h3>
-                    <p className="text-[11px] font-mono text-pink-600 font-bold mt-1 mb-2">{p.handle}</p>
-                    <p className="text-gray-500 text-xs leading-relaxed opacity-80 line-clamp-2">
+                    <p className="text-[11px] font-mono text-pink-400 font-bold mt-1 mb-2">
+                      {p.handle}
+                    </p>
+                    <p className="text-gray-400 text-xs leading-relaxed line-clamp-2">
                       {language === "kg" ? p.descKg : p.descRu}
                     </p>
-                    <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-blue-600">{t.cta}</span>
-                      <ExternalLink size={12} className="text-gray-300" />
+                    <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-blue-400 group-hover:text-blue-300 transition-colors">
+                        {t.cta}
+                      </span>
+                      <ExternalLink
+                        size={12}
+                        className="text-gray-500 group-hover:text-blue-400 transition-colors"
+                      />
                     </div>
                   </div>
                 </div>
@@ -130,26 +236,33 @@ export const Collaboration = () => {
         </div>
 
         {/* Индикаторы-точки */}
-        <div className="flex justify-center gap-2 mt-4 mb-6">
+        <div className="flex justify-center gap-2 mt-6">
           {partners.map((_, idx) => (
             <div
               key={idx}
               className={`h-1.5 rounded-full transition-all duration-300 ${
-                activeIndex === idx ? "w-6 bg-blue-600" : "w-1.5 bg-gray-200"
+                activeIndex === idx
+                  ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500"
+                  : "w-1.5 bg-white/20"
               }`}
             />
           ))}
         </div>
 
         {/* Кнопка управления */}
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-8">
           <button
             type="button"
             onClick={handleNextScroll}
             className={`
-              group inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-bold text-sm shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95
-              ${!canScrollRight ? "opacity-30 grayscale pointer-events-none" : "opacity-100"}
+              group inline-flex items-center gap-2 px-8 py-3 rounded-full font-bold text-sm shadow-xl transition-all duration-300 hover:scale-105 active:scale-95
+              ${
+                !canScrollRight
+                  ? "bg-white/10 text-gray-500 cursor-not-allowed opacity-50"
+                  : "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-blue-500/30"
+              }
             `}
+            disabled={!canScrollRight}
           >
             <span>{t.next}</span>
             <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -160,6 +273,12 @@ export const Collaboration = () => {
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
       `}</style>
     </section>
   );
