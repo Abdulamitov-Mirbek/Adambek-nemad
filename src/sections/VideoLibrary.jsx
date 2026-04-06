@@ -97,7 +97,6 @@ export const VideoLibrary = () => {
       <div className="max-w-7xl mx-auto px-6">
         
         <motion.div
-        id="videos"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -109,7 +108,9 @@ export const VideoLibrary = () => {
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900 mb-3 uppercase">
             {t.title}
           </h2>
-          <p className="text-lg text-gray-600 leading-relaxed opacity-80">{t.lead}</p>
+          <p 
+        id="videos"
+           className="text-lg text-gray-600 leading-relaxed opacity-80">{t.lead}</p>
         </motion.div>
 
         <div  className="relative group/container">
