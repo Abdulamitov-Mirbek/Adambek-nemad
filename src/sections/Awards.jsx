@@ -249,7 +249,7 @@ export const Awards = () => {
   const displayedResults = showAll ? results : results.slice(0, 3);
 
   return (
-    <section id="awards" className="relative py-32 overflow-hidden bg-black">
+    <section id="students" className="relative py-32 overflow-hidden bg-black">
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
 
