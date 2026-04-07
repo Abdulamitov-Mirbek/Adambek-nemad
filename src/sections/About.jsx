@@ -10,7 +10,7 @@ const photos = [adambekPhoto1, adambekPhoto2, adambekPhoto3];
 
 const content = {
   ru: {
-    badge: "О НАС",
+    badge: "ОБО МНЕ",
     title: "АДАМБЕК",
     titleGradient: "НЭЭМАТ",
     description1:
@@ -65,7 +65,7 @@ export const About = () => {
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-      
+
       <div className="container-custom max-w-6xl mx-auto px-6 relative z-20">
         <div className="flex flex-col md:flex-row gap-16 items-center">
           {/* Левая колонка - фото */}
@@ -91,7 +91,7 @@ export const About = () => {
 
               {/* Градиентная накладка */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-              
+
               {/* Индикатор слайдов */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
                 {photos.map((_, idx) => (
@@ -108,9 +108,9 @@ export const About = () => {
               </div>
             </div>
 
-            {/* Декоративный элемент */}
+            {/* Декоративный элемент - ИЗМЕНЕНО с 10 на 17 */}
             <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 rounded-2xl hidden md:block shadow-xl z-20">
-              <p className="text-5xl font-black italic">10</p>
+              <p className="text-5xl font-black italic">17</p>
               <p className="text-xs uppercase tracking-widest opacity-90">
                 {language === "ru" ? "Лет в бизнесе" : "Жыл бизнесте"}
               </p>
@@ -138,7 +138,8 @@ export const About = () => {
               viewport={{ once: true }}
               className="text-5xl md:text-6xl font-black mb-6 leading-tight text-white"
             >
-              {t.title}<br />
+              {t.title}
+              <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
                 {t.titleGradient}
               </span>
@@ -153,7 +154,7 @@ export const About = () => {
               >
                 {t.description1}
               </motion.p>
-              
+
               <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -162,7 +163,7 @@ export const About = () => {
               >
                 {t.description2}
               </motion.p>
-              
+
               <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -173,7 +174,7 @@ export const About = () => {
             </div>
 
             {/* Статистика */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
@@ -217,8 +218,18 @@ export const About = () => {
                 className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-bold text-white hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105"
               >
                 {t.button}
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
                 </svg>
               </a>
             </motion.div>

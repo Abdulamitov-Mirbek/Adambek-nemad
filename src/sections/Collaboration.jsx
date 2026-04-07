@@ -32,33 +32,6 @@ function InstagramGlyph({ className }) {
 
 const partners = [
   {
-    handle: "@navis.academy",
-    url: "https://instagram.com/navis.academy/",
-    img: navisImg,
-    labelRu: "Navis Academy",
-    labelKg: "Navis Academy",
-    descRu: "IT курсы в Бишкеке.",
-    descKg: "Бишкектеги IT курстар.",
-  },
-  {
-    handle: "@navis.academyosh",
-    url: "https://instagram.com/navis.academyosh/",
-    img: navisImgosh,
-    labelRu: "Navis Osh",
-    labelKg: "Navis Ош",
-    descRu: "IT курсы в Оше.",
-    descKg: "Оштогу IT курстар.",
-  },
-  {
-    handle: "@diagonal.brand",
-    url: "https://instagram.com/diagonal.brand/",
-    img: diagonalImg,
-    labelRu: "Diagonal KG",
-    labelKg: "Diagonal KG",
-    descRu: "Мужская одежда.",
-    descKg: "Эркектердин кийимдери.",
-  },
-  {
     handle: "@electro.adis",
     url: "https://instagram.com/electro.adis/",
     img: electroImg,
@@ -77,6 +50,15 @@ const partners = [
     descKg: "Электротехника Ош.",
   },
   {
+    handle: "@navis.academy",
+    url: "https://instagram.com/navis.academy/",
+    img: navisImg,
+    labelRu: "Navis Academy",
+    labelKg: "Navis Academy",
+    descRu: "IT курсы в Бишкеке.",
+    descKg: "Бишкектеги IT курстар.",
+  },
+  {
     handle: "@techno.adis",
     url: "https://instagram.com/techno.adis/",
     img: technoImg,
@@ -84,6 +66,24 @@ const partners = [
     labelKg: "Techno Adis",
     descRu: "Бытовая техника.",
     descKg: "Турмуш-тиричилик техникасы.",
+  },
+  {
+    handle: "@diagonal.brand",
+    url: "https://instagram.com/diagonal.brand/",
+    img: diagonalImg,
+    labelRu: "Diagonal KG",
+    labelKg: "Diagonal KG",
+    descRu: "Мужская одежда.",
+    descKg: "Эркектердин кийимдери.",
+  },
+  {
+    handle: "@navis.academyosh",
+    url: "https://instagram.com/navis.academyosh/",
+    img: navisImgosh,
+    labelRu: "Navis Osh",
+    labelKg: "Navis Ош",
+    descRu: "IT курсы в Оше.",
+    descKg: "Оштогу IT курстар.",
   },
 ];
 
