@@ -14,20 +14,26 @@ export default defineConfig({
   },
 
   build: {
-    sourcemap: false, // Обязательно отключаем карты кода
-    minify: 'esbuild', // Используем встроенный минификатор
+    sourcemap: false,
+    minify: 'esbuild',
+    // Оптимизация чанков для ускорения загрузки
     rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'framer-motion'],
+        },
+      },
       plugins: [
         obfuscator({
           compact: true,
-          controlFlowFlattening: true,
-          deadCodeInjection: true,
-          debugProtection: true, // Защита от открытия DevTools
-          debugProtectionInterval: 2000,
-          disableConsoleOutput: true, // Отключает console.log в билде
+          controlFlowFlattening: false, // Выключил, т.к. сильно бьет по производительности
+          deadCodeInjection: false,    // Выключил, чтобы не раздувать размер бандла
+          debugProtection: false,      // На Vercel лучше держать выключенным, если нет строгой нужды
+          disableConsoleOutput: true, 
           identifierNamesGenerator: 'hexadecimal',
           stringArray: true,
           stringArrayThreshold: 0.75,
+          unicodeEscapeSequence: false // Важно для корректного отображения кириллицы
         }),
       ],
     },
