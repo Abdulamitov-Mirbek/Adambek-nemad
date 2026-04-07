@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import obfuscator from "rollup-plugin-javascript-obfuscator";
 
 export default defineConfig({
   plugins: [react()],
@@ -23,22 +22,6 @@ export default defineConfig({
           vendor: ["react", "react-dom", "framer-motion"],
         },
       },
-      plugins: [
-        obfuscator({
-          compact: true,
-          controlFlowFlattening: false,
-          deadCodeInjection: false,
-          debugProtection: false, // CHANGE: was true
-          debugProtectionInterval: 0,
-          disableConsoleOutput: false, // CHANGE: was true
-          identifierNamesGenerator: "mangled",
-          stringArray: true,
-          stringArrayThreshold: 0.5, // REDUCED from 0.75
-          unicodeEscapeSequence: false,
-          rotateStringArray: true,
-          selfDefending: false,
-        }),
-      ],
     },
   },
 });
