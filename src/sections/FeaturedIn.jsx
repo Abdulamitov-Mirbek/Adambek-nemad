@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { motion } from "motion/react"; // или 'framer-motion'
+import { motion } from "framer-motion"; // или 'framer-motion'
 import { FaYoutube, FaInstagram } from "react-icons/fa";
 import { LanguageContext } from "../context/LanguageContext";
 
