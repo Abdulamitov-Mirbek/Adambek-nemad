@@ -4,6 +4,12 @@ import { Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
 const videos = [
+  "https://www.youtube.com/shorts/OfMA-QJzG6A",
+  "https://youtu.be/of-JJl9Yauc",
+  "https://www.youtube.com/shorts/bCFWI_acscM",
+  "https://www.youtube.com/shorts/4b_HxfcT2nE",
+  "https://www.youtube.com/shorts/N6Z8TlRiVsY",
+  "https://www.youtube.com/shorts/yMrsSJkQhWE",
   "https://youtube.com/shorts/hGD94wr7jGc",
   "https://youtube.com/shorts/SAeUxoUbvgg",
   "https://youtube.com/shorts/eECH5n8TnkA",
