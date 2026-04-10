@@ -1,34 +1,46 @@
 import React, { useContext, useMemo, useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, X, ChevronLeft, ChevronRight } from "lucide-react"; 
+import { Play, X, ChevronLeft, ChevronRight } from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
 
 const videos = [
-  "https://www.youtube.com/shorts/OfMA-QJzG6A",
-  "https://youtu.be/of-JJl9Yauc",
-  "https://www.youtube.com/shorts/bCFWI_acscM",
-  "https://www.youtube.com/shorts/4b_HxfcT2nE",
-  "https://www.youtube.com/shorts/N6Z8TlRiVsY",
-  "https://www.youtube.com/shorts/yMrsSJkQhWE",
+  "https://youtube.com/shorts/hGD94wr7jGc",
+  "https://youtube.com/shorts/SAeUxoUbvgg",
+  "https://youtube.com/shorts/eECH5n8TnkA",
+  "https://youtube.com/shorts/lMpMAmgp-W4",
+  "https://youtube.com/shorts/ozSxEFqfxog",
+  "https://youtube.com/shorts/cRh1GIhOlzc",
+  "https://youtube.com/shorts/FuSeZFgdBnU",
+  "https://youtube.com/shorts/SfBJjNtNME8",
+  "https://youtube.com/shorts/YoerIvssug4",
+  "https://youtube.com/shorts/-bigux1daTA",
+  "https://youtube.com/shorts/Q-eXF2k0mwQ",
 ];
 
 function getVideoId(url) {
   try {
-    const u = new URL(url);
+    // Очищаем URL от параметров типа ?si=...
+    const cleanUrl = url.split("?")[0];
+    const u = new URL(cleanUrl);
     if (u.hostname.includes("youtu.be")) return u.pathname.replace("/", "");
     const parts = u.pathname.split("/").filter(Boolean);
     const idx = parts.indexOf("shorts");
     if (idx !== -1 && parts[idx + 1]) return parts[idx + 1];
     if (u.searchParams.get("v")) return u.searchParams.get("v");
+    return parts[parts.length - 1] || "";
+  } catch {
     return "";
-  } catch { return ""; }
+  }
 }
 
 function getThumbCandidates(id) {
   if (!id) return [];
+  // Порядок важен: сначала пробуем Максимум, потом Высокое
   return [
-    `https://img.youtube.com/vi/${id}/maxresdefault.jpg`,
-    `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+    `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`, // Максимальное (пробуем первым)
+    `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, // Высокое ( fallback №1, обычно самое сочное для Shorts)
+    `https://i.ytimg.com/vi/${id}/sddefault.jpg`, // Стандартное (fallback №2)
+    `https://i.ytimg.com/vi/${id}/mqdefault.jpg`, // Среднее (fallback №3)
   ];
 }
 
@@ -51,23 +63,25 @@ export const VideoLibrary = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
   const [activeVideo, setActiveVideo] = useState(null);
-  
+
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [scrollInfo, setScrollInfo] = useState({ current: 0, max: 0 });
 
-  const cards = useMemo(() =>
-    videos.map((url) => {
-      const id = getVideoId(url);
-      return { url, id, thumbCandidates: getThumbCandidates(id) };
-    }), []
+  const cards = useMemo(
+    () =>
+      videos.map((url) => {
+        const id = getVideoId(url);
+        return { url, id, thumbCandidates: getThumbCandidates(id) };
+      }),
+    [],
   );
 
   const updateScrollStatus = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       setScrollInfo({ current: scrollLeft, max: scrollWidth - clientWidth });
-      const cardWidth = 280 + 24; 
+      const cardWidth = 280 + 24;
       setActiveIndex(Math.round(scrollLeft / cardWidth));
     }
   };
@@ -94,15 +108,14 @@ export const VideoLibrary = () => {
   };
 
   return (
-    <section id="videos" className="relative py-32 overflow-hidden bg-black scroll-mt-24">
-      {/* Фоновые градиенты */}
+    <section
+      id="videos"
+      className="relative py-32 overflow-hidden bg-black scroll-mt-24"
+    >
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-20">
-        
-        {/* Заголовок */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -114,53 +127,74 @@ export const VideoLibrary = () => {
               {t.badge}
             </span>
           </div>
-          
+
           <h2 className="text-5xl md:text-6xl font-black text-white mb-4 tracking-tighter">
-            {t.title}<br />
+            {t.title}
+            <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
               {t.titleGradient}
             </span>
           </h2>
-          
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            {t.lead}
-          </p>
+
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">{t.lead}</p>
         </motion.div>
 
-        {/* Карусель видео */}
         <div className="relative group/container">
-          {/* Стрелка Влево */}
           <button
             onClick={() => scroll("left")}
             className={`absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
-                scrollInfo.current <= 5 ? "opacity-0 pointer-events-none" : "opacity-0 group-hover/container:opacity-100"
+              scrollInfo.current <= 5
+                ? "opacity-0 pointer-events-none"
+                : "opacity-0 group-hover/container:opacity-100"
             }`}
           >
             <ChevronLeft size={20} className="text-white" />
           </button>
 
-          {/* Список видео */}
-          <div 
+          <div
             ref={scrollRef}
             className="flex gap-6 overflow-x-auto pb-10 scroll-smooth snap-x snap-mandatory no-scrollbar relative z-0"
           >
             {cards.map((v, idx) => (
               <motion.div
-                key={v.id}
+                key={`${v.id}-${idx}`}
                 className="min-w-[280px] md:min-w-[320px] snap-center"
                 whileHover={{ y: -8 }}
                 onClick={() => setActiveVideo(v.id)}
               >
                 <div className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-800 to-gray-900 shadow-xl transition-all duration-500 hover:border-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/20">
                   <img
-                    src={v.thumbCandidates[0]}
+                    src={v.thumbCandidates[0]} // Всегда пробуем maxresdefault
                     alt="Preview"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    onError={(e) => { e.target.src = v.thumbCandidates[1]; }}
+                    onLoad={(e) => {
+                      // Если YouTube отдал "битую" заглушку (маленькая ширина 120px)
+                      if (e.target.naturalWidth === 120) {
+                        // Ищем текущую ссылку в списке кандидатов
+                        const currentSrc = e.target.src;
+                        const idx = v.thumbCandidates.indexOf(currentSrc);
+
+                        // Если есть куда падать по качеству, падаем
+                        if (idx !== -1 && idx < v.thumbCandidates.length - 1) {
+                          e.target.src = v.thumbCandidates[idx + 1];
+                        }
+                      }
+                    }}
+                    onError={(e) => {
+                      // Если ссылка вообще не открылась (404), делаем то же самое
+                      const currentSrc = e.target.src;
+                      const idx = v.thumbCandidates.indexOf(currentSrc);
+                      if (idx !== -1 && idx < v.thumbCandidates.length - 1) {
+                        e.target.src = v.thumbCandidates[idx + 1];
+                      } else {
+                        // Если совсем всё плохо, ставим темный фон
+                        e.target.src =
+                          "https://via.placeholder.com/360x640/0f0f0f/0f0f0f";
+                      }
+                    }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  
-                  {/* Play Button */}
+
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative">
                       <div className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
@@ -169,8 +203,7 @@ export const VideoLibrary = () => {
                       </div>
                     </div>
                   </div>
-                  
-                  {/* Bottom Label */}
+
                   <div className="absolute bottom-6 left-6 right-6">
                     <p className="text-white font-bold tracking-wide text-xs opacity-80 mb-1">
                       {language === "kg" ? "ПИКИР" : "ОТЗЫВ"} {idx + 1}
@@ -182,25 +215,25 @@ export const VideoLibrary = () => {
             ))}
           </div>
 
-          {/* Стрелка Вправо */}
           <button
             onClick={() => scroll("right")}
             className={`absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
-                scrollInfo.current >= scrollInfo.max - 5 ? "opacity-0 pointer-events-none" : "opacity-0 group-hover/container:opacity-100"
+              scrollInfo.current >= scrollInfo.max - 5
+                ? "opacity-0 pointer-events-none"
+                : "opacity-0 group-hover/container:opacity-100"
             }`}
           >
             <ChevronRight size={20} className="text-white" />
           </button>
 
-          {/* Точки пагинации */}
           {scrollInfo.max > 0 && (
             <div className="flex justify-center gap-2 mt-6">
               {cards.map((_, idx) => (
                 <div
                   key={idx}
                   className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeIndex === idx 
-                      ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500" 
+                    activeIndex === idx
+                      ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500"
                       : "w-1.5 bg-white/20"
                   }`}
                 />
@@ -210,19 +243,18 @@ export const VideoLibrary = () => {
         </div>
       </div>
 
-      {/* MODAL PLAYER */}
       <AnimatePresence>
         {activeVideo && (
           <motion.div
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4"
             onClick={() => setActiveVideo(null)}
           >
             <motion.div
-              initial={{ scale: 0.9, y: 40 }} 
-              animate={{ scale: 1, y: 0 }} 
+              initial={{ scale: 0.9, y: 40 }}
+              animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 40 }}
               className="relative w-full max-w-[400px] aspect-[9/16] bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-3xl overflow-hidden shadow-2xl border border-white/20"
               onClick={(e) => e.stopPropagation()}
