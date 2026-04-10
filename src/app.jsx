@@ -59,7 +59,7 @@ function App() {
         <About />
         <Collaboration />
         <Awards />
-        {/* <Books /> */}
+        <Books />
         <Courses />
         <VideoLibrary />
         <InTheNews />

@@ -107,7 +107,6 @@ const AwardCard = ({ item, t, isMobile }) => {
   );
 };
 
-// ... resultsData и content (без изменений, оставляем твои)
 
 const resultsData = {
   ru: [
