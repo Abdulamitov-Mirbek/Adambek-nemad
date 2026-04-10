@@ -17,7 +17,15 @@ import smartcamera from "../assets/images/smartcamera.jpg";
 
 function InstagramGlyph({ className }) {
   return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -72,6 +80,7 @@ const AwardCard = ({ item, t, isMobile }) => {
           <img
             src={item.img}
             alt={item.name}
+            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90" />
@@ -92,14 +101,21 @@ const AwardCard = ({ item, t, isMobile }) => {
           <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1 group-hover:text-blue-400 transition-colors relative z-20">
             {item.name}
           </h3>
-          <p className="text-[11px] font-medium text-blue-400/70 mb-3 tracking-wide relative z-20">{item.handle}</p>
-          <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-grow relative z-20 italic">"{item.description}"</p>
+          <p className="text-[11px] font-medium text-blue-400/70 mb-3 tracking-wide relative z-20">
+            {item.handle}
+          </p>
+          <p className="text-white/80 text-sm leading-relaxed mb-6 flex-grow relative z-20 italic">
+            "{item.description}"
+          </p>
 
           <div className="pt-4 border-t border-white/5 flex items-center justify-between relative z-20">
             <span className="text-xs font-bold uppercase tracking-widest text-white/50 group-hover:text-blue-400 transition-colors">
               {t.cta}
             </span>
-            <ExternalLink size={16} className="text-white/30 group-hover:text-blue-400 transition-all" />
+            <ExternalLink
+              size={16}
+              className="text-white/30 group-hover:text-blue-400 transition-all"
+            />
           </div>
         </div>
       </div>
@@ -107,37 +123,197 @@ const AwardCard = ({ item, t, isMobile }) => {
   );
 };
 
-
 const resultsData = {
   ru: [
-    { name: "Асан Мавлонов", result: "20k → 1M+ сом", description: "Прошел путь от скромной зарплаты до статуса миллионера.", img: asanmavlonov, handle: "@asan_mavlonov", insta: "https://www.instagram.com/asan_mavlonov/" },
-    { name: "Кутман Нурланбек", result: "Профессиональный рост", description: "Закрытие крупных сделок и внедрение скриптов Адамбека.", img: kutman_nurlanbek, handle: "@kutman_nurlanbek", insta: "https://www.instagram.com/kutman_nurlanbek/" },
-    { name: "elitcamera", result: "Лидер продаж", description: "Масштабирование магазина систем видеонаблюдения через контент.", img: elitcamera, handle: "@elitcamera.kg", insta: "https://www.instagram.com/elitcamera.kg/" },
-    { name: "smartcamera", result: "Системный маркетинг", description: "Автоматизация привлечения клиентов и создание узнаваемого бренда.", img: smartcamera, handle: "@smartcamera.kg", insta: "https://www.instagram.com/smartcamera.kg/" },
-    { name: "turan_ned", result: "Масштабный рост", description: "Лидер рынка в нише зарубежной недвижимости и инвестиций.", img: turan_ned, handle: "@turan_ned", insta: "https://www.instagram.com/turan_ned/" },
-    { name: "Aza Sport", result: "Системные продажи", description: "Внедрение системы продаж в крупнейший магазин спорттоваров.", img: azasport, handle: "@azasport_bishkek", insta: "https://www.instagram.com/azasport_bishkek/" },
-    { name: "turan_nedvizhimost", result: "Сильный бренд", description: "Создание качественного медиа-присутствия в сфере жилья.", img: turan_nedvizhimost, handle: "@turan_nedvizhimost", insta: "https://www.instagram.com/turan_nedvizhimost/" },
-    { name: "_barbershop01.kg", result: "Лояльные клиенты", description: "Построение системы сервиса и стабильного потока записей.", img: _barbershop, handle: "@_barbershop01.kg", insta: "https://www.instagram.com/_barbershop01.kg/" },
-    { name: "Rayber Barber", result: "Масштабирование", description: "Построил сильный бренд и наладил поток лояльных клиентов.", img: rayber_barbershop, handle: "@rayber_barbershop", insta: "https://www.instagram.com/rayber_barbershop/" },
-    { name: "Рахманберди", result: "Результат х3", description: "Увеличил личный доход и масштаб бизнеса после обучения.", img: rahmanberdi, handle: "@rahmanberdi_mavlonov", insta: "https://www.instagram.com/rahmanberdi_mavlonov/" },
+    {
+      name: "Асан Мавлонов",
+      result: "20k → 1M+ сом",
+      description: "Прошел путь от скромной зарплаты до статуса миллионера.",
+      img: asanmavlonov,
+      handle: "@asan_mavlonov",
+      insta: "https://www.instagram.com/asan_mavlonov/",
+    },
+    {
+      name: "Кутман Нурланбек",
+      result: "Профессиональный рост",
+      description: "Закрытие крупных сделок и внедрение скриптов Адамбека.",
+      img: kutman_nurlanbek,
+      handle: "@kutman_nurlanbek",
+      insta: "https://www.instagram.com/kutman_nurlanbek/",
+    },
+    {
+      name: "elitcamera",
+      result: "Лидер продаж",
+      description:
+        "Масштабирование магазина систем видеонаблюдения через контент.",
+      img: elitcamera,
+      handle: "@elitcamera.kg",
+      insta: "https://www.instagram.com/elitcamera.kg/",
+    },
+    {
+      name: "smartcamera",
+      result: "Системный маркетинг",
+      description:
+        "Автоматизация привлечения клиентов и создание узнаваемого бренда.",
+      img: smartcamera,
+      handle: "@smartcamera.kg",
+      insta: "https://www.instagram.com/smartcamera.kg/",
+    },
+    {
+      name: "turan_ned",
+      result: "Масштабный рост",
+      description: "Лидер рынка в нише зарубежной недвижимости и инвестиций.",
+      img: turan_ned,
+      handle: "@turan_ned",
+      insta: "https://www.instagram.com/turan_ned/",
+    },
+    {
+      name: "Aza Sport",
+      result: "Системные продажи",
+      description:
+        "Внедрение системы продаж в крупнейший магазин спорттоваров.",
+      img: azasport,
+      handle: "@azasport_bishkek",
+      insta: "https://www.instagram.com/azasport_bishkek/",
+    },
+    {
+      name: "turan_nedvizhimost",
+      result: "Сильный бренд",
+      description: "Создание качественного медиа-присутствия в сфере жилья.",
+      img: turan_nedvizhimost,
+      handle: "@turan_nedvizhimost",
+      insta: "https://www.instagram.com/turan_nedvizhimost/",
+    },
+    {
+      name: "_barbershop01.kg",
+      result: "Лояльные клиенты",
+      description: "Построение системы сервиса и стабильного потока записей.",
+      img: _barbershop,
+      handle: "@_barbershop01.kg",
+      insta: "https://www.instagram.com/_barbershop01.kg/",
+    },
+    {
+      name: "Rayber Barber",
+      result: "Масштабирование",
+      description: "Построил сильный бренд и наладил поток лояльных клиентов.",
+      img: rayber_barbershop,
+      handle: "@rayber_barbershop",
+      insta: "https://www.instagram.com/rayber_barbershop/",
+    },
+    {
+      name: "Рахманберди",
+      result: "Результат х3",
+      description: "Увеличил личный доход и масштаб бизнеса после обучения.",
+      img: rahmanberdi,
+      handle: "@rahmanberdi_mavlonov",
+      insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
+    },
   ],
   kg: [
-    { name: "Асан Мавлонов", result: "20k → 1M+ сом", description: "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.", img: asanmavlonov, handle: "@asan_mavlonov", insta: "https://www.instagram.com/asan_mavlonov/" },
-    { name: "Кутман Нурланбек", result: "Кесиптик өсүү", description: "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.", img: kutman_nurlanbek, handle: "@kutman_nurlanbek", insta: "https://www.instagram.com/kutman_nurlanbek/" },
-    { name: "elitcamera", result: "Сатуунун лидери", description: "Контент аркылуу видеокөзөмөл дүкөнүн өнүктүрүү.", img: elitcamera, handle: "@elitcamera.kg", insta: "https://www.instagram.com/elitcamera.kg/" },
-    { name: "smartcamera", result: "Системалуу маркетинг", description: "Кардарларды тартууну автоматташтыруу жана таанымал бренд түзүү.", img: smartcamera, handle: "@smartcamera.kg", insta: "https://www.instagram.com/smartcamera.kg/" },
-    { name: "turan_ned", result: "Масштабдуу өсүү", description: "Инвестиция жана чет өлкөлүк мүлк рыногунун лидери.", img: turan_ned, handle: "@turan_ned", insta: "https://www.instagram.com/turan_ned/" },
-    { name: "Aza Sport", result: "Системалуу сатуу", description: "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.", img: azasport, handle: "@azasport_bishkek", insta: "https://www.instagram.com/azasport_bishkek/" },
-    { name: "turan_nedvizhimost", result: "Күчтүү бренд", description: "Турак жай тармагында сапаттуу медиа-контент түзүү.", img: turan_nedvizhimost, handle: "@turan_nedvizhimost", insta: "https://www.instagram.com/turan_nedvizhimost/" },
-    { name: "_barbershop01.kg", result: "Туруктуу кардарлар", description: "Тейлөө тутумун жана жазылуулардын туруктуу агымын түзүү.", img: _barbershop, handle: "@_barbershop01.kg", insta: "https://www.instagram.com/_barbershop01.kg/" },
-    { name: "Rayber Barber", result: "Масштабдоо", description: "Күчтүү бренд куруп, туруктуу кардарлар агымын түздү.", img: rayber_barbershop, handle: "@rayber_barbershop", insta: "https://www.instagram.com/rayber_barbershop/" },
-    { name: "Рахманберди", result: "Жыйынтык х3", description: "Окуудан кийин жеке кирешесин жана бизнесин өстүрдү.", img: rahmanberdi, handle: "@rahmanberdi_mavlonov", insta: "https://www.instagram.com/rahmanberdi_mavlonov/" },
+    {
+      name: "Асан Мавлонов",
+      result: "20k → 1M+ сом",
+      description:
+        "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
+      img: asanmavlonov,
+      handle: "@asan_mavlonov",
+      insta: "https://www.instagram.com/asan_mavlonov/",
+    },
+    {
+      name: "Кутман Нурланбек",
+      result: "Кесиптик өсүү",
+      description:
+        "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
+      img: kutman_nurlanbek,
+      handle: "@kutman_nurlanbek",
+      insta: "https://www.instagram.com/kutman_nurlanbek/",
+    },
+    {
+      name: "elitcamera",
+      result: "Сатуунун лидери",
+      description: "Контент аркылуу видеокөзөмөл дүкөнүн өнүктүрүү.",
+      img: elitcamera,
+      handle: "@elitcamera.kg",
+      insta: "https://www.instagram.com/elitcamera.kg/",
+    },
+    {
+      name: "smartcamera",
+      result: "Системалуу маркетинг",
+      description:
+        "Кардарларды тартууну автоматташтыруу жана таанымал бренд түзүү.",
+      img: smartcamera,
+      handle: "@smartcamera.kg",
+      insta: "https://www.instagram.com/smartcamera.kg/",
+    },
+    {
+      name: "turan_ned",
+      result: "Масштабдуу өсүү",
+      description: "Инвестиция жана чет өлкөлүк мүлк рыногунун лидери.",
+      img: turan_ned,
+      handle: "@turan_ned",
+      insta: "https://www.instagram.com/turan_ned/",
+    },
+    {
+      name: "Aza Sport",
+      result: "Системалуу сатуу",
+      description:
+        "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
+      img: azasport,
+      handle: "@azasport_bishkek",
+      insta: "https://www.instagram.com/azasport_bishkek/",
+    },
+    {
+      name: "turan_nedvizhimost",
+      result: "Күчтүү бренд",
+      description: "Турак жай тармагында сапаттуу медиа-контент түзүү.",
+      img: turan_nedvizhimost,
+      handle: "@turan_nedvizhimost",
+      insta: "https://www.instagram.com/turan_nedvizhimost/",
+    },
+    {
+      name: "_barbershop01.kg",
+      result: "Туруктуу кардарлар",
+      description: "Тейлөө тутумун жана жазылуулардын туруктуу агымын түзүү.",
+      img: _barbershop,
+      handle: "@_barbershop01.kg",
+      insta: "https://www.instagram.com/_barbershop01.kg/",
+    },
+    {
+      name: "Rayber Barber",
+      result: "Масштабдоо",
+      description: "Күчтүү бренд куруп, туруктуу кардарлар агымын түздү.",
+      img: rayber_barbershop,
+      handle: "@rayber_barbershop",
+      insta: "https://www.instagram.com/rayber_barbershop/",
+    },
+    {
+      name: "Рахманберди",
+      result: "Жыйынтык х3",
+      description: "Окуудан кийин жеке кирешесин жана бизнесин өстүрдү.",
+      img: rahmanberdi,
+      handle: "@rahmanberdi_mavlonov",
+      insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
+    },
   ],
 };
 
 const content = {
-  ru: { badge: "ИСТОРИИ УСПЕХА", title: "РЕЗУЛЬТАТЫ", titleGradient: "УЧЕНИКОВ", cta: "Смотреть отзыв", showAll: "Показать всех", hideAll: "Скрыть" },
-  kg: { badge: "ИЙГИЛИК ТАРЫХТАРЫ", title: "ШАКИРТТЕРДИН", titleGradient: "ЖЕТИШКЕНДИКТЕРИ", cta: "Пикирди көрүү", showAll: "Баарын көрүү", hideAll: "Жабуу" },
+  ru: {
+    badge: "ИСТОРИИ УСПЕХА",
+    title: "РЕЗУЛЬТАТЫ",
+    titleGradient: "УЧЕНИКОВ",
+    cta: "Смотреть отзыв",
+    showAll: "Показать всех",
+    hideAll: "Скрыть",
+  },
+  kg: {
+    badge: "ИЙГИЛИК ТАРЫХТАРЫ",
+    title: "ШАКИРТТЕРДИН",
+    titleGradient: "ЖЕТИШКЕНДИКТЕРИ",
+    cta: "Пикирди көрүү",
+    showAll: "Баарын көрүү",
+    hideAll: "Жабуу",
+  },
 };
 
 export const Awards = () => {
@@ -174,13 +350,23 @@ export const Awards = () => {
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
 
       <div className="max-w-7xl mx-auto px-6 relative z-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
           <div className="inline-block px-4 py-1.5 mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">{t.badge}</span>
+            <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
+              {t.badge}
+            </span>
           </div>
           <h2 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter uppercase">
-            {t.title}<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">{t.titleGradient}</span>
+            {t.title}
+            <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+              {t.titleGradient}
+            </span>
           </h2>
         </motion.div>
 
@@ -193,14 +379,22 @@ export const Awards = () => {
               md:overflow-visible md:pb-0 md:gap-y-12`}
           >
             {displayedResults.map((item, index) => (
-              <AwardCard key={`${item.handle}-${index}`} item={item} t={t} isMobile={isMobile} />
+              <AwardCard
+                key={`${item.handle}-${index}`}
+                item={item}
+                t={t}
+                isMobile={isMobile}
+              />
             ))}
           </div>
 
           {isMobile && (
             <div className="flex justify-center items-center gap-2 mt-6">
               {displayedResults.map((_, idx) => (
-                <div key={idx} className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500" : "w-1.5 bg-white/20"}`} />
+                <div
+                  key={idx}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500" : "w-1.5 bg-white/20"}`}
+                />
               ))}
             </div>
           )}
@@ -209,11 +403,19 @@ export const Awards = () => {
         {results.length > 3 && (
           <div className="flex justify-center mt-12">
             <button
-              onClick={() => { setShowAll(!showAll); setActiveIndex(0); }}
+              onClick={() => {
+                setShowAll(!showAll);
+                setActiveIndex(0);
+              }}
               className="group inline-flex items-center gap-2 px-8 py-3 rounded-full font-bold text-sm shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 bg-gradient-to-r from-blue-600 to-purple-600 text-white"
             >
               <span>{showAll ? t.hideAll : t.showAll}</span>
-              <motion.div animate={{ rotate: showAll ? 180 : 0 }} transition={{ duration: 0.3 }}><ChevronRight className="w-4 h-4" /></motion.div>
+              <motion.div
+                animate={{ rotate: showAll ? 180 : 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </motion.div>
             </button>
           </div>
         )}

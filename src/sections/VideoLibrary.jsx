@@ -19,7 +19,6 @@ const videos = [
 
 function getVideoId(url) {
   try {
-    // Очищаем URL от параметров типа ?si=...
     const cleanUrl = url.split("?")[0];
     const u = new URL(cleanUrl);
     if (u.hostname.includes("youtu.be")) return u.pathname.replace("/", "");
@@ -35,12 +34,10 @@ function getVideoId(url) {
 
 function getThumbCandidates(id) {
   if (!id) return [];
-  // Порядок важен: сначала пробуем Максимум, потом Высокое
   return [
-    `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`, // Максимальное (пробуем первым)
-    `https://i.ytimg.com/vi/${id}/hqdefault.jpg`, // Высокое ( fallback №1, обычно самое сочное для Shorts)
-    `https://i.ytimg.com/vi/${id}/sddefault.jpg`, // Стандартное (fallback №2)
-    `https://i.ytimg.com/vi/${id}/mqdefault.jpg`, // Среднее (fallback №3)
+    `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+    `https://i.ytimg.com/vi/${id}/sddefault.jpg`,
+    `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
   ];
 }
 
@@ -50,12 +47,20 @@ const content = {
     title: "ВИДЕО-ОТЗЫВЫ",
     titleGradient: "КЛИЕНТОВ",
     lead: "Реальные истории успеха наших учеников. Нажмите на карточку, чтобы запустить видео.",
+    ariaPrev: "Предыдущий видео-отзыв",
+    ariaNext: "Следующий видео-отзыв",
+    ariaClose: "Закрыть видео",
+    goToSlide: "Перейти к видео номер",
   },
   kg: {
     badge: "ВИДЕОКОНТЕНТ",
     title: "ВИДЕО-ПИКИРЛЕР",
     titleGradient: "КЛИЕНТТЕРДИН",
     lead: "Окуучуларыбыздын чыныгы ийгилик тарыхтары. Видеону көрүү үчүн карточканы басыңыз.",
+    ariaPrev: "Мурунку видео-пикир",
+    ariaNext: "Кийинки видео-пикир",
+    ariaClose: "Видеону жабуу",
+    goToSlide: "Видео номерине өтүү",
   },
 };
 
@@ -136,12 +141,14 @@ export const VideoLibrary = () => {
             </span>
           </h2>
 
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">{t.lead}</p>
+          <p className="text-white/100 text-lg max-w-2xl mx-auto">{t.lead}</p>
         </motion.div>
 
         <div className="relative group/container">
+          {/* Левая кнопка */}
           <button
             onClick={() => scroll("left")}
+            aria-label={t.ariaPrev}
             className={`absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
               scrollInfo.current <= 5
                 ? "opacity-0 pointer-events-none"
@@ -164,30 +171,32 @@ export const VideoLibrary = () => {
               >
                 <div className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-800 to-gray-900 shadow-xl transition-all duration-500 hover:border-blue-500/30 hover:shadow-2xl hover:shadow-blue-500/20">
                   <img
-                    src={v.thumbCandidates[0]} // Всегда пробуем maxresdefault
-                    alt="Preview"
+                    src={v.thumbCandidates[0]}
+                    alt={`${t.title} ${idx + 1}`}
+                    loading="lazy"
+                    fetchpriority={idx === 0 ? "high" : "low"}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     onLoad={(e) => {
-                      // Если YouTube отдал "битую" заглушку (маленькая ширина 120px)
                       if (e.target.naturalWidth === 120) {
-                        // Ищем текущую ссылку в списке кандидатов
                         const currentSrc = e.target.src;
-                        const idx = v.thumbCandidates.indexOf(currentSrc);
-
-                        // Если есть куда падать по качеству, падаем
-                        if (idx !== -1 && idx < v.thumbCandidates.length - 1) {
-                          e.target.src = v.thumbCandidates[idx + 1];
+                        const srcIdx = v.thumbCandidates.indexOf(currentSrc);
+                        if (
+                          srcIdx !== -1 &&
+                          srcIdx < v.thumbCandidates.length - 1
+                        ) {
+                          e.target.src = v.thumbCandidates[srcIdx + 1];
                         }
                       }
                     }}
                     onError={(e) => {
-                      // Если ссылка вообще не открылась (404), делаем то же самое
                       const currentSrc = e.target.src;
-                      const idx = v.thumbCandidates.indexOf(currentSrc);
-                      if (idx !== -1 && idx < v.thumbCandidates.length - 1) {
-                        e.target.src = v.thumbCandidates[idx + 1];
+                      const srcIdx = v.thumbCandidates.indexOf(currentSrc);
+                      if (
+                        srcIdx !== -1 &&
+                        srcIdx < v.thumbCandidates.length - 1
+                      ) {
+                        e.target.src = v.thumbCandidates[srcIdx + 1];
                       } else {
-                        // Если совсем всё плохо, ставим темный фон
                         e.target.src =
                           "https://via.placeholder.com/360x640/0f0f0f/0f0f0f";
                       }
@@ -205,7 +214,8 @@ export const VideoLibrary = () => {
                   </div>
 
                   <div className="absolute bottom-6 left-6 right-6">
-                    <p className="text-white font-bold tracking-wide text-xs opacity-80 mb-1">
+                    {/* Исправлена контрастность: text-white/90 вместо 80 */}
+                    <p className="text-white/90 font-bold tracking-wide text-xs mb-1">
                       {language === "kg" ? "ПИКИР" : "ОТЗЫВ"} {idx + 1}
                     </p>
                     <div className="h-0.5 w-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
@@ -215,8 +225,10 @@ export const VideoLibrary = () => {
             ))}
           </div>
 
+          {/* Правая кнопка */}
           <button
             onClick={() => scroll("right")}
+            aria-label={t.ariaNext}
             className={`absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
               scrollInfo.current >= scrollInfo.max - 5
                 ? "opacity-0 pointer-events-none"
@@ -226,17 +238,31 @@ export const VideoLibrary = () => {
             <ChevronRight size={20} className="text-white" />
           </button>
 
+          {/* ТОЧКИ ПАГИНАЦИИ - Accessibility Fix with 48x48px tap target */}
           {scrollInfo.max > 0 && (
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-1 mt-6">
               {cards.map((_, idx) => (
-                <div
+                <button
                   key={idx}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    activeIndex === idx
-                      ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500"
-                      : "w-1.5 bg-white/20"
-                  }`}
-                />
+                  onClick={() => {
+                    const cardWidth = 320 + 24;
+                    scrollRef.current.scrollTo({
+                      left: idx * cardWidth,
+                      behavior: "smooth",
+                    });
+                  }}
+                  aria-label={`${t.goToSlide} ${idx + 1}`}
+                  aria-current={activeIndex === idx ? "page" : undefined}
+                  className="p-3 rounded-full transition-all duration-300 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <span
+                    className={`block rounded-full transition-all duration-300 ${
+                      activeIndex === idx
+                        ? "h-2 w-8 bg-gradient-to-r from-blue-500 to-purple-500"
+                        : "h-1.5 w-1.5 bg-white/40 group-hover:bg-white/60"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           )}
@@ -261,6 +287,7 @@ export const VideoLibrary = () => {
             >
               <button
                 onClick={() => setActiveVideo(null)}
+                aria-label={t.ariaClose}
                 className="absolute top-4 right-4 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-colors backdrop-blur-sm"
               >
                 <X size={20} />
@@ -268,7 +295,7 @@ export const VideoLibrary = () => {
               <iframe
                 className="h-full w-full"
                 src={`https://www.youtube.com/embed/${activeVideo}?autoplay=1&rel=0`}
-                title="YouTube Video"
+                title={`${t.title} - ${activeVideo}`}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

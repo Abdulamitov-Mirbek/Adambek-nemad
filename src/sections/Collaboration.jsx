@@ -172,7 +172,7 @@ export const Collaboration = () => {
             </span>
           </h2>
 
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto mt-4">
+          <p className="text-white/100 text-lg max-w-2xl mx-auto mt-4">
             {t.description}
           </p>
         </motion.div>
@@ -201,6 +201,7 @@ export const Collaboration = () => {
                     <img
                       src={p.img}
                       alt={p.handle}
+                      loading="lazy"
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -216,7 +217,7 @@ export const Collaboration = () => {
                     <p className="text-[11px] font-mono text-pink-400 font-bold mt-1 mb-2">
                       {p.handle}
                     </p>
-                    <p className="text-gray-400 text-xs leading-relaxed line-clamp-2">
+                    <p className="text-white/80 text-xs leading-relaxed line-clamp-2">
                       {language === "kg" ? p.descKg : p.descRu}
                     </p>
                     <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
@@ -225,7 +226,7 @@ export const Collaboration = () => {
                       </span>
                       <ExternalLink
                         size={12}
-                        className="text-gray-500 group-hover:text-blue-400 transition-colors"
+                        className="text-white/70 group-hover:text-blue-400 transition-colors"
                       />
                     </div>
                   </div>
@@ -254,11 +255,12 @@ export const Collaboration = () => {
           <button
             type="button"
             onClick={handleNextScroll}
+            aria-label={t.next}
             className={`
               group inline-flex items-center gap-2 px-8 py-3 rounded-full font-bold text-sm shadow-xl transition-all duration-300 hover:scale-105 active:scale-95
               ${
                 !canScrollRight
-                  ? "bg-white/10 text-gray-500 cursor-not-allowed opacity-50"
+                  ? "bg-white/10 text-white/70 cursor-not-allowed opacity-50"
                   : "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:shadow-blue-500/30"
               }
             `}

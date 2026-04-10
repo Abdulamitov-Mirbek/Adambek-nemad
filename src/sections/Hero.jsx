@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
-import { motion } from 'framer-motion';
-import { LanguageContext } from '../context/LanguageContext';
-import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import React, { useContext } from "react";
+import { motion } from "framer-motion";
+import { LanguageContext } from "../context/LanguageContext";
+import { LanguageSwitcher } from "../components/LanguageSwitcher";
 
 const content = {
   ru: {
     badge: "Официальный сайт",
     title: "АДАМБЕК",
     titleGradient: "НЭЭМАТ",
-    description: "Предприниматель, ментор и визионер. Помогаю раскрыть потенциал через системное мышление и инновационные подходы в бизнесе.",
+    description:
+      "Предприниматель, ментор и визионер. Помогаю раскрыть потенциал через системное мышление и инновационные подходы в бизнесе.",
     button1: "Смотреть курсы",
     button2: "Связаться",
   },
@@ -16,10 +17,11 @@ const content = {
     badge: "Расмий сайт",
     title: "АДАМБЕК",
     titleGradient: "НЭЭМАТ",
-    description: "Ишкер, ментор жана визионер. Системалык ой жүгүртүү жана бизнестеги инновациялык ыкмалар аркылуу потенциалды ачууга жардам берем.",
+    description:
+      "Ишкер, ментор жана визионер. Системалык ой жүгүртүү жана бизнестеги инновациялык ыкмалар аркылуу потенциалды ачууга жардам берем.",
     button1: "Курстарды көрүү",
     button2: "Байланышуу",
-  }
+  },
 };
 
 export const Hero = () => {
@@ -31,7 +33,7 @@ export const Hero = () => {
       {/* Фоновый градиент для глубины */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
-      
+
       <LanguageSwitcher />
 
       <div className="container px-6 relative z-20 text-center">
@@ -47,28 +49,29 @@ export const Hero = () => {
           </span>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-6xl md:text-8xl font-black mb-8 leading-[0.9] tracking-tighter"
         >
-          {t.title}<br />
+          {t.title}
+          <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
             {t.titleGradient}
           </span>
         </motion.h1>
 
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light"
+          className="text-lg md:text-xl text-white/100 max-w-2xl mx-auto mb-10 leading-relaxed font-light"
         >
           {t.description}
         </motion.p>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -76,6 +79,7 @@ export const Hero = () => {
         >
           <a
             href="#courses"
+            aria-label={t.button1}
             className="w-full sm:w-auto px-10 py-4 bg-white text-black rounded-full font-bold hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-blue-500/40 text-center inline-block"
           >
             {t.button1}
@@ -84,6 +88,7 @@ export const Hero = () => {
             href="https://wa.me/996704343756?text=%D0%90%D1%81%D1%81%D0%B0%D0%BB%D0%B0%D0%BC%D1%83%20%D0%B0%D0%BB%D0%B0%D0%B9%D0%BA%D1%83%D0%BC!%20%D0%9C%D0%B5%D0%BD%20%D1%81%D0%B0%D0%B9%D1%82%D1%82%D0%B0%D0%BD%20%D0%B6%D0%B0%D0%B7%D1%8B%D0%BF%20%D0%B6%D0%B0%D1%82%D0%B0%D0%BC."
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={t.button2}
             className="w-full sm:w-auto px-10 py-4 border border-white/20 rounded-full font-bold hover:bg-white/10 backdrop-blur-sm transition-all duration-300 text-center inline-block"
           >
             {t.button2}
@@ -92,7 +97,7 @@ export const Hero = () => {
       </div>
 
       {/* Декоративный элемент снизу */}
-      <motion.div 
+      <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-30"

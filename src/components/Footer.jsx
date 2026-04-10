@@ -59,7 +59,7 @@ export const Footer = () => {
     fullName: "",
     phone: "",
     comment: "",
-    website: "", // Honeypot
+    website: "", // Honeypot для защиты от ботов
   });
 
   const [isSending, setIsSending] = useState(false);
@@ -95,36 +95,7 @@ export const Footer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // 1. ЗАЩИТА: Honeypot
-    if (formData.website) return;
-
-    // 2. ЗАЩИТА: Прогрессивная блокировка
-    const lastSend = parseInt(
-      localStorage.getItem("last_form_submission") || "0",
-    );
-    const attempts = parseInt(
-      localStorage.getItem("submission_attempts") || "0",
-    );
-    const now = Date.now();
-
-    let limit = 0;
-    if (attempts === 1) limit = 40 * 1000;
-    else if (attempts === 2) limit = 60 * 60 * 1000;
-    else if (attempts >= 3) limit = 24 * 60 * 60 * 1000;
-
-    if (lastSend && now - lastSend < limit) {
-      const timeLeft = limit - (now - lastSend);
-      let timeString;
-      if (timeLeft > 3600000)
-        timeString = `${Math.ceil(timeLeft / 3600000)} ч.`;
-      else if (timeLeft > 60000)
-        timeString = `${Math.ceil(timeLeft / 60000)} мин.`;
-      else timeString = `${Math.ceil(timeLeft / 1000)} сек.`;
-
-      alert(`Доступ ограничен. Попробуйте через ${timeString}`);
-      return;
-    }
+    if (formData.website) return; // Игнорируем ботов
 
     setIsSending(true);
     setShowSuccess(false);
@@ -137,9 +108,6 @@ export const Footer = () => {
         formData.comment,
       );
       if (success) {
-        localStorage.setItem("last_form_submission", Date.now().toString());
-        localStorage.setItem("submission_attempts", (attempts + 1).toString());
-
         setShowSuccess(true);
         setFormData({ fullName: "", phone: "", comment: "", website: "" });
         setTimeout(() => setShowSuccess(false), 5000);
@@ -156,28 +124,42 @@ export const Footer = () => {
   };
 
   return (
-    <footer id="contact" className="scroll-mt-24 bg-gray-950 text-white py-16">
+    <footer
+      id="contact"
+      className="scroll-mt-24 bg-[#050505] text-white py-16 border-t border-white/5"
+    >
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
+          {/* Имя и Роль */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-black tracking-tighter">{t.name}</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">{t.title}</p>
+            <h3 className="text-2xl font-black tracking-tighter uppercase">
+              {t.name}
+            </h3>
+            <p className="text-white/90 text-sm leading-relaxed font-light">
+              {t.title}
+            </p>
           </div>
 
+          {/* Ссылки */}
           <div>
-            <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em] text-blue-500">
+            <h4 className="font-bold mb-6 uppercase text-[10px] tracking-[0.2em] text-blue-500">
               {t.quickLinks}
             </h4>
-            <ul className="space-y-3 text-gray-400 text-sm">
+            <ul className="space-y-3 text-white/100 text-sm">
               <li>
-                <a href="#about" className="hover:text-white transition-colors">
+                <a
+                  href="#about"
+                  aria-label={t.about}
+                  className="hover:text-blue-400 transition-colors"
+                >
                   {t.about}
                 </a>
               </li>
               <li>
                 <a
                   href="#courses"
-                  className="hover:text-white transition-colors"
+                  aria-label={t.courses}
+                  className="hover:text-blue-400 transition-colors"
                 >
                   {t.courses}
                 </a>
@@ -185,7 +167,8 @@ export const Footer = () => {
               <li>
                 <a
                   href="#projects"
-                  className="hover:text-white transition-colors"
+                  aria-label={t.projects}
+                  className="hover:text-blue-400 transition-colors"
                 >
                   {t.projects}
                 </a>
@@ -193,19 +176,21 @@ export const Footer = () => {
             </ul>
           </div>
 
+          {/* Соцсети */}
           <div>
-            <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em] text-blue-500">
+            <h4 className="font-bold mb-6 uppercase text-[10px] tracking-[0.2em] text-blue-500">
               {t.connect}
             </h4>
-            <ul className="space-y-4 text-gray-400 text-sm">
+            <ul className="space-y-4 text-white/80 text-sm">
               <li>
                 <a
                   href="https://wa.me/996704343756"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="WhatsApp"
                   className="flex items-center gap-3 hover:text-green-500 transition-colors group"
                 >
-                  <FaWhatsapp className="text-xl group-hover:scale-110 transition-transform" />
+                  <FaWhatsapp className="text-xl text-white group-hover:scale-110 transition-transform" />
                   <span>WhatsApp</span>
                 </a>
               </li>
@@ -214,49 +199,51 @@ export const Footer = () => {
                   href="https://www.instagram.com/adambek.neemat"
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label="Instagram"
                   className="flex items-center gap-3 hover:text-pink-500 transition-colors group"
                 >
-                  <AiFillInstagram className="text-xl group-hover:scale-110 transition-transform" />
+                  <AiFillInstagram className="text-xl text-white group-hover:scale-110 transition-transform" />
                   <span>Instagram</span>
                 </a>
               </li>
               <li>
                 <a
                   href="mailto:mmrek07@gmail.com"
+                  aria-label="Email"
                   className="flex items-center gap-3 hover:text-blue-400 transition-colors group"
                 >
-                  <TfiEmail className="text-xl group-hover:scale-110 transition-transform" />
+                  <TfiEmail className="text-xl text-white group-hover:scale-110 transition-transform" />
                   <span>Email</span>
                 </a>
               </li>
             </ul>
           </div>
 
+          {/* Форма */}
           <div>
-            <h4 className="font-bold mb-6 uppercase text-xs tracking-[0.2em] text-blue-500">
+            <h4 className="font-bold mb-6 uppercase text-[10px] tracking-[0.2em] text-blue-500">
               {t.contactUs}
             </h4>
+
             {showSuccess && (
-              <div className="mb-4 p-3 bg-green-500/20 border border-green-500 rounded-lg text-green-400 text-xs text-center">
-                {t.successMessage}
-              </div>
+              <p className="text-green-400 text-xs mb-4">{t.successMessage}</p>
             )}
             {showError && (
-              <div className="mb-4 p-3 bg-red-500/20 border border-red-500 rounded-lg text-red-400 text-xs text-center">
-                {t.errorMessage}
-              </div>
+              <p className="text-red-400 text-xs mb-4">{t.errorMessage}</p>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-3">
+              {/* Honeypot field (hidden from users) */}
               <input
                 type="text"
                 name="website"
                 value={formData.website}
                 onChange={handleChange}
-                style={{ display: "none" }}
+                className="hidden"
                 tabIndex="-1"
                 autoComplete="off"
               />
+
               <input
                 type="text"
                 name="fullName"
@@ -264,7 +251,7 @@ export const Footer = () => {
                 onChange={handleChange}
                 placeholder={t.fullName}
                 required
-                className="w-full px-4 py-2.5 rounded-xl bg-gray-900 text-white border border-gray-800 focus:outline-none focus:border-blue-500 text-sm transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:outline-none focus:border-blue-500/50 text-sm transition-all placeholder:text-white/70"
               />
               <input
                 type="tel"
@@ -273,29 +260,27 @@ export const Footer = () => {
                 onChange={handleChange}
                 placeholder={t.phone}
                 required
-                className="w-full px-4 py-2.5 rounded-xl bg-gray-900 text-white border border-gray-800 focus:outline-none focus:border-blue-500 text-sm transition-colors"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:outline-none focus:border-blue-500/50 text-sm transition-all placeholder:text-white/70"
               />
-
-              {/* Новое поле: Комментарий */}
               <textarea
                 name="comment"
                 value={formData.comment}
                 onChange={handleChange}
                 placeholder={t.comment}
                 rows="3"
-                className="w-full px-4 py-2.5 rounded-xl bg-gray-900 text-white border border-gray-800 focus:outline-none focus:border-blue-500 text-sm transition-colors resize-none"
+                className="w-full px-4 py-3 rounded-xl bg-white/5 text-white border border-white/10 focus:outline-none focus:border-blue-500/50 text-sm transition-all resize-none placeholder:text-white/70"
               />
-
               <button
                 type="submit"
                 disabled={isSending}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2.5 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label={t.send}
+                className="w-full flex items-center justify-center gap-2 bg-white text-black hover:bg-blue-600 hover:text-white font-bold py-3 rounded-xl transition-all disabled:opacity-50"
               >
                 {isSending ? (
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
-                    <MdSend className="text-base" /> {t.send}
+                    <MdSend size={18} /> {t.send}
                   </>
                 )}
               </button>
@@ -303,9 +288,10 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-900 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-gray-500 text-xs">
-          <p>
-            &copy; {new Date().getFullYear()} {t.name}. {t.copyright}
+        {/* Copyright - Исправлена контрастность (text-white/60) */}
+        <div className="border-t border-white/5 pt-8 flex justify-center text-white/60 text-[11px] uppercase tracking-[0.1em] font-medium">
+          <p className="text-center">
+            &copy; {new Date().getFullYear()} {t.name} • {t.copyright}
           </p>
         </div>
       </div>

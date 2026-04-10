@@ -242,13 +242,14 @@ export const InTheNews = () => {
             </span>
           </h2>
 
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">{t.lead}</p>
+          <p className="text-white/100 text-lg max-w-2xl mx-auto">{t.lead}</p>
         </motion.div>
 
         {/* Scroll Container */}
         <div className="relative group">
           <button
             onClick={() => scroll("left")}
+            aria-label={t.badge ? "Предыдущее видео" : "Previous video"}
             className="absolute -left-4 top-1/2 -translate-y-1/2 z-10 bg-black/80 backdrop-blur-md border border-white/10 shadow-xl p-3 rounded-full hover:bg-black/100 hover:scale-110 transition-all duration-300 lg:flex hidden"
           >
             <ChevronIcon dir="left" />
@@ -256,6 +257,7 @@ export const InTheNews = () => {
 
           <button
             onClick={() => scroll("right")}
+            aria-label={t.badge ? "Следующее видео" : "Next video"}
             className="absolute -right-4 top-1/2 -translate-y-1/2 z-10 bg-black/80 backdrop-blur-md border border-white/10 shadow-xl p-3 rounded-full hover:bg-black/100 hover:scale-110 transition-all duration-300 lg:flex hidden"
           >
             <ChevronIcon dir="right" />
@@ -280,7 +282,8 @@ export const InTheNews = () => {
                   <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
                     <img
                       src={v.thumb}
-                      alt=""
+                      alt={`${v.title[language]}`}
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -318,7 +321,7 @@ export const InTheNews = () => {
                     <h3 className="text-xl font-bold text-white mb-3 line-clamp-2 leading-tight hover:text-blue-400 transition-colors">
                       {v.title[language]}
                     </h3>
-                    <p className="text-gray-400 text-sm line-clamp-2 mb-6">
+                    <p className="text-white/80 text-sm line-clamp-2 mb-6">
                       {v.description[language]}
                     </p>
                     <div className="flex items-center justify-between pt-4 border-t border-white/10">
