@@ -16,7 +16,8 @@ const content = {
     titleGradient: "ПРОГРАММЫ",
     lead: "Адамбек Нээмат — предприниматель и бизнес-аналитик: помогает разобраться в цифрах, процессах и клиентах, чтобы рост был измеримым, а не случайным.",
     ctaTitle: "Начните свой путь",
-    ctaBody: "Выберите удобный способ связи — мы подберём формат обучения под ваши задачи",
+    ctaBody:
+      "Выберите удобный способ связи — мы подберём формат обучения под ваши задачи",
     whatsappButton: "Написать в WhatsApp",
     instagramButton: "Перейти в Instagram",
     ctaNote: "Ответим в рабочее время · без обязательств",
@@ -41,7 +42,8 @@ const content = {
     titleGradient: "ПРОГРАММАЛАР",
     lead: "Адамбек Нээмат — ишкер жана бизнес-аналитик: сандарды, процесстерди жана кардарларды түшүнүүгө жардам берет.",
     ctaTitle: "Сапарыңызды баштаңыз",
-    ctaBody: "Өзүңүзгө ыңгайлуу байланыш жолун тандаңыз — биз сизге ылайыктуу окуу форматын сунуштайбыз",
+    ctaBody:
+      "Өзүңүзгө ыңгайлуу байланыш жолун тандаңыз — биз сизге ылайыктуу окуу форматын сунуштайбыз",
     whatsappButton: "WhatsApp аркылуу жазуу",
     instagramButton: "Instagram'га өтүү",
     ctaNote: "Жумуш убактысында жооп беребиз · милдеттүү эмес",
@@ -100,7 +102,10 @@ export const Courses = () => {
     window.open(instagramLink, "_blank", "noopener,noreferrer");
 
   return (
-    <section id="courses" className="relative py-32 overflow-hidden bg-black scroll-mt-24">
+    <section
+      id="courses"
+      className="relative py-32 overflow-hidden bg-black scroll-mt-24"
+    >
       {/* Фоновые градиенты */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
@@ -124,12 +129,13 @@ export const Courses = () => {
           className="mx-auto mb-12 max-w-3xl text-center"
         >
           <h2 className="text-5xl md:text-6xl font-black text-white mb-4 tracking-tighter">
-            {t.title}<br />
+            {t.title}
+            <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
               {t.titleGradient}
             </span>
           </h2>
-          <p className="text-lg leading-relaxed text-gray-400 md:text-xl">
+          <p className="text-lg leading-relaxed text-white/100 md:text-xl">
             {t.lead}
           </p>
         </motion.div>
@@ -153,7 +159,7 @@ export const Courses = () => {
                   <h3 className="mb-2 text-xl font-bold text-white">
                     {f.title}
                   </h3>
-                  <p className="text-sm leading-relaxed text-gray-400">
+                  <p className="text-sm leading-relaxed text-white/80">
                     {f.text}
                   </p>
                 </div>
@@ -176,12 +182,13 @@ export const Courses = () => {
           <p className="mb-8 text-base leading-relaxed text-gray-300 md:text-lg">
             {t.ctaBody}
           </p>
-          
+
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             {/* WhatsApp Button */}
             <button
               type="button"
               onClick={openWa}
+              aria-label={t.whatsappButton}
               className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
             >
               <MessageCircle className="h-5 w-5 shrink-0 transition-transform group-hover:scale-110" />
@@ -192,14 +199,15 @@ export const Courses = () => {
             <button
               type="button"
               onClick={openInstagram}
+              aria-label={t.instagramButton}
               className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
             >
               <InstagramIcon />
               {t.instagramButton}
             </button>
           </div>
-          
-          <p className="mt-5 text-xs text-gray-400">{t.ctaNote}</p>
+
+          <p className="mt-5 text-xs text-white/70">{t.ctaNote}</p>
         </motion.div>
       </div>
     </section>

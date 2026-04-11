@@ -24,6 +24,7 @@ const content = {
     stat2: "1000+ учеников",
     stat3: "90% результат",
     button: "Узнать больше",
+    goToPhoto: "Перейти к фото номер",
   },
   kg: {
     badge: "БИЗ ЖӨНҮНДӨ",
@@ -40,6 +41,7 @@ const content = {
     stat2: "1000+ окуучу",
     stat3: "90% жыйынтык",
     button: "Көбүрөөк билүү",
+    goToPhoto: "Фото номерине өтүү",
   },
 };
 
@@ -81,6 +83,9 @@ export const About = () => {
                   key={currentPhotoIndex}
                   src={photos[currentPhotoIndex]}
                   alt="Адамбек Нээмат"
+                  loading="lazy"
+                  width={400}
+                  height={500}
                   initial={{ opacity: 0, scale: 1.1 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
@@ -92,18 +97,30 @@ export const About = () => {
               {/* Градиентная накладка */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
 
-              {/* Индикатор слайдов */}
+              {/* Индикатор слайдов - Accessibility Fix */}
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
                 {photos.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentPhotoIndex(idx)}
-                    className={`h-1 rounded-full transition-all duration-300 ${
+                    aria-label={`${t.goToPhoto} ${idx + 1}`}
+                    aria-current={
+                      currentPhotoIndex === idx ? "page" : undefined
+                    }
+                    className={`p-2 rounded-full transition-all duration-300 ${
                       currentPhotoIndex === idx
-                        ? "w-8 bg-white"
-                        : "w-2 bg-white/50 hover:bg-white/80"
+                        ? "scale-110"
+                        : "hover:scale-110"
                     }`}
-                  />
+                  >
+                    <span
+                      className={`block rounded-full transition-all duration-300 ${
+                        currentPhotoIndex === idx
+                          ? "h-2 w-8 bg-white"
+                          : "h-1.5 w-1.5 bg-white/50 hover:bg-white/80"
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
             </div>
@@ -146,7 +163,7 @@ export const About = () => {
             </motion.h2>
 
             {/* Текст */}
-            <div className="space-y-5 text-gray-300 text-lg leading-relaxed">
+            <div className="space-y-5 text-gray-100 text-lg leading-relaxed">
               <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -184,7 +201,7 @@ export const About = () => {
                 <p className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                   {t.stat1.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-gray-500 tracking-tight mt-1">
+                <p className="text-[10px] uppercase text-white/70 tracking-tight mt-1">
                   {t.stat1.split(" ").slice(1).join(" ")}
                 </p>
               </div>
@@ -192,7 +209,7 @@ export const About = () => {
                 <p className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                   {t.stat2.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-gray-500 tracking-tight mt-1">
+                <p className="text-[10px] uppercase text-white/70 tracking-tight mt-1">
                   {t.stat2.split(" ").slice(1).join(" ")}
                 </p>
               </div>
@@ -200,7 +217,7 @@ export const About = () => {
                 <p className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                   {t.stat3.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-gray-500 tracking-tight mt-1">
+                <p className="text-[10px] uppercase text-white/70 tracking-tight mt-1">
                   {t.stat3.split(" ").slice(1).join(" ")}
                 </p>
               </div>
@@ -215,6 +232,7 @@ export const About = () => {
             >
               <a
                 href="#courses"
+                aria-label={t.button}
                 className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-bold text-white hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105"
               >
                 {t.button}

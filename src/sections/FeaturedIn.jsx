@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { motion } from "framer-motion"; // или 'framer-motion'
-import { FaYoutube, FaInstagram } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { FaYoutube } from "react-icons/fa"; // Оставляем только её
 import { LanguageContext } from "../context/LanguageContext";
 
 // Кастомная иконка Instagram для соответствия стилю Lucide
@@ -32,7 +32,7 @@ const featuredPartners = [
   {
     name: "YOUTUBE",
     link: "https://www.youtube.com/@adambek.neemat",
-    icon: <FaYoutube size={48} />, // ИСПРАВЛЕНО: используем импортированный FaYoutube
+    icon: <FaYoutube size={48} />,
     gradient: "from-[#FF0000] to-[#cc0000]",
     hoverColor: "group-hover:text-[#FF0000]",
   },
@@ -89,7 +89,7 @@ export const FeaturedIn = () => {
             </span>
           </h2>
 
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto italic">
+          <p className="text-white/100 text-lg max-w-2xl mx-auto italic">
             {t.description}
           </p>
         </motion.div>
@@ -109,19 +109,23 @@ export const FeaturedIn = () => {
               className="group cursor-pointer"
             >
               <div
-                className={`w-40 h-40 md:w-48 md:h-48 rounded-3xl bg-gradient-to-br ${social.gradient} p-[1px] transition-all duration-500 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-current`}
+                className={`w-40 h-40 md:w-48 md:h-48 rounded-3xl bg-gradient-to-br ${social.gradient} p-[2px] transition-all duration-500 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-current`}
                 style={{
-                  // Передаем текущий цвет тени через переменную для shadow-current
                   color: social.name === "YOUTUBE" ? "#FF0000" : "#ee2a7b",
                 }}
               >
-                <div className="relative w-full h-full rounded-3xl bg-[#0a0a0a] overflow-hidden flex flex-col items-center justify-center gap-4 transition-all duration-500">
-                  {/* Слой заливки, который плавно появляется при ховере */}
+                <div className="relative w-full h-full rounded-[22px] bg-[#0a0a0a] flex flex-col items-center justify-center gap-4 transition-all duration-500">
+                  {/* Добавляем легкое свечение внутри в статике */}
                   <div
-                    className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${social.gradient}`}
+                    className={`absolute inset-0 opacity-5 bg-gradient-to-br ${social.gradient}`}
                   />
 
-                  {/* Контент (z-10 чтобы быть над градиентом выше) */}
+                  {/* Слой полной заливки при ховере */}
+                  <div
+                    className={`absolute inset-0 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-500 bg-gradient-to-br ${social.gradient}`}
+                  />
+
+                  {/* Контент */}
                   <div className="relative z-10 flex flex-col items-center gap-4">
                     <div className="text-white transition-transform duration-300 group-hover:scale-110">
                       {social.icon}
@@ -144,7 +148,7 @@ export const FeaturedIn = () => {
           transition={{ delay: 0.5 }}
           className="text-center mt-20"
         >
-          <p className="text-[10px] text-gray-500 uppercase tracking-[0.3em] font-medium">
+          <p className="text-[10px] text-white/100 uppercase tracking-[0.3em] font-medium">
             {t.footerText}
           </p>
         </motion.div>
