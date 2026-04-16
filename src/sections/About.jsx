@@ -62,14 +62,17 @@ export const About = () => {
   }, []);
 
   return (
-    <section id="about" className="relative py-32 overflow-hidden bg-black">
+    <section
+      id="about"
+      className="relative py-20 sm:py-32 overflow-hidden bg-black"
+    >
       {/* Фоновые градиенты */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
 
-      <div className="container-custom max-w-6xl mx-auto px-6 relative z-20">
-        <div className="flex flex-col md:flex-row gap-16 items-center">
+      <div className="container-custom max-w-6xl mx-auto px-4 sm:px-6 relative z-20">
+        <div className="flex flex-col md:flex-row gap-8 sm:gap-12 lg:gap-16 items-center">
           {/* Левая колонка - фото */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -77,7 +80,7 @@ export const About = () => {
             viewport={{ once: true }}
             className="w-full md:w-1/2 relative"
           >
-            <div className="relative aspect-[4/5] bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+            <div className="relative aspect-[4/5] bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10">
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentPhotoIndex}
@@ -97,8 +100,8 @@ export const About = () => {
               {/* Градиентная накладка */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
 
-              {/* Индикатор слайдов - Accessibility Fix */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
+              {/* Индикатор слайдов */}
+              <div className="absolute bottom-3 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1 sm:gap-2 z-20">
                 {photos.map((_, idx) => (
                   <button
                     key={idx}
@@ -107,7 +110,7 @@ export const About = () => {
                     aria-current={
                       currentPhotoIndex === idx ? "page" : undefined
                     }
-                    className={`p-2 rounded-full transition-all duration-300 ${
+                    className={`p-1.5 sm:p-2 rounded-full transition-all duration-300 ${
                       currentPhotoIndex === idx
                         ? "scale-110"
                         : "hover:scale-110"
@@ -116,8 +119,8 @@ export const About = () => {
                     <span
                       className={`block rounded-full transition-all duration-300 ${
                         currentPhotoIndex === idx
-                          ? "h-2 w-8 bg-white"
-                          : "h-1.5 w-1.5 bg-white/50 hover:bg-white/80"
+                          ? "h-1.5 sm:h-2 w-5 sm:w-8 bg-white"
+                          : "h-1 sm:h-1.5 w-1 sm:w-1.5 bg-white/50 hover:bg-white/80"
                       }`}
                     />
                   </button>
@@ -125,10 +128,12 @@ export const About = () => {
               </div>
             </div>
 
-            {/* Декоративный элемент - ИЗМЕНЕНО с 10 на 17 */}
-            <div className="absolute -bottom-6 -right-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-8 rounded-2xl hidden md:block shadow-xl z-20">
-              <p className="text-5xl font-black italic">17</p>
-              <p className="text-xs uppercase tracking-widest opacity-90">
+            {/* Декоративный элемент */}
+            <div className="absolute -bottom-4 -right-4 sm:-bottom-6 sm:-right-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl hidden sm:block shadow-xl z-20">
+              <p className="text-3xl sm:text-4xl md:text-5xl font-black italic">
+                17
+              </p>
+              <p className="text-[8px] sm:text-[10px] md:text-xs uppercase tracking-widest opacity-90">
                 {language === "ru" ? "Лет в бизнесе" : "Жыл бизнесте"}
               </p>
             </div>
@@ -141,9 +146,9 @@ export const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="inline-block px-4 py-1.5 mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full"
+              className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full"
             >
-              <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
+              <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
                 {t.badge}
               </span>
             </motion.div>
@@ -153,17 +158,17 @@ export const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-5xl md:text-6xl font-black mb-6 leading-tight text-white"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-[1.2] text-white"
             >
               {t.title}
               <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 whitespace-nowrap sm:whitespace-normal inline-block">
                 {t.titleGradient}
               </span>
             </motion.h2>
 
             {/* Текст */}
-            <div className="space-y-5 text-gray-100 text-lg leading-relaxed">
+            <div className="space-y-3 sm:space-y-5 text-gray-100 text-sm sm:text-base md:text-lg leading-relaxed">
               <motion.p
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
@@ -176,7 +181,7 @@ export const About = () => {
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="font-medium text-white border-l-4 border-blue-500 pl-4 bg-gradient-to-r from-blue-500/10 to-transparent py-2 rounded-r-lg"
+                className="font-medium text-white border-l-3 sm:border-l-4 border-blue-500 pl-3 sm:pl-4 bg-gradient-to-r from-blue-500/10 to-transparent py-1.5 sm:py-2 rounded-r-lg"
               >
                 {t.description2}
               </motion.p>
@@ -195,29 +200,29 @@ export const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="mt-12 grid grid-cols-3 gap-4 border-t border-white/10 pt-8"
+              className="mt-8 sm:mt-12 grid grid-cols-3 gap-2 sm:gap-4 border-t border-white/10 pt-6 sm:pt-8"
             >
               <div className="text-center">
-                <p className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                   {t.stat1.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-white/70 tracking-tight mt-1">
+                <p className="text-[8px] sm:text-[10px] uppercase text-white/70 tracking-tight mt-1">
                   {t.stat1.split(" ").slice(1).join(" ")}
                 </p>
               </div>
-              <div className="text-center border-x border-white/10 px-4">
-                <p className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+              <div className="text-center border-x border-white/10 px-2 sm:px-4">
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                   {t.stat2.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-white/70 tracking-tight mt-1">
+                <p className="text-[8px] sm:text-[10px] uppercase text-white/70 tracking-tight mt-1">
                   {t.stat2.split(" ").slice(1).join(" ")}
                 </p>
               </div>
               <div className="text-center">
-                <p className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                <p className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
                   {t.stat3.split(" ")[0]}
                 </p>
-                <p className="text-[10px] uppercase text-white/70 tracking-tight mt-1">
+                <p className="text-[8px] sm:text-[10px] uppercase text-white/70 tracking-tight mt-1">
                   {t.stat3.split(" ").slice(1).join(" ")}
                 </p>
               </div>
@@ -228,16 +233,16 @@ export const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="mt-8"
+              className="mt-6 sm:mt-8"
             >
               <a
                 href="#courses"
                 aria-label={t.button}
-                className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-bold text-white hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full font-bold text-sm sm:text-base text-white hover:shadow-xl hover:shadow-blue-500/30 transition-all duration-300 hover:scale-105"
               >
                 {t.button}
                 <svg
-                  className="w-4 h-4"
+                  className="w-3 h-3 sm:w-4 sm:h-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
