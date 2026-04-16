@@ -1,7 +1,6 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
-import { LanguageSwitcher } from "../components/LanguageSwitcher";
 
 const content = {
   ru: {
@@ -24,17 +23,79 @@ const content = {
   },
 };
 
+// LanguageSwitcher компонент внутри Hero
+const LanguageSwitcher = ({ language, setLanguage, isVisible }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: isVisible ? 1 : 0, y: isVisible ? 0 : -20 }}
+      transition={{ duration: 0.3 }}
+      className="fixed top-6 right-6 z-[100] flex items-center bg-black/60 backdrop-blur-md border border-white/10 rounded-full p-1.5 shadow-2xl"
+      style={{ pointerEvents: isVisible ? "auto" : "none" }}
+    >
+      <button
+        onClick={() => setLanguage("ru")}
+        aria-label="Switch to Russian"
+        className={`relative px-5 py-1.5 rounded-full text-xs font-bold tracking-widest transition-all duration-300 ${
+          language === "ru"
+            ? "text-white bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg"
+            : "text-white/60 hover:text-white hover:bg-white/10"
+        }`}
+      >
+        РУС
+      </button>
+      <button
+        onClick={() => setLanguage("kg")}
+        aria-label="Switch to Kyrgyz"
+        className={`relative px-5 py-1.5 rounded-full text-xs font-bold tracking-widest transition-all duration-300 ${
+          language === "kg"
+            ? "text-white bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg"
+            : "text-white/60 hover:text-white hover:bg-white/10"
+        }`}
+      >
+        КЫР
+      </button>
+    </motion.div>
+  );
+};
+
 export const Hero = () => {
-  const { language } = useContext(LanguageContext);
+  const { language, setLanguage } = useContext(LanguageContext);
   const t = content[language];
+  const [showLanguageSwitcher, setShowLanguageSwitcher] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const heroSection = document.getElementById("hero");
+      if (heroSection) {
+        const rect = heroSection.getBoundingClientRect();
+        // Показываем переключатель только когда Hero секция видна
+        const isHeroVisible = rect.top <= 100 && rect.bottom >= 100;
+        setShowLanguageSwitcher(isHeroVisible);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll(); // Вызываем сразу для установки начального состояния
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a] text-white">
+    <section
+      id="hero"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0a0a0a] text-white"
+    >
       {/* Фоновый градиент для глубины */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
 
-      <LanguageSwitcher />
+      {/* LanguageSwitcher только на Hero и исчезает при скролле */}
+      <LanguageSwitcher
+        language={language}
+        setLanguage={setLanguage}
+        isVisible={showLanguageSwitcher}
+      />
 
       <div className="container px-6 relative z-20 text-center">
         {/* Маленький бейдж над заголовком */}

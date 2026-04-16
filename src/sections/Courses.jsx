@@ -128,14 +128,14 @@ export const Courses = () => {
           transition={{ duration: 0.45 }}
           className="mx-auto mb-12 max-w-3xl text-center"
         >
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-4 tracking-tighter">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-4 tracking-tighter leading-[1.2]">
             {t.title}
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 whitespace-nowrap sm:whitespace-normal inline-block">
               {t.titleGradient}
             </span>
           </h2>
-          <p className="text-lg leading-relaxed text-white/100 md:text-xl">
+          <p className="text-base md:text-lg leading-relaxed text-white/100">
             {t.lead}
           </p>
         </motion.div>
@@ -174,12 +174,12 @@ export const Courses = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 backdrop-blur-sm p-8 text-center shadow-2xl md:p-10"
+          className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-br from-blue-600/20 via-purple-600/20 to-pink-600/20 backdrop-blur-sm p-6 sm:p-8 md:p-10 text-center shadow-2xl"
         >
-          <h3 className="mb-3 text-2xl font-black text-white md:text-3xl">
+          <h3 className="mb-3 text-xl sm:text-2xl md:text-3xl font-black text-white">
             {t.ctaTitle}
           </h3>
-          <p className="mb-8 text-base leading-relaxed text-gray-300 md:text-lg">
+          <p className="mb-6 sm:mb-8 text-sm sm:text-base md:text-lg leading-relaxed text-gray-300">
             {t.ctaBody}
           </p>
 
@@ -189,10 +189,10 @@ export const Courses = () => {
               type="button"
               onClick={openWa}
               aria-label={t.whatsappButton}
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-8 py-4 text-base font-bold text-indigo-700 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold text-indigo-700 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
             >
               <MessageCircle className="h-5 w-5 shrink-0 transition-transform group-hover:scale-110" />
-              {t.whatsappButton}
+              <span className="whitespace-nowrap">{t.whatsappButton}</span>
             </button>
 
             {/* Instagram Button */}
@@ -200,10 +200,10 @@ export const Courses = () => {
               type="button"
               onClick={openInstagram}
               aria-label={t.instagramButton}
-              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
+              className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold text-white shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1 active:scale-[0.97] sm:w-auto"
             >
               <InstagramIcon />
-              {t.instagramButton}
+              <span className="whitespace-nowrap">{t.instagramButton}</span>
             </button>
           </div>
 

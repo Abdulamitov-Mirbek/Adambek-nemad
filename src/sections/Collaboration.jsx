@@ -25,7 +25,7 @@ function InstagramGlyph({ className }) {
     >
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+      <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
     </svg>
   );
 }
@@ -118,7 +118,7 @@ export const Collaboration = () => {
     if (!scrollRef.current) return;
     const container = scrollRef.current;
     const { scrollLeft, scrollWidth, clientWidth } = container;
-    const cardWidthWithGap = 344;
+    const cardWidthWithGap = window.innerWidth < 640 ? 284 : 344;
     const index = Math.round(scrollLeft / cardWidthWithGap);
     setActiveIndex(index);
     setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 20);
@@ -132,7 +132,7 @@ export const Collaboration = () => {
 
   const handleNextScroll = () => {
     if (scrollRef.current) {
-      const cardWidthWithGap = 344;
+      const cardWidthWithGap = window.innerWidth < 640 ? 284 : 344;
       scrollRef.current.scrollBy({
         left: cardWidthWithGap,
         behavior: "smooth",
@@ -143,36 +143,36 @@ export const Collaboration = () => {
   return (
     <section
       id="projects"
-      className="relative py-32 overflow-hidden bg-black scroll-mt-20"
+      className="relative py-20 sm:py-32 overflow-hidden bg-black scroll-mt-20"
     >
       {/* Фоновые градиенты */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-20">
         {/* Заголовок */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
-          <div className="inline-block px-4 py-1.5 mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
+          <div className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
+            <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
               {t.badge}
             </span>
           </div>
 
-          <h2 className="text-5xl md:text-6xl font-black text-white mb-4 tracking-tighter">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4 tracking-tighter leading-[1.2]">
             {t.title}
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 whitespace-nowrap sm:whitespace-normal inline-block">
               {t.titleGradient}
             </span>
           </h2>
 
-          <p className="text-white/100 text-lg max-w-2xl mx-auto mt-4">
+          <p className="text-sm sm:text-base md:text-lg text-white/100 max-w-2xl mx-auto mt-3 sm:mt-4 px-2">
             {t.description}
           </p>
         </motion.div>
@@ -182,7 +182,7 @@ export const Collaboration = () => {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex gap-6 overflow-x-auto pb-10 no-scrollbar snap-x snap-mandatory"
+            className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 sm:pb-10 no-scrollbar snap-x snap-mandatory"
           >
             {partners.map((p, idx) => (
               <motion.div
@@ -191,11 +191,11 @@ export const Collaboration = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.05 }}
-                className="w-[280px] sm:w-[320px] flex-shrink-0 snap-center"
+                className="w-[240px] sm:w-[280px] md:w-[320px] flex-shrink-0 snap-center"
               >
                 <div
                   onClick={() => window.open(p.url, "_blank")}
-                  className="group flex flex-col h-full bg-white/5 border border-white/10 rounded-2xl hover:border-blue-500/30 transition-all duration-500 overflow-hidden text-left cursor-pointer hover:transform hover:-translate-y-2"
+                  className="group flex flex-col h-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl hover:border-blue-500/30 transition-all duration-500 overflow-hidden text-left cursor-pointer hover:transform hover:-translate-y-2"
                 >
                   <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
                     <img
@@ -207,26 +207,26 @@ export const Collaboration = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
 
-                  <div className="p-6 flex flex-col flex-grow">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white mb-4 shadow-lg group-hover:scale-110 transition-transform">
-                      <InstagramGlyph className="h-6 w-6" />
+                  <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                    <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform">
+                      <InstagramGlyph className="h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
-                    <h3 className="text-lg font-bold text-white leading-tight group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-base sm:text-lg font-bold text-white leading-tight group-hover:text-blue-400 transition-colors">
                       {language === "kg" ? p.labelKg : p.labelRu}
                     </h3>
-                    <p className="text-[11px] font-mono text-pink-400 font-bold mt-1 mb-2">
+                    <p className="text-[9px] sm:text-[11px] font-mono text-pink-400 font-bold mt-1 mb-1 sm:mb-2">
                       {p.handle}
                     </p>
-                    <p className="text-white/80 text-xs leading-relaxed line-clamp-2">
+                    <p className="text-white/80 text-[11px] sm:text-xs leading-relaxed line-clamp-2">
                       {language === "kg" ? p.descKg : p.descRu}
                     </p>
-                    <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-blue-400 group-hover:text-blue-300 transition-colors">
+                    <div className="mt-auto pt-3 sm:pt-4 border-t border-white/10 flex items-center justify-between">
+                      <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-blue-400 group-hover:text-blue-300 transition-colors">
                         {t.cta}
                       </span>
                       <ExternalLink
-                        size={12}
-                        className="text-white/70 group-hover:text-blue-400 transition-colors"
+                        size={11}
+                        className="text-white/70 group-hover:text-blue-400 transition-colors sm:w-3 sm:h-3"
                       />
                     </div>
                   </div>
@@ -237,27 +237,27 @@ export const Collaboration = () => {
         </div>
 
         {/* Индикаторы-точки */}
-        <div className="flex justify-center gap-2 mt-6">
+        <div className="flex justify-center gap-1 sm:gap-2 mt-4 sm:mt-6">
           {partners.map((_, idx) => (
             <div
               key={idx}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
+              className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
                 activeIndex === idx
-                  ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500"
-                  : "w-1.5 bg-white/20"
+                  ? "w-5 sm:w-8 bg-gradient-to-r from-blue-500 to-purple-500"
+                  : "w-1 sm:w-1.5 bg-white/20"
               }`}
             />
           ))}
         </div>
 
         {/* Кнопка управления */}
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-6 sm:mt-8">
           <button
             type="button"
             onClick={handleNextScroll}
             aria-label={t.next}
             className={`
-              group inline-flex items-center gap-2 px-8 py-3 rounded-full font-bold text-sm shadow-xl transition-all duration-300 hover:scale-105 active:scale-95
+              group inline-flex items-center gap-2 px-5 sm:px-8 py-2 sm:py-3 rounded-full font-bold text-xs sm:text-sm shadow-xl transition-all duration-300 hover:scale-105 active:scale-95
               ${
                 !canScrollRight
                   ? "bg-white/10 text-white/70 cursor-not-allowed opacity-50"
@@ -267,7 +267,7 @@ export const Collaboration = () => {
             disabled={!canScrollRight}
           >
             <span>{t.next}</span>
-            <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>

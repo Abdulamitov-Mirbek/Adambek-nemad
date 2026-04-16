@@ -58,14 +58,13 @@ const AwardCard = ({ item, t, isMobile }) => {
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className="w-[280px] sm:w-[320px] md:w-[350px] flex-shrink-0 snap-center"
+      className="w-[260px] sm:w-[300px] md:w-[350px] flex-shrink-0 snap-center"
     >
       <div
         onClick={() => window.open(item.insta, "_blank")}
         onMouseMove={handleMouseMove}
-        className="group relative flex flex-col bg-[#0f0f0f] border border-white/10 hover:border-blue-500/50 rounded-2xl cursor-pointer transition-all duration-500 h-full shadow-2xl overflow-hidden"
+        className="group relative flex flex-col bg-[#0f0f0f] border border-white/10 hover:border-blue-500/50 rounded-xl sm:rounded-2xl cursor-pointer transition-all duration-500 h-full shadow-2xl overflow-hidden"
       >
-        {/* Слой свечения карточки */}
         {isMobile ? (
           <div className="absolute inset-0 bg-gradient-to-br from-blue-600/15 via-transparent to-transparent opacity-100" />
         ) : (
@@ -75,7 +74,6 @@ const AwardCard = ({ item, t, isMobile }) => {
           />
         )}
 
-        {/* Изображение */}
         <div className="relative aspect-[7/9] overflow-hidden">
           <img
             src={item.img}
@@ -86,35 +84,30 @@ const AwardCard = ({ item, t, isMobile }) => {
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-90" />
         </div>
 
-        {/* Контент с живым дымком */}
-        <div className="p-6 relative z-10 flex flex-col flex-grow glow-image-container">
-          <div className="flex items-center justify-between mb-4 relative z-20">
-            {/* Яркая иконка Инсты */}
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white shadow-[0_5px_15px_rgba(238,42,123,0.3)]">
-              <InstagramGlyph className="h-5 w-5" />
+        <div className="p-4 sm:p-6 relative z-10 flex flex-col flex-grow">
+          <div className="flex items-center justify-between mb-3 sm:mb-4 relative z-20">
+            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-gradient-to-br from-[#f9ce34] via-[#ee2a7b] to-[#6228d7] text-white shadow-[0_5px_15px_rgba(238,42,123,0.3)]">
+              <InstagramGlyph className="h-4 w-4 sm:h-5 sm:w-5" />
             </div>
-            <div className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]">
+            <div className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-[8px] sm:text-[10px] font-black uppercase tracking-wider bg-blue-500 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]">
               {item.result}
             </div>
           </div>
 
-          <h3 className="text-xl font-black text-white uppercase tracking-tight mb-1 group-hover:text-blue-400 transition-colors relative z-20">
+          <h3 className="text-lg sm:text-xl font-black text-white uppercase tracking-tight mb-0.5 sm:mb-1 group-hover:text-blue-400 transition-colors relative z-20">
             {item.name}
           </h3>
-          <p className="text-[11px] font-medium text-blue-400/70 mb-3 tracking-wide relative z-20">
+          <p className="text-[10px] sm:text-[11px] font-medium text-blue-400/70 mb-2 sm:mb-3 tracking-wide relative z-20">
             {item.handle}
           </p>
-          <p className="text-white/80 text-sm leading-relaxed mb-6 flex-grow relative z-20 italic">
-            "{item.description}"
-          </p>
 
-          <div className="pt-4 border-t border-white/5 flex items-center justify-between relative z-20">
-            <span className="text-xs font-bold uppercase tracking-widest text-white/50 group-hover:text-blue-400 transition-colors">
+          <div className="pt-3 sm:pt-4 border-t border-white/5 flex items-center justify-between relative z-20 mt-auto">
+            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-white/50 group-hover:text-blue-400 transition-colors">
               {t.cta}
             </span>
             <ExternalLink
-              size={16}
-              className="text-white/30 group-hover:text-blue-400 transition-all"
+              size={14}
+              className="text-white/30 group-hover:text-blue-400 transition-all sm:w-4 sm:h-4"
             />
           </div>
         </div>
@@ -123,12 +116,233 @@ const AwardCard = ({ item, t, isMobile }) => {
   );
 };
 
+// Кнопка-обманка с 404 страницей в модальном окне
+const FakeButton = ({ t }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClick = () => {
+    setShowModal(true);
+  };
+
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        className="w-[260px] sm:w-[300px] md:w-[350px] flex-shrink-0 snap-center"
+      >
+        <div
+          onClick={handleClick}
+          className="group relative flex flex-col bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-dashed border-blue-500/50 hover:border-blue-400 rounded-xl sm:rounded-2xl cursor-pointer transition-all duration-500 h-full overflow-hidden backdrop-blur-sm"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          <div className="flex flex-col items-center justify-center h-full p-5 sm:p-8 text-center relative z-10 min-h-[400px] sm:min-h-[500px]">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 mb-4 sm:mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-[0_0_40px_rgba(59,130,246,0.5)] group-hover:scale-110 transition-transform duration-300">
+              <ChevronRight className="w-7 h-7 sm:w-10 sm:h-10 text-white" />
+            </div>
+            <h3 className="text-lg sm:text-2xl font-black text-white uppercase tracking-tight mb-2 sm:mb-3">
+              {t.fakeButton}
+            </h3>
+            <p className="text-xs sm:text-sm text-white/60">{t.fakeSubtext}</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Модальное окно в стиле 404 ошибки */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
+          <div
+            className="absolute inset-0 bg-black/90 backdrop-blur-md"
+            onClick={() => setShowModal(false)}
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 border border-red-500/30 rounded-2xl p-5 sm:p-8 max-w-lg w-full text-center shadow-2xl"
+          >
+            {/* Анимированный фон с ошибкой */}
+            <div className="absolute inset-0 overflow-hidden rounded-2xl">
+              <div className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-gradient-to-br from-red-500/5 via-transparent to-purple-500/5 animate-spin-slow" />
+            </div>
+
+            {/* Код ошибки 404 */}
+            <div className="relative z-10">
+              <div className="text-6xl sm:text-8xl md:text-9xl font-black mb-3 sm:mb-4 tracking-tighter">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500">
+                  404
+                </span>
+              </div>
+
+              {/* Глитч-эффект */}
+              <div className="relative">
+                <h3
+                  className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4 glitch-text"
+                  data-text={t.errorTitle}
+                >
+                  {t.errorTitle}
+                </h3>
+              </div>
+
+              <p className="text-gray-400 mb-4 sm:mb-6 text-base sm:text-lg">
+                {t.errorMessage}
+              </p>
+
+              {/* Анимированная строка поиска */}
+              <div className="mb-6 sm:mb-8 max-w-md mx-auto">
+                <div className="relative">
+                  <div className="w-full bg-white/5 border border-white/10 rounded-lg px-3 sm:px-4 py-2 sm:py-3 text-left text-gray-500 font-mono text-xs sm:text-sm">
+                    <span className="text-red-400">$</span> find /students/more
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent animate-shimmer" />
+                </div>
+                <div className="text-left mt-2 font-mono text-[10px] sm:text-xs text-gray-600">
+                  <span className="text-red-400">Error:</span> Resource not
+                  found in database
+                </div>
+              </div>
+
+              {/* Кнопки действий */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="px-5 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-full text-white font-bold transition-all transform hover:scale-105"
+                >
+                  {t.closeButton}
+                </button>
+                <button
+                  onClick={() =>
+                    window.open("https://www.instagram.com/", "_blank")
+                  }
+                  className="px-5 sm:px-6 py-2 sm:py-2.5 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full text-white font-bold transition-all"
+                >
+                  Instagram →
+                </button>
+              </div>
+
+              {/* Дополнительная информация */}
+              <div className="mt-5 sm:mt-6 pt-5 sm:pt-6 border-t border-white/10 text-[10px] sm:text-xs text-gray-600 font-mono">
+                <p>Reference ID: ERR_404_STUDENTS_NOT_FOUND</p>
+                <p className="mt-1">Timestamp: {new Date().toLocaleString()}</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        
+        .animate-spin-slow {
+          animation: spin-slow 10s linear infinite;
+        }
+        
+        .animate-shimmer {
+          animation: shimmer 2s infinite;
+        }
+        
+        .glitch-text {
+          position: relative;
+          animation: glitch 0.3s infinite;
+        }
+        
+        .glitch-text::before,
+        .glitch-text::after {
+          content: attr(data-text);
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+        
+        .glitch-text::before {
+          left: 2px;
+          text-shadow: -2px 0 red;
+          clip: rect(24px, 550px, 90px, 0);
+          animation: glitch-anim 0.3s infinite linear alternate-reverse;
+        }
+        
+        .glitch-text::after {
+          left: -2px;
+          text-shadow: -2px 0 blue;
+          clip: rect(85px, 550px, 140px, 0);
+          animation: glitch-anim2 0.3s infinite linear alternate-reverse;
+        }
+        
+        @keyframes glitch {
+          2%, 64% { transform: translate(2px,0) skew(0deg); }
+          4%, 60% { transform: translate(-2px,0) skew(0deg); }
+          62% { transform: translate(0,0) skew(5deg); }
+        }
+        
+        @keyframes glitch-anim {
+          0% { clip: rect(42px, 9999px, 44px, 0); transform: skew(0.3deg); }
+          5% { clip: rect(12px, 9999px, 59px, 0); transform: skew(0.03deg); }
+          10% { clip: rect(48px, 9999px, 29px, 0); transform: skew(0.72deg); }
+          15% { clip: rect(42px, 9999px, 73px, 0); transform: skew(0.7deg); }
+          20% { clip: rect(63px, 9999px, 27px, 0); transform: skew(0.15deg); }
+          25% { clip: rect(34px, 9999px, 55px, 0); transform: skew(0.16deg); }
+          30% { clip: rect(86px, 9999px, 73px, 0); transform: skew(0.81deg); }
+          35% { clip: rect(20px, 9999px, 23px, 0); transform: skew(0.85deg); }
+          40% { clip: rect(69px, 9999px, 61px, 0); transform: skew(0.82deg); }
+          45% { clip: rect(37px, 9999px, 24px, 0); transform: skew(0.31deg); }
+          50% { clip: rect(41px, 9999px, 55px, 0); transform: skew(0.64deg); }
+          55% { clip: rect(89px, 9999px, 53px, 0); transform: skew(0.17deg); }
+          60% { clip: rect(15px, 9999px, 68px, 0); transform: skew(0.98deg); }
+          65% { clip: rect(72px, 9999px, 34px, 0); transform: skew(0.74deg); }
+          70% { clip: rect(18px, 9999px, 72px, 0); transform: skew(0.65deg); }
+          75% { clip: rect(50px, 9999px, 86px, 0); transform: skew(0.45deg); }
+          80% { clip: rect(72px, 9999px, 99px, 0); transform: skew(0.52deg); }
+          85% { clip: rect(45px, 9999px, 79px, 0); transform: skew(0.1deg); }
+          90% { clip: rect(86px, 9999px, 82px, 0); transform: skew(0.49deg); }
+          95% { clip: rect(57px, 9999px, 47px, 0); transform: skew(0.34deg); }
+          100% { clip: rect(89px, 9999px, 56px, 0); transform: skew(0.05deg); }
+        }
+        
+        @keyframes glitch-anim2 {
+          0% { clip: rect(65px, 9999px, 100px, 0); transform: skew(0.88deg); }
+          5% { clip: rect(46px, 9999px, 41px, 0); transform: skew(0.35deg); }
+          10% { clip: rect(22px, 9999px, 28px, 0); transform: skew(0.42deg); }
+          15% { clip: rect(97px, 9999px, 76px, 0); transform: skew(0.76deg); }
+          20% { clip: rect(18px, 9999px, 69px, 0); transform: skew(0.29deg); }
+          25% { clip: rect(10px, 9999px, 44px, 0); transform: skew(0.6deg); }
+          30% { clip: rect(97px, 9999px, 73px, 0); transform: skew(0.27deg); }
+          35% { clip: rect(19px, 9999px, 100px, 0); transform: skew(0.68deg); }
+          40% { clip: rect(76px, 9999px, 20px, 0); transform: skew(0.15deg); }
+          45% { clip: rect(81px, 9999px, 83px, 0); transform: skew(0.1deg); }
+          50% { clip: rect(68px, 9999px, 97px, 0); transform: skew(0.03deg); }
+          55% { clip: rect(92px, 9999px, 25px, 0); transform: skew(0.56deg); }
+          60% { clip: rect(51px, 9999px, 21px, 0); transform: skew(0.25deg); }
+          65% { clip: rect(30px, 9999px, 90px, 0); transform: skew(0.65deg); }
+          70% { clip: rect(62px, 9999px, 19px, 0); transform: skew(0.17deg); }
+          75% { clip: rect(38px, 9999px, 54px, 0); transform: skew(0.55deg); }
+          80% { clip: rect(98px, 9999px, 79px, 0); transform: skew(0.84deg); }
+          85% { clip: rect(86px, 9999px, 37px, 0); transform: skew(0.44deg); }
+          90% { clip: rect(18px, 9999px, 47px, 0); transform: skew(0.18deg); }
+          95% { clip: rect(69px, 9999px, 48px, 0); transform: skew(0.93deg); }
+          100% { clip: rect(11px, 9999px, 30px, 0); transform: skew(0.02deg); }
+        }
+      `}</style>
+    </>
+  );
+};
+
 const resultsData = {
   ru: [
     {
       name: "Асан Мавлонов",
       result: "20k → 1M+ сом",
-      description: "Прошел путь от скромной зарплаты до статуса миллионера.",
       img: asanmavlonov,
       handle: "@asan_mavlonov",
       insta: "https://www.instagram.com/asan_mavlonov/",
@@ -136,7 +350,6 @@ const resultsData = {
     {
       name: "Кутман Нурланбек",
       result: "Профессиональный рост",
-      description: "Закрытие крупных сделок и внедрение скриптов Адамбека.",
       img: kutman_nurlanbek,
       handle: "@kutman_nurlanbek",
       insta: "https://www.instagram.com/kutman_nurlanbek/",
@@ -144,8 +357,6 @@ const resultsData = {
     {
       name: "elitcamera",
       result: "Лидер продаж",
-      description:
-        "Масштабирование магазина систем видеонаблюдения через контент.",
       img: elitcamera,
       handle: "@elitcamera.kg",
       insta: "https://www.instagram.com/elitcamera.kg/",
@@ -153,8 +364,6 @@ const resultsData = {
     {
       name: "smartcamera",
       result: "Системный маркетинг",
-      description:
-        "Автоматизация привлечения клиентов и создание узнаваемого бренда.",
       img: smartcamera,
       handle: "@smartcamera.kg",
       insta: "https://www.instagram.com/smartcamera.kg/",
@@ -162,7 +371,6 @@ const resultsData = {
     {
       name: "turan_ned",
       result: "Масштабный рост",
-      description: "Лидер рынка в нише зарубежной недвижимости и инвестиций.",
       img: turan_ned,
       handle: "@turan_ned",
       insta: "https://www.instagram.com/turan_ned/",
@@ -170,8 +378,6 @@ const resultsData = {
     {
       name: "Aza Sport",
       result: "Системные продажи",
-      description:
-        "Внедрение системы продаж в крупнейший магазин спорттоваров.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -179,7 +385,6 @@ const resultsData = {
     {
       name: "turan_nedvizhimost",
       result: "Сильный бренд",
-      description: "Создание качественного медиа-присутствия в сфере жилья.",
       img: turan_nedvizhimost,
       handle: "@turan_nedvizhimost",
       insta: "https://www.instagram.com/turan_nedvizhimost/",
@@ -187,7 +392,6 @@ const resultsData = {
     {
       name: "_barbershop01.kg",
       result: "Лояльные клиенты",
-      description: "Построение системы сервиса и стабильного потока записей.",
       img: _barbershop,
       handle: "@_barbershop01.kg",
       insta: "https://www.instagram.com/_barbershop01.kg/",
@@ -195,7 +399,6 @@ const resultsData = {
     {
       name: "Rayber Barber",
       result: "Масштабирование",
-      description: "Построил сильный бренд и наладил поток лояльных клиентов.",
       img: rayber_barbershop,
       handle: "@rayber_barbershop",
       insta: "https://www.instagram.com/rayber_barbershop/",
@@ -203,7 +406,6 @@ const resultsData = {
     {
       name: "Рахманберди",
       result: "Результат х3",
-      description: "Увеличил личный доход и масштаб бизнеса после обучения.",
       img: rahmanberdi,
       handle: "@rahmanberdi_mavlonov",
       insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
@@ -213,8 +415,6 @@ const resultsData = {
     {
       name: "Асан Мавлонов",
       result: "20k → 1M+ сом",
-      description:
-        "Жөнөкөй айлыктан миллионер статусуна чейинки жолду басып өттү.",
       img: asanmavlonov,
       handle: "@asan_mavlonov",
       insta: "https://www.instagram.com/asan_mavlonov/",
@@ -222,8 +422,6 @@ const resultsData = {
     {
       name: "Кутман Нурланбек",
       result: "Кесиптик өсүү",
-      description:
-        "Ири келишимдерди түзүү жана Адамбектин скрипттерин колдонуу.",
       img: kutman_nurlanbek,
       handle: "@kutman_nurlanbek",
       insta: "https://www.instagram.com/kutman_nurlanbek/",
@@ -231,7 +429,6 @@ const resultsData = {
     {
       name: "elitcamera",
       result: "Сатуунун лидери",
-      description: "Контент аркылуу видеокөзөмөл дүкөнүн өнүктүрүү.",
       img: elitcamera,
       handle: "@elitcamera.kg",
       insta: "https://www.instagram.com/elitcamera.kg/",
@@ -239,8 +436,6 @@ const resultsData = {
     {
       name: "smartcamera",
       result: "Системалуу маркетинг",
-      description:
-        "Кардарларды тартууну автоматташтыруу жана таанымал бренд түзүү.",
       img: smartcamera,
       handle: "@smartcamera.kg",
       insta: "https://www.instagram.com/smartcamera.kg/",
@@ -248,7 +443,6 @@ const resultsData = {
     {
       name: "turan_ned",
       result: "Масштабдуу өсүү",
-      description: "Инвестиция жана чет өлкөлүк мүлк рыногунун лидери.",
       img: turan_ned,
       handle: "@turan_ned",
       insta: "https://www.instagram.com/turan_ned/",
@@ -256,8 +450,6 @@ const resultsData = {
     {
       name: "Aza Sport",
       result: "Системалуу сатуу",
-      description:
-        "Спорт товарлар дүкөнүнө заманбап сатуу системасын киргизди.",
       img: azasport,
       handle: "@azasport_bishkek",
       insta: "https://www.instagram.com/azasport_bishkek/",
@@ -265,7 +457,6 @@ const resultsData = {
     {
       name: "turan_nedvizhimost",
       result: "Күчтүү бренд",
-      description: "Турак жай тармагында сапаттуу медиа-контент түзүү.",
       img: turan_nedvizhimost,
       handle: "@turan_nedvizhimost",
       insta: "https://www.instagram.com/turan_nedvizhimost/",
@@ -273,7 +464,6 @@ const resultsData = {
     {
       name: "_barbershop01.kg",
       result: "Туруктуу кардарлар",
-      description: "Тейлөө тутумун жана жазылуулардын туруктуу агымын түзүү.",
       img: _barbershop,
       handle: "@_barbershop01.kg",
       insta: "https://www.instagram.com/_barbershop01.kg/",
@@ -281,7 +471,6 @@ const resultsData = {
     {
       name: "Rayber Barber",
       result: "Масштабдоо",
-      description: "Күчтүү бренд куруп, туруктуу кардарлар агымын түздү.",
       img: rayber_barbershop,
       handle: "@rayber_barbershop",
       insta: "https://www.instagram.com/rayber_barbershop/",
@@ -289,7 +478,6 @@ const resultsData = {
     {
       name: "Рахманберди",
       result: "Жыйынтык х3",
-      description: "Окуудан кийин жеке кирешесин жана бизнесин өстүрдү.",
       img: rahmanberdi,
       handle: "@rahmanberdi_mavlonov",
       insta: "https://www.instagram.com/rahmanberdi_mavlonov/",
@@ -303,16 +491,23 @@ const content = {
     title: "РЕЗУЛЬТАТЫ",
     titleGradient: "УЧЕНИКОВ",
     cta: "Смотреть отзыв",
-    showAll: "Показать всех",
-    hideAll: "Скрыть",
+    fakeButton: "СМОТРЕТЬ ВСЕХ",
+    fakeSubtext: "Больше историй в Instagram",
+    errorTitle: "СТРАНИЦА НЕ НАЙДЕНА",
+    errorMessage:
+      "Извините, запрашиваемая страница не существует или была перемещена.",
+    closeButton: "Вернуться",
   },
   kg: {
     badge: "ИЙГИЛИК ТАРЫХТАРЫ",
     title: "ШАКИРТТЕРДИН",
     titleGradient: "ЖЕТИШКЕНДИКТЕРИ",
     cta: "Пикирди көрүү",
-    showAll: "Баарын көрүү",
-    hideAll: "Жабуу",
+    fakeButton: "БААРЫН КӨРҮҮ",
+    fakeSubtext: "Дагы ийгиликтер Instagramда",
+    errorTitle: "БЕТ ТАБЫЛГАН ЖОК",
+    errorMessage: "Кечиресиз, суралган бет жок же жылдырылган.",
+    closeButton: "Кайтуу",
   },
 };
 
@@ -320,7 +515,6 @@ export const Awards = () => {
   const { language } = useContext(LanguageContext);
   const t = content[language];
   const results = resultsData[language];
-  const [showAll, setShowAll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollRef = useRef(null);
@@ -342,29 +536,30 @@ export const Awards = () => {
     setActiveIndex(index);
   };
 
-  const displayedResults = showAll ? results : results.slice(0, 3);
-
   return (
-    <section id="students" className="relative py-32 overflow-hidden bg-black">
+    <section
+      id="students"
+      className="relative py-20 sm:py-32 overflow-hidden bg-black"
+    >
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
 
-      <div className="max-w-7xl mx-auto px-6 relative z-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-16"
         >
-          <div className="inline-block px-4 py-1.5 mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
-            <span className="text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
+          <div className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 mb-4 sm:mb-6 border border-white/10 bg-white/5 backdrop-blur-md rounded-full">
+            <span className="text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase text-blue-400">
               {t.badge}
             </span>
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-4 tracking-tighter uppercase">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-white mb-3 sm:mb-4 tracking-tighter uppercase leading-[1.2]">
             {t.title}
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 whitespace-nowrap sm:whitespace-normal inline-block">
               {t.titleGradient}
             </span>
           </h2>
@@ -374,11 +569,9 @@ export const Awards = () => {
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className={`flex gap-6 overflow-x-auto pb-8 no-scrollbar snap-x snap-mandatory 
-              ${!showAll ? "md:flex md:justify-center" : "md:grid md:grid-cols-2 lg:grid-cols-3 md:max-w-fit md:mx-auto"} 
-              md:overflow-visible md:pb-0 md:gap-y-12`}
+            className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 sm:pb-8 no-scrollbar snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 md:gap-y-10 lg:gap-y-12"
           >
-            {displayedResults.map((item, index) => (
+            {results.map((item, index) => (
               <AwardCard
                 key={`${item.handle}-${index}`}
                 item={item}
@@ -386,68 +579,29 @@ export const Awards = () => {
                 isMobile={isMobile}
               />
             ))}
+            <FakeButton t={t} />
           </div>
 
           {isMobile && (
-            <div className="flex justify-center items-center gap-2 mt-6">
-              {displayedResults.map((_, idx) => (
+            <div className="flex justify-center items-center gap-1 sm:gap-2 mt-4 sm:mt-6">
+              {[...results, { id: "fake" }].map((_, idx) => (
                 <div
                   key={idx}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx ? "w-8 bg-gradient-to-r from-blue-500 to-purple-500" : "w-1.5 bg-white/20"}`}
+                  className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
+                    activeIndex === idx
+                      ? "w-5 sm:w-8 bg-gradient-to-r from-blue-500 to-purple-500"
+                      : "w-1 sm:w-1.5 bg-white/20"
+                  }`}
                 />
               ))}
             </div>
           )}
         </div>
-
-        {results.length > 3 && (
-          <div className="flex justify-center mt-12">
-            <button
-              onClick={() => {
-                setShowAll(!showAll);
-                setActiveIndex(0);
-              }}
-              className="group inline-flex items-center gap-2 px-8 py-3 rounded-full font-bold text-sm shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 bg-gradient-to-r from-blue-600 to-purple-600 text-white"
-            >
-              <span>{showAll ? t.hideAll : t.showAll}</span>
-              <motion.div
-                animate={{ rotate: showAll ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </motion.div>
-            </button>
-          </div>
-        )}
       </div>
 
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        .glow-image-container { position: relative; }
-
-        .glow-image-container::before {
-          content: "";
-          position: absolute;
-          inset: -1rem;
-          z-index: 1;
-          border-radius: inherit;
-          background: linear-gradient(120deg, #3b82f6, #000000, #2563eb, #000000);
-          background-size: 300% 300%;
-          opacity: 0.6;
-          filter: blur(2.0rem);
-          animation: gradientShift 10s ease-in-out infinite;
-          pointer-events: none;
-        }
-
-        .glow-image-container .relative.z-20 { z-index: 2; }
-
-        @keyframes gradientShift {
-          0% { background-position: 0% 50%; transform: scale(1) translateY(0); }
-          50% { background-position: 100% 50%; transform: scale(1.1) translateY(-10px); }
-          100% { background-position: 0% 50%; transform: scale(1) translateY(0); }
-        }
       `}</style>
     </section>
   );
