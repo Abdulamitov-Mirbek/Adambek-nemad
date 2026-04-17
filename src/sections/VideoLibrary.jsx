@@ -64,6 +64,11 @@ const content = {
     goToSlide: "Перейти к видео номер",
     moreButton: "СМОТРЕТЬ ЕЩЁ",
     moreSubtext: "Больше видео в Instagram",
+    errorTitle: "УПС!",
+    errorMessage:
+      "Видео временно недоступно. Загляните в наш Instagram для просмотра всех видео-отзывов.",
+    closeButton: "Закрыть",
+    instagramButton: "Instagram →",
   },
   kg: {
     badge: "ВИДЕОКОНТЕНТ",
@@ -76,10 +81,15 @@ const content = {
     goToSlide: "Видео номерине өтүү",
     moreButton: "ДАГЫ КӨРҮҮ",
     moreSubtext: "Дагы видеолор Instagramда",
+    errorTitle: "ОЙ!",
+    errorMessage:
+      "Видео убактылуу жеткиликсиз. Бардык видео-пикирлерди көрүү үчүн Instagram'га кириңиз.",
+    closeButton: "Жабуу",
+    instagramButton: "Instagram →",
   },
 };
 
-// Кнопка-обманка
+// Кнопка-обманка с поддержкой двух языков
 const FakeMoreButton = ({ t }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -93,7 +103,7 @@ const FakeMoreButton = ({ t }) => {
   return (
     <>
       <motion.div
-        className="min-w-[240px] sm:min-w-[280px] md:min-w-[320px] snap-center"
+        className="min-w-[240px] sm:min-w-[280px] md:min-w-[320px] snap-center transition-transform duration-300 hover:-translate-y-1 sm:hover:-translate-y-2"
         whileHover={{ y: -8 }}
       >
         <div
@@ -115,7 +125,7 @@ const FakeMoreButton = ({ t }) => {
         </div>
       </motion.div>
 
-      {/* Модальное окно с ошибкой */}
+      {/* Модальное окно с ошибкой - поддержка двух языков */}
       {showModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
           <div
@@ -130,18 +140,17 @@ const FakeMoreButton = ({ t }) => {
           >
             <div className="text-6xl sm:text-7xl mb-4">⚠️</div>
             <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-              УПС!
+              {t.errorTitle}
             </h3>
             <p className="text-sm sm:text-base text-gray-400 mb-6">
-              Видео временно недоступно. Загляните в наш Instagram для просмотра
-              всех видео-отзывов.
+              {t.errorMessage}
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
               <button
                 onClick={() => setShowModal(false)}
                 className="px-5 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-full text-white font-bold transition-all"
               >
-                Закрыть
+                {t.closeButton}
               </button>
               <button
                 onClick={() =>
@@ -152,7 +161,7 @@ const FakeMoreButton = ({ t }) => {
                 }
                 className="px-5 sm:px-6 py-2 sm:py-2.5 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full text-white font-bold transition-all"
               >
-                Instagram →
+                {t.instagramButton}
               </button>
             </div>
           </motion.div>
@@ -180,11 +189,13 @@ export const VideoLibrary = () => {
     [],
   );
 
+  const allCards = [...cards, { isFake: true }];
+
   const updateScrollStatus = () => {
     if (scrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       setScrollInfo({ current: scrollLeft, max: scrollWidth - clientWidth });
-      const cardWidth = 240 + 24;
+      const cardWidth = window.innerWidth < 640 ? 264 : 344;
       setActiveIndex(Math.round(scrollLeft / cardWidth));
     }
   };
@@ -209,8 +220,6 @@ export const VideoLibrary = () => {
       scrollRef.current.scrollBy({ left: amount, behavior: "smooth" });
     }
   };
-
-  const allCards = [...cards, { isFake: true }];
 
   return (
     <section
@@ -261,6 +270,7 @@ export const VideoLibrary = () => {
 
           <div
             ref={scrollRef}
+            onScroll={updateScrollStatus}
             className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 sm:pb-10 scroll-smooth snap-x snap-mandatory no-scrollbar relative z-0"
           >
             {cards.map((v, idx) => (
