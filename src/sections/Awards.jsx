@@ -214,7 +214,7 @@ const FakeButton = ({ t }) => {
                 </button>
                 <button
                   onClick={() =>
-                    window.open("https://www.instagram.com/", "_blank")
+                    window.open("https://www.instagram.com/adambek.neemat?igsh=aDJ1YXQ1eGRjYXlx", "_blank")
                   }
                   className="px-5 sm:px-6 py-2 sm:py-2.5 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full text-white font-bold transition-all"
                 >

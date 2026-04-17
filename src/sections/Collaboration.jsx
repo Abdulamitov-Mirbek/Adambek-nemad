@@ -7,7 +7,7 @@ import { LanguageContext } from "../context/LanguageContext";
 import diagonalImg from "../assets/images/Dioganal.jpg";
 import electroImg from "../assets/images/Electro.jpg";
 import electroImgosh from "../assets/images/electro_adis_osh.jpg";
-import navisImg from "../assets/images/Navis.jpg";
+import navisImg from "../assets/images/itadis1.jpg";
 import navisImgosh from "../assets/images/navis_osh.jpg";
 import technoImg from "../assets/images/Techno.jpg";
 
@@ -50,11 +50,11 @@ const partners = [
     descKg: "Электротехника Ош.",
   },
   {
-    handle: "@navis.academy",
-    url: "https://instagram.com/navis.academy/",
+    handle: "@it.adis",
+    url: "https://www.instagram.com/it.adis1?igsh=ejdxZ3JlOGp2dmpi",
     img: navisImg,
-    labelRu: "Navis Academy",
-    labelKg: "Navis Academy",
+    labelRu: "It Adis",
+    labelKg: "It Адис",
     descRu: "IT курсы в Бишкеке.",
     descKg: "Бишкектеги IT курстар.",
   },

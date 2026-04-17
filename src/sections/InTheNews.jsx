@@ -1,6 +1,7 @@
 import React, { useContext, useMemo, useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LanguageContext } from "../context/LanguageContext";
+import { ChevronRight as ArrowRight } from "lucide-react";
 
 // SVG иконки
 const PlayIcon = ({ className = "w-4 h-4", fill = "none" }) => (
@@ -83,6 +84,92 @@ const ChevronIcon = ({ dir }) => (
   </svg>
 );
 
+// Кнопка-обманка
+const FakeMoreButton = ({ t }) => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleClick = () => {
+    setShowModal(true);
+    setTimeout(() => {
+      setShowModal(false);
+    }, 3000);
+  };
+
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        whileHover={{ y: -8 }}
+        className="min-w-[260px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-0 lg:w-full cursor-pointer snap-center"
+      >
+        <div
+          onClick={handleClick}
+          className="group relative bg-white/5 border border-dashed border-blue-500/50 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/20 h-full backdrop-blur-sm"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 via-transparent to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+          <div className="flex flex-col items-center justify-center h-full p-6 sm:p-8 text-center relative z-10 min-h-[280px] sm:min-h-[320px]">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 mb-4 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-[0_0_30px_rgba(59,130,246,0.5)] group-hover:scale-110 transition-transform duration-300">
+              <ArrowRight className="w-7 h-7 sm:w-10 sm:h-10 text-white" />
+            </div>
+            <h3 className="text-lg sm:text-xl font-black text-white uppercase tracking-tight mb-2">
+              {t.moreButton}
+            </h3>
+            <p className="text-xs sm:text-sm text-white/60">{t.moreSubtext}</p>
+            <div className="mt-4 sm:mt-6 w-8 sm:w-12 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full group-hover:w-12 sm:group-hover:w-24 transition-all duration-300" />
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Модальное окно с ошибкой */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 px-4">
+          <div
+            className="absolute inset-0 bg-black/90 backdrop-blur-md"
+            onClick={() => setShowModal(false)}
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 20 }}
+            className="relative bg-gradient-to-br from-gray-900 via-black to-gray-900 border border-red-500/30 rounded-2xl p-5 sm:p-8 max-w-md w-full text-center shadow-2xl"
+          >
+            <div className="text-6xl sm:text-7xl mb-4">⚠️</div>
+            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+              УПС!
+            </h3>
+            <p className="text-sm sm:text-base text-gray-400 mb-6">
+              Видео временно недоступно. Загляните в наш YouTube для просмотра
+              всех видео.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-5 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 rounded-full text-white font-bold transition-all"
+              >
+                Закрыть
+              </button>
+              <button
+                onClick={() =>
+                  window.open(
+                    "https://www.youtube.com/@adambek.neemat",
+                    "_blank",
+                  )
+                }
+                className="px-5 sm:px-6 py-2 sm:py-2.5 bg-white/5 hover:bg-white/10 border border-white/20 rounded-full text-white font-bold transition-all"
+              >
+                YouTube →
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </>
+  );
+};
+
 const videos = [
   {
     url: "https://www.youtube.com/watch?v=crIz4zyNaww",
@@ -148,6 +235,11 @@ const content = {
     lead: "Откровенные разговоры о бизнесе, успехе и жизни. Нажмите на карточку, чтобы посмотреть видео.",
     watchNow: "Смотреть сейчас",
     views: "просмотров",
+    moreButton: "СМОТРЕТЬ ЕЩЁ",
+    moreSubtext: "Больше видео на YouTube",
+    goToSlide: "Перейти к видео номер",
+    ariaPrev: "Предыдущее видео",
+    ariaNext: "Следующее видео",
   },
   kg: {
     badge: "ВИДЕОКОНТЕНТ",
@@ -156,6 +248,11 @@ const content = {
     lead: "Бизнес, ийгилик жана жашоо жөнүндө ачык маектер. Видеону көрүү үчүн карточканы басыңыз.",
     watchNow: "Азыр көрүү",
     views: "көрүү",
+    moreButton: "ДАГЫ КӨРҮҮ",
+    moreSubtext: "Дагы видеолор YouTubeта",
+    goToSlide: "Видео номерине өтүү",
+    ariaPrev: "Мурунку видео",
+    ariaNext: "Кийинки видео",
   },
 };
 
@@ -166,7 +263,7 @@ export const InTheNews = () => {
 
   const scrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [canScroll, setCanScroll] = useState(false);
+  const [scrollInfo, setScrollInfo] = useState({ current: 0, max: 0 });
 
   const cards = useMemo(
     () =>
@@ -180,11 +277,14 @@ export const InTheNews = () => {
     [],
   );
 
+  const allCards = [...cards, { isFake: true }];
+
   const handleScroll = () => {
     if (scrollRef.current) {
       const container = scrollRef.current;
-      const scrollLeft = container.scrollLeft;
-      const cardWidth = window.innerWidth < 640 ? 280 : 352;
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      setScrollInfo({ current: scrollLeft, max: scrollWidth - clientWidth });
+      const cardWidth = window.innerWidth < 640 ? 284 : 352;
       setActiveIndex(Math.round(scrollLeft / cardWidth));
     }
   };
@@ -192,18 +292,15 @@ export const InTheNews = () => {
   useEffect(() => {
     const container = scrollRef.current;
     if (container) {
-      const checkScroll = () => {
-        setCanScroll(container.scrollWidth > container.clientWidth);
-      };
-      checkScroll();
+      handleScroll();
       container.addEventListener("scroll", handleScroll);
-      window.addEventListener("resize", checkScroll);
+      window.addEventListener("resize", handleScroll);
       return () => {
         container.removeEventListener("scroll", handleScroll);
-        window.removeEventListener("resize", checkScroll);
+        window.removeEventListener("resize", handleScroll);
       };
     }
-  }, []);
+  }, [cards]);
 
   const scroll = (dir) => {
     if (scrollRef.current) {
@@ -250,26 +347,23 @@ export const InTheNews = () => {
         </motion.div>
 
         {/* Scroll Container */}
-        <div className="relative group">
+        <div className="relative group/container">
           <button
             onClick={() => scroll("left")}
-            aria-label="Предыдущее видео"
-            className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-10 bg-black/80 backdrop-blur-md border border-white/10 shadow-xl p-2 sm:p-3 rounded-full hover:bg-black/100 hover:scale-110 transition-all duration-300 hidden lg:flex items-center justify-center"
+            aria-label={t.ariaPrev}
+            className={`absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-2 sm:p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
+              scrollInfo.current <= 5
+                ? "opacity-0 pointer-events-none"
+                : "opacity-0 group-hover/container:opacity-100"
+            }`}
           >
             <ChevronIcon dir="left" />
           </button>
 
-          <button
-            onClick={() => scroll("right")}
-            aria-label="Следующее видео"
-            className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-10 bg-black/80 backdrop-blur-md border border-white/10 shadow-xl p-2 sm:p-3 rounded-full hover:bg-black/100 hover:scale-110 transition-all duration-300 hidden lg:flex items-center justify-center"
-          >
-            <ChevronIcon dir="right" />
-          </button>
-
           <div
             ref={scrollRef}
-            className="flex gap-4 sm:gap-8 overflow-x-auto pb-4 sm:pb-6 no-scrollbar snap-x snap-mandatory lg:grid lg:grid-cols-3 lg:overflow-visible lg:justify-items-center lg:max-w-6xl lg:mx-auto"
+            onScroll={handleScroll}
+            className="flex gap-4 sm:gap-8 overflow-x-auto pb-4 sm:pb-6 no-scrollbar snap-x snap-mandatory"
           >
             {cards.map((v, idx) => (
               <motion.div
@@ -280,7 +374,7 @@ export const InTheNews = () => {
                 transition={{ delay: idx * 0.1 }}
                 whileHover={{ y: -8 }}
                 onClick={() => setSelectedVideo(v)}
-                className="min-w-[260px] sm:min-w-[320px] md:min-w-[360px] lg:min-w-0 lg:w-full cursor-pointer snap-center"
+                className="min-w-[260px] sm:min-w-[320px] md:min-w-[360px] cursor-pointer snap-center"
               >
                 <div className="bg-white/5 border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/10">
                   <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
@@ -343,19 +437,47 @@ export const InTheNews = () => {
                 </div>
               </motion.div>
             ))}
+
+            {/* Кнопка "Смотреть ещё" в конце */}
+            <FakeMoreButton t={t} />
           </div>
 
-          {canScroll && (
-            <div className="flex justify-center gap-1 sm:gap-2 mt-4 sm:mt-6 lg:hidden">
-              {cards.map((_, idx) => (
-                <div
+          <button
+            onClick={() => scroll("right")}
+            aria-label={t.ariaNext}
+            className={`absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-2 sm:p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
+              scrollInfo.current >= scrollInfo.max - 5
+                ? "opacity-0 pointer-events-none"
+                : "opacity-0 group-hover/container:opacity-100"
+            }`}
+          >
+            <ChevronIcon dir="right" />
+          </button>
+
+          {scrollInfo.max > 0 && (
+            <div className="flex justify-center gap-0.5 sm:gap-1 mt-4 sm:mt-6">
+              {allCards.map((_, idx) => (
+                <button
                   key={idx}
-                  className={`h-1 sm:h-1.5 rounded-full transition-all duration-300 ${
-                    activeIndex === idx
-                      ? "w-5 sm:w-8 bg-gradient-to-r from-blue-500 to-purple-500"
-                      : "w-1 sm:w-1.5 bg-white/20"
-                  }`}
-                />
+                  onClick={() => {
+                    const cardWidth = window.innerWidth < 640 ? 284 : 352;
+                    scrollRef.current.scrollTo({
+                      left: idx * cardWidth,
+                      behavior: "smooth",
+                    });
+                  }}
+                  aria-label={`${t.goToSlide} ${idx + 1}`}
+                  aria-current={activeIndex === idx ? "page" : undefined}
+                  className="p-2 sm:p-3 rounded-full transition-all duration-300 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <span
+                    className={`block rounded-full transition-all duration-300 ${
+                      activeIndex === idx
+                        ? "h-1.5 sm:h-2 w-5 sm:w-8 bg-gradient-to-r from-blue-500 to-purple-500"
+                        : "h-1 w-1 sm:h-1.5 sm:w-1.5 bg-white/40 group-hover:bg-white/60"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           )}
@@ -396,8 +518,6 @@ export const InTheNews = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      <div></div>
 
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
