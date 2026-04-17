@@ -195,14 +195,14 @@ export const Collaboration = () => {
               >
                 <div
                   onClick={() => window.open(p.url, "_blank")}
-                  className="group flex flex-col h-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl hover:border-blue-500/30 transition-all duration-500 overflow-hidden text-left cursor-pointer hover:transform hover:-translate-y-2"
+                  className="group mt-4 flex flex-col h-full bg-white/5 border border-white/10 rounded-xl sm:rounded-2xl hover:border-blue-500/30 transition-all duration-500 overflow-hidden text-left cursor-pointer hover:transform hover:-translate-y-2"
                 >
                   <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
                     <img
                       src={p.img}
                       alt={p.handle}
                       loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
