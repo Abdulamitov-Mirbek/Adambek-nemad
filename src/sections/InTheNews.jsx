@@ -350,17 +350,17 @@ export const InTheNews = () => {
             </span>
           </h2>
 
-          <p className="text-sm sm:text-base md:text-lg text-white/100 max-w-2xl mx-auto px-2">
+          <p className="text-sm sm:text-base md:text-lg text-white max-w-2xl mx-auto px-2">
             {t.lead}
           </p>
         </motion.div>
 
         {/* Scroll Container */}
         <div className="relative group/container">
+          {/* Левая стрелка (только для десктопа) */}
           <button
             onClick={() => scroll("left")}
-            aria-label={t.ariaPrev}
-            className={`absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-2 sm:p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
+            className={`absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black hover:scale-110 ${
               scrollInfo.current <= 5
                 ? "opacity-0 pointer-events-none"
                 : "opacity-0 group-hover/container:opacity-100"
@@ -371,7 +371,6 @@ export const InTheNews = () => {
 
           <div
             ref={scrollRef}
-            onScroll={handleScroll}
             className="flex gap-4 sm:gap-8 overflow-x-auto pb-4 sm:pb-6 no-scrollbar snap-x snap-mandatory"
           >
             {cards.map((v, idx) => (
@@ -383,78 +382,55 @@ export const InTheNews = () => {
                 transition={{ delay: idx * 0.1 }}
                 whileHover={{ y: -8 }}
                 onClick={() => setSelectedVideo(v)}
-                className="min-w-[260px] sm:min-w-[320px] md:min-w-[360px] cursor-pointer snap-center"
+                className="min-w-[280px] sm:min-w-[320px] md:min-w-[360px] cursor-pointer snap-center"
               >
-                <div className="bg-white/5 border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/10">
-                  <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900">
+                <div className="bg-white/5 border border-white/10 rounded-2xl sm:rounded-3xl overflow-hidden transition-all duration-500 hover:border-blue-500/30 hover:shadow-xl hover:shadow-blue-500/10 h-full">
+                  <div className="relative aspect-video overflow-hidden bg-gray-900">
                     <img
                       src={v.thumb}
-                      alt={`${v.title[language]}`}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      alt={v.title[language]}
+                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
-                    <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 flex justify-between items-start gap-2">
-                      <div className="bg-black/60 backdrop-blur-md px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] text-white font-bold flex items-center gap-1">
+                    {/* Play Button Overlay */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl transition-transform group-hover:scale-110">
+                        <PlayIcon
+                          className="w-8 h-8 text-white ml-1"
+                          fill="white"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="absolute top-3 left-3 flex gap-2">
+                      <div className="bg-black/60 backdrop-blur-md px-2 py-1 rounded-full text-[10px] text-white font-bold flex items-center gap-1">
                         <ClockIcon /> {v.duration}
                       </div>
-                      <div className="bg-black/60 backdrop-blur-md px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] text-white font-bold">
-                        {v.views} {t.views}
-                      </div>
-                    </div>
-
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="relative">
-                        <div className="absolute inset-0 rounded-full bg-white/20 animate-ping" />
-                        <div className="relative w-14 h-14 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-                          <PlayIcon
-                            className="w-7 h-7 sm:w-10 sm:h-10 text-white ml-0.5 sm:ml-1"
-                            fill="white"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 bg-black/60 backdrop-blur-md px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[8px] sm:text-[10px] text-white font-bold flex items-center gap-1">
-                      <CalendarIcon />{" "}
-                      {new Date(v.date).toLocaleDateString(
-                        language === "kg" ? "ky" : "ru",
-                      )}
                     </div>
                   </div>
 
-                  <div className="p-4 sm:p-6">
-                    <h3 className="text-base sm:text-lg md:text-xl font-bold text-white mb-2 sm:mb-3 line-clamp-2 leading-tight hover:text-blue-400 transition-colors">
+                  <div className="p-5 sm:p-6">
+                    <h3 className="text-lg font-bold text-white mb-2 line-clamp-2 leading-tight">
                       {v.title[language]}
                     </h3>
-                    <p className="text-white/80 text-xs sm:text-sm line-clamp-2 mb-4 sm:mb-6">
+                    <p className="text-white/60 text-sm line-clamp-2 mb-4">
                       {v.description[language]}
                     </p>
-                    <div className="flex items-center justify-between pt-3 sm:pt-4 border-t border-white/10">
-                      <span className="text-xs sm:text-sm font-bold text-blue-400 hover:text-blue-300 transition-colors">
-                        {t.watchNow}
-                      </span>
-                      <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-blue-500/20 flex items-center justify-center hover:bg-blue-500/30 transition-colors">
-                        <PlayIcon
-                          className="w-3 h-3 sm:w-4 sm:h-4 text-blue-400 ml-0.5"
-                          fill="currentColor"
-                        />
-                      </div>
+                    <div className="flex items-center justify-between pt-4 border-t border-white/5 text-blue-400 font-bold text-sm">
+                      {t.watchNow}
+                      <ArrowRight className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
               </motion.div>
             ))}
-
-            {/* Кнопка "Смотреть ещё" в конце */}
-            <FakeMoreButton t={t} />
           </div>
 
+          {/* Правая стрелка (только для десктопа) */}
           <button
             onClick={() => scroll("right")}
-            aria-label={t.ariaNext}
-            className={`absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-2 sm:p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black/100 hover:scale-110 hover:border-blue-500/50 ${
+            className={`absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-3 shadow-xl transition-all duration-300 hidden lg:flex items-center justify-center hover:bg-black hover:scale-110 ${
               scrollInfo.current >= scrollInfo.max - 5
                 ? "opacity-0 pointer-events-none"
                 : "opacity-0 group-hover/container:opacity-100"
@@ -462,64 +438,54 @@ export const InTheNews = () => {
           >
             <ChevronIcon dir="right" />
           </button>
-
-          {scrollInfo.max > 0 && (
-            <div className="flex justify-center gap-0.5 sm:gap-1 mt-4 sm:mt-6">
-              {allCards.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => {
-                    const cardWidth = window.innerWidth < 640 ? 284 : 352;
-                    scrollRef.current.scrollTo({
-                      left: idx * cardWidth,
-                      behavior: "smooth",
-                    });
-                  }}
-                  aria-label={`${t.goToSlide} ${idx + 1}`}
-                  aria-current={activeIndex === idx ? "page" : undefined}
-                  className="p-2 sm:p-3 rounded-full transition-all duration-300 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <span
-                    className={`block rounded-full transition-all duration-300 ${
-                      activeIndex === idx
-                        ? "h-1.5 sm:h-2 w-5 sm:w-8 bg-gradient-to-r from-blue-500 to-purple-500"
-                        : "h-1 w-1 sm:h-1.5 sm:w-1.5 bg-white/40 group-hover:bg-white/60"
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
-          )}
         </div>
+
+        {/* Новая кнопка YouTube вместо фейковой карточки */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="mt-12 flex justify-center"
+        >
+          <button
+            onClick={() =>
+              window.open("https://www.youtube.com/@adambek.neemat", "_blank")
+            }
+            className="group flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 border border-white/10 text-white font-bold hover:bg-white/10 transition-all hover:border-blue-500/50"
+          >
+            <span className="uppercase tracking-wider text-sm">
+              {t.moreSubtext}
+            </span>
+            <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1 text-blue-500" />
+          </button>
+        </motion.div>
       </div>
 
-      {/* Modal */}
+      {/* Модалка для видео */}
       <AnimatePresence>
         {selectedVideo && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl p-3 sm:p-4"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4"
             onClick={() => setSelectedVideo(null)}
           >
             <motion.div
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
-              className="relative w-full max-w-5xl aspect-video bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/20"
+              className="relative w-full max-w-5xl aspect-video rounded-2xl overflow-hidden border border-white/20 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <button
                 onClick={() => setSelectedVideo(null)}
-                className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 p-1.5 sm:p-2 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors backdrop-blur-sm"
+                className="absolute top-4 right-4 z-10 p-2 bg-black/50 text-white rounded-full hover:bg-black/70"
               >
                 <CloseIcon />
               </button>
               <iframe
                 src={`https://www.youtube.com/embed/${selectedVideo.id}?autoplay=1`}
                 className="w-full h-full"
-                frameBorder="0"
                 allowFullScreen
                 title={selectedVideo.title[language]}
               ></iframe>
@@ -531,7 +497,6 @@ export const InTheNews = () => {
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
       `}</style>
     </section>
   );

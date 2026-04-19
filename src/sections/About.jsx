@@ -87,6 +87,7 @@ export const About = () => {
                   src={photos[currentPhotoIndex]}
                   alt="Адамбек Нээмат"
                   loading="lazy"
+                  decoding="async"
                   width={400}
                   height={500}
                   initial={{ opacity: 0, scale: 1.1 }}

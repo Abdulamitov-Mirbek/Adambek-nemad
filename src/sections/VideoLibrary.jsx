@@ -103,8 +103,10 @@ const FakeMoreButton = ({ t }) => {
         className="min-w-[240px] sm:min-w-[280px] md:min-w-[320px] snap-center transition-transform duration-300 hover:-translate-y-2"
         whileHover={{ y: -8 }}
       >
-        <div
+        <button
+          type="button"
           onClick={handleClick}
+          aria-label={t.moreButton}
           className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-3xl border border-dashed border-blue-500/50 bg-gradient-to-br from-blue-600/10 to-purple-600/10 backdrop-blur-sm shadow-xl transition-all duration-500 hover:border-blue-400"
         >
           <div className="flex flex-col items-center justify-center h-full p-6 text-center relative z-10">
@@ -116,7 +118,7 @@ const FakeMoreButton = ({ t }) => {
             </h3>
             <p className="text-xs sm:text-sm text-white/60">{t.moreSubtext}</p>
           </div>
-        </div>
+        </button>
       </motion.div>
 
       <AnimatePresence>
@@ -267,6 +269,7 @@ export const VideoLibrary = () => {
           {/* Кнопки навигации (только десктоп) */}
           <button
             onClick={() => scroll("left")}
+            aria-label={t.ariaPrev}
             className={`absolute -left-6 top-1/2 -translate-y-1/2 z-30 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-4 hidden lg:flex items-center justify-center transition-all ${
               scrollInfo.current <= 5
                 ? "opacity-0 pointer-events-none"
@@ -289,7 +292,9 @@ export const VideoLibrary = () => {
                 <div className="group relative aspect-[9/16] cursor-pointer overflow-hidden rounded-3xl border border-white/10 bg-gray-900 shadow-xl transition-all duration-500 hover:border-blue-500/50">
                   <img
                     src={v.thumbCandidates[0]}
-                    alt="Review"
+                    alt={`Видео отзыв ${idx + 1}`}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
@@ -312,6 +317,7 @@ export const VideoLibrary = () => {
 
           <button
             onClick={() => scroll("right")}
+            aria-label={t.ariaNext}
             className={`absolute -right-6 top-1/2 -translate-y-1/2 z-30 bg-black/80 backdrop-blur-md border border-white/10 rounded-full p-4 hidden lg:flex items-center justify-center transition-all ${
               scrollInfo.current >= scrollInfo.max - 5
                 ? "opacity-0 pointer-events-none"
@@ -341,7 +347,8 @@ export const VideoLibrary = () => {
                         });
                       }
                     }}
-                    className="relative flex items-center justify-center py-2 focus:outline-none"
+                    aria-label={`${t.goToSlide} ${idx + 1}`}
+                    className="relative flex items-center justify-center p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full -m-3"
                   >
                     <div
                       className={`rounded-full transition-all duration-500 ${isActive ? "w-8 h-2 bg-transparent" : "w-2 h-2 bg-white/20 hover:bg-white/40"}`}
@@ -384,6 +391,7 @@ export const VideoLibrary = () => {
             >
               <button
                 onClick={() => setActiveVideo(null)}
+                aria-label={t.ariaClose}
                 className="absolute top-4 right-4 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm"
               >
                 <X size={20} />

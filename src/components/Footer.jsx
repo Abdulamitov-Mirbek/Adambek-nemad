@@ -1,16 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LanguageContext } from "../context/LanguageContext";
 
 import { AiFillInstagram } from "react-icons/ai";
 import { FaWhatsapp } from "react-icons/fa";
 import { TfiEmail } from "react-icons/tfi";
 import { MdSend } from "react-icons/md";
-
-const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_IDS = [
-  import.meta.env.VITE_TELEGRAM_CHAT_ID_1,
-  import.meta.env.VITE_TELEGRAM_CHAT_ID_2,
-].filter(Boolean);
 
 const content = {
   ru: {
@@ -65,29 +59,71 @@ export const Footer = () => {
   const [isSending, setIsSending] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [cooldownUntil, setCooldownUntil] = useState(() => {
+    if (typeof window === "undefined") return 0;
+    const stored = localStorage.getItem("footerSendCooldownUntil");
+    const parsed = Number(stored);
+    return parsed > Date.now() ? parsed : 0;
+  });
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
+  const COOLDOWN_KEY = "footerSendCooldownUntil";
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    if (!cooldownUntil || cooldownUntil <= Date.now()) {
+      setCooldownSeconds(0);
+      if (cooldownUntil && cooldownUntil <= Date.now()) {
+        setCooldownUntil(0);
+        localStorage.removeItem(COOLDOWN_KEY);
+      }
+      return;
+    }
+
+    const update = () => {
+      const remaining = Math.max(
+        0,
+        Math.ceil((cooldownUntil - Date.now()) / 1000),
+      );
+      setCooldownSeconds(remaining);
+      if (remaining <= 0) {
+        setCooldownUntil(0);
+        localStorage.removeItem(COOLDOWN_KEY);
+      }
+    };
+
+    update();
+    const interval = window.setInterval(update, 1000);
+    return () => window.clearInterval(interval);
+  }, [cooldownUntil]);
+
+  const startCooldown = () => {
+    if (typeof window === "undefined") return;
+    const until = Date.now() + 60_000;
+    setCooldownUntil(until);
+    localStorage.setItem(COOLDOWN_KEY, String(until));
+  };
+
+  const isCooldownActive = cooldownUntil > Date.now();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const sendToTelegram = async (fullName, phone, comment) => {
-    const message = `📋 *Новая заявка*\n\n👤 *ФИО:* ${fullName}\n📞 *Телефон:* ${phone}\n💬 *Комментарий:* ${comment || "—"}\n🌐 *Язык:* ${language === "kg" ? "Кыргызча" : "Русский"}\n⏰ *Время:* ${new Date().toLocaleString()}`;
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-
     try {
-      const promises = TELEGRAM_CHAT_IDS.map((chatId) =>
-        fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: chatId,
-            text: message,
-            parse_mode: "Markdown",
-          }),
+      const response = await fetch("/api/send-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName,
+          phone,
+          comment,
+          website: formData.website,
         }),
-      );
-      const responses = await Promise.all(promises);
-      return responses.every((res) => res.ok);
+      });
+
+      return response.ok;
     } catch (error) {
       return false;
     }
@@ -110,6 +146,7 @@ export const Footer = () => {
       if (success) {
         setShowSuccess(true);
         setFormData({ fullName: "", phone: "", comment: "", website: "" });
+        startCooldown();
         setTimeout(() => setShowSuccess(false), 5000);
       } else {
         setShowError(true);
@@ -275,15 +312,18 @@ export const Footer = () => {
               />
               <button
                 type="submit"
-                disabled={isSending}
+                disabled={isSending || isCooldownActive}
                 aria-label={t.send}
-                className="w-full flex items-center justify-center gap-2 bg-white text-black hover:bg-blue-600 hover:text-white font-bold py-2.5 sm:py-3 rounded-xl transition-all disabled:opacity-50 text-xs sm:text-sm"
+                className="w-full flex items-center justify-center gap-2 bg-white text-black hover:bg-blue-600 hover:text-white font-bold py-2.5 sm:py-3 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm"
               >
                 {isSending ? (
                   <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
-                    <MdSend size={16} /> {t.send}
+                    <MdSend size={16} />
+                    {isCooldownActive
+                      ? `${t.send} (${cooldownSeconds}s)`
+                      : t.send}
                   </>
                 )}
               </button>

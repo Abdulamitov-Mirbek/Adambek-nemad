@@ -1,13 +1,16 @@
 import React, { useContext, useMemo } from "react";
 import { motion } from "framer-motion";
-import {
-  GraduationCap,
-  ChartLine,
-  ClipboardList,
-  MessageCircle,
-  TrendingUp,
-} from "lucide-react";
 import { LanguageContext } from "../context/LanguageContext";
+
+// Объединяем все нужные иконки в один импорт
+import { 
+  BookOpen, 
+  GraduationCap, 
+  MessageCircle, 
+  ChartLine, 
+  ClipboardList, 
+  TrendingUp 
+} from 'lucide-react';
 
 const content = {
   ru: {

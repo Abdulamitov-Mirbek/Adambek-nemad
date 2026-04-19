@@ -8,7 +8,6 @@ import {
   User,
   FolderKanban,
   Users,
-  Building2,
   BookOpen,
   GraduationCap,
   MessageSquare,
