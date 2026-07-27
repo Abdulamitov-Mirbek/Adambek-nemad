@@ -9,7 +9,7 @@ import { MdSend } from "react-icons/md";
 const content = {
   ru: {
     name: "Адамбек Нээмат",
-    title: "Предприниматель и бизнес-коуч",
+    title: "Эксперт по продажам и развитию бизнеса",
     quickLinks: "Быстрые ссылки",
     about: "Обо мне",
     projects: "Проекты",
@@ -27,7 +27,7 @@ const content = {
   },
   kg: {
     name: "Адамбек Нээмат",
-    title: "Ишкер жана бизнес-коуч",
+    title: "Сатуу жана бизнести өнүктүрүү боюнча Эксперт",
     quickLinks: "Тез шилтемелер",
     about: "Мен жөнүндө",
     projects: "Долбоорлор",
