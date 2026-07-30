@@ -6,18 +6,22 @@ const content = {
   ru: {
     badge: "Официальный сайт",
     title: "АДАМБЕК",
-    titleGradient: "НЭЭМАТ",
+    titleGradient: "НЕЕМАТ",
     description:
-      "Предприниматель, ментор и визионер. Помогаю раскрыть потенциал через системное мышление и инновационные подходы в бизнесе.",
+      "Помогаю бизнесу увеличивать продажи, прибыль и масштабироваться",
+    description2:
+      "Если вы хотите продавать дороже, уверенно закрывать сделки, создать сильную команду и вывести бизнес на новый уровень",
     button1: "Смотреть курсы",
     button2: "Связаться",
   },
   kg: {
     badge: "Расмий сайт",
     title: "АДАМБЕК",
-    titleGradient: "НЭЭМАТ",
+    titleGradient: "НЕЕМАТ",
     description:
-      "Ишкер, ментор жана визионер. Системалык ой жүгүртүү жана бизнестеги инновациялык ыкмалар аркылуу потенциалды ачууга жардам берем.",
+      "Бизнеске сатууну, кирешени жана масштабдаштырууга жардам берем",
+    description2:
+      "Эгер сиз кымбатыраак сатууну, ишенимдүү келишимдерди түзүүнү, күчтүү команда түзүүнү жана бизнести жаңы деңгээлге чыгарууну кааласаңыз",
     button1: "Курстарды көрүү",
     button2: "Байланышуу",
   },
@@ -134,9 +138,18 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-sm sm:text-base md:text-lg lg:text-xl text-white/100 max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 leading-relaxed font-light px-2"
+          className="text-sm sm:text-base md:text-lg lg:text-xl text-white/100 max-w-2xl mx-auto leading-relaxed font-light px-2"
         >
           {t.description}
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-sm sm:text-base md:text-lg lg:text-xl text-white/80 max-w-2xl mx-auto mb-6 sm:mb-8 md:mb-10 leading-relaxed font-light px-2"
+        >
+          {t.description2}
         </motion.p>
 
         <motion.div
