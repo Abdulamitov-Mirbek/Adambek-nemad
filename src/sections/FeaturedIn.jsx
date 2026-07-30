@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
-import { FaYoutube } from "react-icons/fa";
+import { FaYoutube, FaTelegramPlane } from "react-icons/fa";
 import { LanguageContext } from "../context/LanguageContext";
 
 // Кастомная иконка Instagram для соответствия стилю Lucide
@@ -36,23 +36,30 @@ const featuredPartners = [
     gradient: "from-[#FF0000] to-[#cc0000]",
     hoverColor: "group-hover:text-[#FF0000]",
   },
+  {
+    name: "TELEGRAM",
+    link: "https://t.me/adambek_neemat",
+    icon: <FaTelegramPlane size={32} />,
+    gradient: "from-[#0088cc] to-[#005f8a]",
+    hoverColor: "group-hover:text-[#0088cc]",
+  },
 ];
 
 const content = {
   ru: {
     badge: "ПОДПИСЫВАЙТЕСЬ",
-    title: "МЫ В СОЦСЕТЯХ",
-    titleGradient: "СЛЕДИТЕ ЗА НАМИ",
+    title: "Больше пользы —",
+    titleGradient: "в моих социальных сетях",
     description:
-      "Будьте в курсе всех новостей, анонсов и бесплатных материалов",
+      "Здесь вы найдете реальные кейсы, современные техники продаж, советы по развитию бизнеса, мотивацию и ответы на самые частые вопросы предпринимателей.",
     footerText: "Присоединяйтесь к нам в соцсетях",
   },
   kg: {
     badge: "ЖАЗЫЛЫҢЫЗ",
-    title: "БИЗ СОЦТАРМАКТАРДА",
-    titleGradient: "БИЗДИ КӨЗӨМӨЛДӨҢҮЗ",
+    title: "Көбүрөөк пайда —",
+    titleGradient: "менин социалдык тармактарымда",
     description:
-      "Бардык жаңылыктар, анонстор жана акысыз материалдардан кабардар болуңуз",
+      "Бул жерде сиз реалдуу кейстер, заманбап сатуу техникалары, бизнести өнүктүрүү боюнча кеңештер, мотивация жана ишкерлердин эң көп берилүүчү суроолоруна жоопторду таба аласыз.",
     footerText: "Соцтармактарга кошулуңуз",
   },
 };
@@ -114,7 +121,12 @@ export const FeaturedIn = () => {
               <div
                 className={`w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 rounded-2xl sm:rounded-3xl bg-gradient-to-br ${social.gradient} p-[2px] transition-all duration-500 group-hover:shadow-[0_0_40px_-10px] group-hover:shadow-current`}
                 style={{
-                  color: social.name === "YOUTUBE" ? "#FF0000" : "#ee2a7b",
+                  color:
+                    social.name === "YOUTUBE"
+                      ? "#FF0000"
+                      : social.name === "TELEGRAM"
+                      ? "#0088cc"
+                      : "#ee2a7b",
                 }}
               >
                 <div className="relative w-full h-full rounded-[20px] sm:rounded-[22px] bg-[#0a0a0a] flex flex-col items-center justify-center gap-2 sm:gap-4 transition-all duration-500">
